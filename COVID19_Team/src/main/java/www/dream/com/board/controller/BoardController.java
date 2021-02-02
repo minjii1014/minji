@@ -21,6 +21,6 @@ public class BoardController {
 	@GetMapping("/post/map")
 	public void map() {
 	}
-	
+	// 해삼
 }
 
