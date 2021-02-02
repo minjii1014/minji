@@ -14,6 +14,7 @@ import www.dream.com.board.service.PostService;
 import www.dream.com.party.model.PartyVO;
 
 //change
+//test
 @Controller
 @RequestMapping("/post/*")
 public class PostController {
