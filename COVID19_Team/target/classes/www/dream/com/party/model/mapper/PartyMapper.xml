@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="www.dream.com.party.model.mapper.PartyMapper">
+	<resultMap id="partyResultMap" type="www.dream.com.party.model.PartyVO">
+		<result property="partyId" column="party_id" />
+	</resultMap>
+	<resultMap id="infectedPersonResultMap" type="www.dream.com.party.model.InfectedVO" extends="partyResultMap">
+		<result property="startDate" column="start_date" />
+		<result property="thruDate" column="thru_date" />
+	</resultMap>
+	<resultMap id="userResultMap" type="www.dream.com.party.model.UserVO" extends="partyResultMap">
+		<result property="email" column="email" />
+		<result property="loginId" column="login_id" />
+		<result property="password" column="password" />
+	</resultMap>
+	
+	<select id="selectAllParty" resultMap="partyResultMap">
+	<![CDATA[
+		select *
+		  from T_Party
+	]]>
+	</select>
+</mapper>
