@@ -13,6 +13,7 @@ import www.dream.com.board.model.PostVO;
 import www.dream.com.board.service.PostService;
 import www.dream.com.party.model.PartyVO;
 
+//change
 @Controller
 @RequestMapping("/post/*")
 public class PostController {

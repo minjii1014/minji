@@ -14,3 +14,4 @@ public class ReplyVO {
 	private Date regDate;
 	private Date updateDate;
 }
+
