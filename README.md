@@ -1,1 +1,3 @@
 # minji
+
+i'm genius
