@@ -22,5 +22,7 @@ public class BoardController {
 	public void map() {
 	}
 	
+	// 민지님 바보 해삼 똥개
+	
 }
 
