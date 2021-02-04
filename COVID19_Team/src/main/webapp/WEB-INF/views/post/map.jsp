@@ -7,7 +7,6 @@
 <head>
     <meta charset="utf-8">
     <title>클릭한 위치에 마커 표시하기</title>
-    
 </head>
 <body>
 	<button onclick="startGeolocation()">위치 정보 시작</button>
@@ -51,18 +50,29 @@
 			    
 			    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
 			    message += '경도는 ' + latlng.getLng() + ' 입니다';
-			    
+
 			    var resultDiv = document.getElementById('clickLatlng'); 
 			    resultDiv.innerHTML = message;
+
 			    
 			});
 		}
+		
 		function stopGeolocation() {
 			if (navigator.geolocation) {
 				navigator.geolocation.clearWatch(id);
 			}
 		}
+
+		
 	</script>
+
+	
+	<input type="hidden" value="${latitude }" id="latitude" >
+	<input type="hidden" value="${longitude }" id="longitude">
+	<input type="hidden" value="${start_date }" id="start_date">
+	<input type="hidden" value="${thru_date }" id="thru_date">
+	
 	
 <div id="map" style="width:100%;height:350px;"></div>
 <p><em>지도를 클릭해주세요!</em></p> 

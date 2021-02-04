@@ -12,7 +12,7 @@ create table T_MoveInfo (
 drop index idx_MoveInfo;
 create index idx_MoveInfo on T_MoveInfo(latitude, longitude);
 
---�솗吏꾩옄(1踰�)�쓽 �씠�룞 �젙蹂�
+--확진자(1번)의 이동 정보
 insert into T_MoveInfo(party_id, start_date, thru_date, latitude, longitude ,altitude)
   values(1, '2000.01.01.01.01.01', '2000.01.01.02.01.01', 37.5, 126.9, 0.008);
 insert into T_MoveInfo(party_id, start_date, thru_date, latitude, longitude ,altitude)
@@ -22,20 +22,20 @@ insert into T_MoveInfo(party_id, start_date, thru_date, latitude, longitude ,alt
 insert into T_MoveInfo(party_id, start_date, latitude, longitude ,altitude)
   values(1, '2000.01.01.02.03.01', 37.3, 126.7, 0.008);
   
---�븞�쟾 硫ㅻ쾭(2踰�)�쓽 �씠�룞 �젙蹂�
+--안전 멤버(2번)의 이동 정보
 insert into T_MoveInfo(party_id, start_date, thru_date, latitude, longitude ,altitude)
   values(2, '2000.01.01.00.01.01', '2000.01.01.04.01.01', 38.5, 126.9, 0.008);
 insert into T_MoveInfo(party_id, start_date, latitude, longitude ,altitude)
   values(2, '2000.01.01.04.01.02', 38.6, 126.9, 0.008);
   
---�쐞�뿕 硫ㅻ쾭(3踰�)�쓽 �씠�룞 �젙蹂�
+--위험 멤버(3번)의 이동 정보
 insert into T_MoveInfo(party_id, start_date, thru_date, latitude, longitude ,altitude)
   values(3, '2000.01.01.00.01.01', '2000.01.01.02.02.01', 37.3, 126.9, 0.008);
 insert into T_MoveInfo(party_id, start_date, latitude, longitude ,altitude)
   values(3, '2000.01.01.02.02.02', 37.8, 126.9, 0.008);
 
  
---�솗吏꾩옄�� �룞�꽑�씠 寃뱀튂�뒗 �쐞�뿕 硫ㅻ쾭瑜� �룄異쒗븯�떆�삤
+--확진자와 동선이 겹치는 위험 멤버를 도출하시오
 select distinct m.party_id
   from T_MoveInfo m, T_MoveInfo d
  where m.party_id = 3
