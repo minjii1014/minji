@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import www.dream.com.board.model.Criteria;
 import www.dream.com.board.model.PostVO;
 import www.dream.com.board.model.mapper.PostMapper;
 
@@ -13,8 +14,8 @@ public class PostService {
 	@Autowired
 	private PostMapper postMapper;
 	
-	public List<PostVO> listPost(long boardId) {
-		return postMapper.listPost(boardId);
+	public List<PostVO> findPostWithPaging(long boardId, Criteria criteria) {
+		return postMapper.findPostWithPaging(boardId, criteria);
 	}
 
 	public void registerPost(PostVO post) {

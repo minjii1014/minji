@@ -9,7 +9,7 @@ create sequence seq4Location_id;
 create table C_Location (
 	id				numeric(22, 0) primary key,
 	latitude		numeric(22,0),   -- 위도
-	longitude 		numeric(22,0)   -- 경도	
+	longitude 		numeric(22,0)   -- 경도
 );
 
 create index idx_location_id on C_Location(id);

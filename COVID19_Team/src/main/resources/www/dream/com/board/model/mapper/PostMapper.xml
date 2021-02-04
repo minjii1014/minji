@@ -65,4 +65,21 @@
 		 where post_id = #{postId}
 	]]>
 	</delete>
+	
+<!-- 	findPostWithPaging -->
+	<select id="findPostWithPaging" resultMap="postResultMap">
+	<![CDATA[
+		select *
+		  from (
+				select rownum rn, p.post_id, p.post_content, p.user_id, p.post_title, p.reg_date, p.update_date
+				  from T_Post p
+				 where board_id = #{boardId}
+				   and rownum <= #{criteria.limit}
+				 order by p.post_id desc
+				)
+		 where rn > #{criteria.offset}
+		 
+	]]>
+	</select>
+	
 </mapper>

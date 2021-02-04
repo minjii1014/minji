@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import www.dream.com.board.model.Criteria;
 import www.dream.com.board.model.PostVO;
 import www.dream.com.board.service.PostService;
 import www.dream.com.party.model.PartyVO;
@@ -22,8 +23,9 @@ public class PostController {
 	private PostService postService;
 	
 	@GetMapping("listPost")
-	public void listPost(@RequestParam("boardId") long boardId, Model model) {
-		model.addAttribute("listPost", postService.listPost(boardId));
+	public void listPost(@RequestParam("boardId") long boardId, Criteria criteria, Model model) {
+		model.addAttribute("listPost", postService.findPostWithPaging(boardId, criteria));
+		model.addAttribute("criteria", criteria);
 		model.addAttribute("boardId", boardId);
 	}
 	
