@@ -32,8 +32,8 @@
 				<tbody>
 					<c:forEach var="post" items="${listPost}">
 						<tr>
-							<td><a href='/post/postDetail?postId=${post.postId}'>${post.postTitle}</a></td>
-							<td>${post.postContent}</td>
+							<td><a href='/post/postDetail?id=${post.id}'>${post.title}</a></td>
+							<td>${post.content}</td>
 							<td>${post.userId.partyId}</td>
 							<td>${post.viewCount}</td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"

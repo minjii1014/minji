@@ -21,8 +21,8 @@ public class PostService {
 		postMapper.registerPost(post);
 	}
 
-	public PostVO findPostById(long postId) {
-		return postMapper.findPostById(postId);
+	public PostVO findPostById(long id) {
+		return postMapper.findPostById(id);
 	}
 
 	public boolean updatePost(PostVO post) {
