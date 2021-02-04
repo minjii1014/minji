@@ -12,7 +12,7 @@ public interface PostMapper {
 
 	public void registerPost(PostVO post);
 
-	public PostVO findPostById(long postId);
+	public PostVO findPostById(long id);
 
 	public boolean updatePost(PostVO post);
 

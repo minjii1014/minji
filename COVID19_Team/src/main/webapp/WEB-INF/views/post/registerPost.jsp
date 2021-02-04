@@ -15,11 +15,11 @@
 			<form id="frmPost" role="form" action="/post/registerPost" method="post">
 				<div class="form-group">
 					<label>제목</label>
-					<input id="title" name="postTitle" value="${post.postTitle}" class="form-control" >
+					<input id="title" name="title" value="${post.title}" class="form-control" >
 				</div>
 				<div class="form-group">
 					<label>내용</label>
-					<textarea id="txacontent" name="postContent" class="form-control" rows=3 >${post.postContent}</textarea>
+					<textarea id="txacontent" name="content" class="form-control" rows=3 >${post.content}</textarea>
 				</div>
 				<button id='btnRegistPost' type="submit" class="btn btn-default">등록</button>
 				<button type="reset" class="btn btn-default">취소</button>

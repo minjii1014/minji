@@ -7,7 +7,7 @@ var replyService = (function(){
 	function listReplyInternal(param, cbSuccess, cbError) {
 		var page = param.page || 1;
 		$.getJSON(
-			"/replies/" + param.originalId + "/" + page + ".json",
+			"/replies/pages/" + param.originalId + ".json",
 			function(result) {
 				if (cbSuccess) {
 					cbSuccess(result);
@@ -21,10 +21,10 @@ var replyService = (function(){
 			}
 		);
 	}
-
-	function showReplyInternal(replyId, cbSuccess, cbError) {
+	
+	function showReplyInternal(id, cbSuccess, cbError) {
 		$.get(
-			"/replies/" + replyId + ".json",
+			"/replies/" + id + ".json",
 			function(reply) {
 				if (cbSuccess) {
 					cbSuccess(reply);
@@ -78,10 +78,10 @@ var replyService = (function(){
         });
 	}
 	
-	function deleteReplyInternal(replyId, replyerId, cbSuccess, cbError) {
+	function deleteReplyInternal(id, cbSuccess, cbError) {
 		$.ajax({
             type : 'Delete',
-            url : '/replies/' + replyId + '/' + replyerId,
+            url : '/replies/' + id,
             dataType : "text",	//결과에 대한 데이터 타입
             success : function(result, status, xhr){
 				if (cbSuccess) {

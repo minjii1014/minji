@@ -21,8 +21,6 @@ public class BoardController {
 	@GetMapping("/post/map")
 	public void map() {
 	}
-	
-	// 민지님 바보 해삼 똥개마ㅓ이ㅏ러ㅣㅏ어ㅣ
-	
+
 }
 
