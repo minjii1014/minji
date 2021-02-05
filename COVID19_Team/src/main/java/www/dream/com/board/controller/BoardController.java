@@ -22,7 +22,7 @@ public class BoardController {
 	public void map() {
 	}
 	
-	// 테스트를 해보겠다 이말입니다.
+	// 민지님은 바보랍니다.
 
 }
 
