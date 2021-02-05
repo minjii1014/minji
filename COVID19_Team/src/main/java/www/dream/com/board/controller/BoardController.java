@@ -21,6 +21,8 @@ public class BoardController {
 	@GetMapping("/post/map")
 	public void map() {
 	}
+	
+//	내꺼는 될텐데 왜 충돌이 나지?
 
 }
 

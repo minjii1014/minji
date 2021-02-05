@@ -18,9 +18,9 @@ public class MoveInfoService {
  
     public Object getItemsFromOpenApi(String regId, String time) throws UnsupportedEncodingException {
         
-        String url = "http://openapi.seoul.go.kr:8088/sample/json/Corona19Status/1/5/";
-        String serviceKey = "서비스키";
-        String decodeServiceKey = URLDecoder.decode(serviceKey, "UTF-8");
+        String url = "//dapi.kakao.com/v2/maps/sdk.js?appkey=4f2dd7e4bc5fdd4c16a578f03d42b1f8";
+//        String serviceKey = "서비스키";
+//        String decodeServiceKey = URLDecoder.decode(serviceKey, "UTF-8");
         
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();

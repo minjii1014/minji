@@ -14,6 +14,7 @@
 		<div class="table-responsive">
 			<form id='frmPaging' action='/post/listPost' method="get">
 				<input type="hidden" name="boardId" value="${boardId}">
+				<input type="hidden" name="pageNum" value="${criteria.pageNum}">
 				<button id="btnSearch" type="submit" class="btn btn-primary">검색</button>
 			</form>
 			<button id='btnRegisterPost' type="button" class="btn btn-primary">Register New Post</button>
@@ -44,6 +45,32 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			
+			
+			<!-- Pagination -->
+			<div class='pull-right'>
+				<ul id='ulPagination' class='pagination'>
+					<c:if test="${criteria.hasPrev}">
+						<li class="page-item previous"> 
+							<a class='page-link' href="${criteria.startPage - 1}">&lt;&lt;</a>
+						</li>
+					</c:if>
+					<c:forEach var="num" begin="${criteria.startPage}" end="${criteria.endPage}">
+						<li class='page-item ${criteria.pageNum == num ? "active" : ""}'>
+							<a class='page-link' href="${num}">${num}</a>
+						</li>
+					</c:forEach>
+					<c:if test="${criteria.hasNext}">
+						<li class="page-item next">
+							<a class='page-link' href="${criteria.endPage + 1}">&gt;&gt;</a>
+						</li>
+					</c:if>
+				</ul>
+			</div>
+			<!-- End Pagination -->			
+			
+			
+			
 			<!-- Modal -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
@@ -86,9 +113,25 @@
 			$("#myModal").modal("show");
 		}
 
+		// 게시글 등록
 		$("#btnRegisterPost").on("click", function(e) {
 			e.preventDefault();
 			frmPaging.attr("action", "/post/registerPost");
+			frmPaging.submit();
+		});
+
+		//해당 페이지 조회 기능 호출	
+		
+		$(".page-item a").on("click", function(e) {
+			e.preventDefault();
+// 			$("#txtSearch").val(curListSearchCondition);
+// 			if (curSortMethod === "sortByDate") {
+// 				$("#optSortByDate").prop('selected', true);
+// 			} else if (curSortMethod === "sortByAccuracy") {
+// 				$("#optSortByAccuracy").prop('selected', true);
+// 			}
+			
+			$("input[name='pageNum']").val($(this).attr("href"));
 			frmPaging.submit();
 		});
 

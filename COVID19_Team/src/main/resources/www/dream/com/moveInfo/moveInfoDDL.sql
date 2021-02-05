@@ -4,8 +4,8 @@ create table T_MoveInfo (
 	party_id			numeric(22, 0),
 	start_date			timestamp default sysdate,
 	thru_date			timestamp default '9999-12-31',
-	latitude			numeric(15, 8),--위도
-	longitude			numeric(15, 8),--경도
+	latitude			numeric(15, 8),-- 위도
+	longitude			numeric(15, 8),-- 경도
 	primary key(party_id, start_date),
 	constraint fk_prod_moveInfo foreign key (party_id) references T_Party (party_id)
 );
