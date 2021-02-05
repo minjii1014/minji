@@ -13,4 +13,8 @@ insert into T_Board(id, name)
 insert into T_Board(id, name)
   values(seq4Board_id.nextval, '공지사항');
 insert into T_Board(id, name)
+<<<<<<< HEAD
   values(seq4Board_id.nextval, '자유 게시판');
+=======
+  values(seq4Board_id.nextval, '자유 게시판');
+>>>>>>> refs/remotes/origin/main

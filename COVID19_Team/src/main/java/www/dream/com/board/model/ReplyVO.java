@@ -7,10 +7,11 @@ import www.dream.com.party.model.PartyVO;
 
 @Data
 public class ReplyVO {
-	private long replyId;
-	private String replyContent;
+	private long id;
+	private String content;
 	private PartyVO userId;
 	private long originalId;
+	private String objType;
 	private Date regDate;
 	private Date updateDate;
 }

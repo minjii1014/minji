@@ -14,8 +14,6 @@ import www.dream.com.board.model.PostVO;
 import www.dream.com.board.service.PostService;
 import www.dream.com.party.model.PartyVO;
 
-//change
-//test
 @Controller
 @RequestMapping("/post/*")
 public class PostController {
@@ -33,8 +31,8 @@ public class PostController {
 	 * 상세 조회, 수정 화면 만들기
 	 */
 	@GetMapping({"postDetail", "modifyPost"})
-	public void postDetail(@RequestParam("postId") long postId, Model model) {
-		PostVO post = postService.findPostById(postId);
+	public void postDetail(@RequestParam("id") long id, Model model) {
+		PostVO post = postService.findPostById(id);
 		model.addAttribute("post", post);
 	}
 	
@@ -53,7 +51,7 @@ public class PostController {
 	public String registerPost(PostVO post, RedirectAttributes rttr) {
 		post.setUserId(new PartyVO(2L));
 		postService.registerPost(post);
-		rttr.addFlashAttribute("result", post.getPostId());
+		rttr.addFlashAttribute("result", post.getId());
 		rttr.addAttribute("boardId", post.getBoardId());
 		return "redirect:/post/listPost";
 	}
