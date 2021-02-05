@@ -39,12 +39,15 @@
 		base-package="www.dream.com.party.service"></context:component-scan>
 	<context:component-scan
 		base-package="www.dream.com.board.service"></context:component-scan>
-		
+	<context:component-scan
+		base-package="www.dream.com.mapTest.service"></context:component-scan>
+				
 	<mybatis-spring:scan
 		base-package="www.dream.com.party.model.mapper" />
 	<mybatis-spring:scan
 		base-package="www.dream.com.board.model.mapper" />
-		
+	<mybatis-spring:scan
+		base-package="www.dream.com.mapTest.model.mapper" />		
 	
 
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
