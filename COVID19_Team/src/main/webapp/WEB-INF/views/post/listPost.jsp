@@ -35,7 +35,7 @@
 						<tr>
 							<td><a href='/post/postDetail?id=${post.id}'>${post.title}</a></td>
 							<td>${post.content}</td>
-							<td>${post.userId.partyId}</td>
+							<td>${post.userId}</td>
 							<td>${post.viewCount}</td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${post.regDate}" /></td>
