@@ -16,6 +16,7 @@ import www.dream.com.party.model.PartyVO;
 @Controller
 @RequestMapping("/post/*")
 public class PostController {
+	// 이번엔 성곤한다.
 	@Autowired
 	private PostService postService;
 	
