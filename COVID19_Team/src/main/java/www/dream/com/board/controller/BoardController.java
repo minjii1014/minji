@@ -21,6 +21,8 @@ public class BoardController {
 	@GetMapping("/post/map")
 	public void map() {
 	}
+	
+	// 테스트를 해보겠다 이말입니다.
 
 }
 
