@@ -17,5 +17,7 @@ public interface PostMapper {
 	public boolean updatePost(PostVO post);
 
 	public boolean removePost(PostVO post);
+	
+	public void countViewCount(long id);
 
 }

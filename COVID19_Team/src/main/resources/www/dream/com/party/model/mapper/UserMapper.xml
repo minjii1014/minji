@@ -4,19 +4,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="www.dream.com.user.model.mapper.UserMapper">
 	<resultMap id="UserResultMap"
-		type="www.dream.com.user.model.mapper.UserVO">
-		<result property="id" column="id" />
-		<result property="name" column="name" />
-		<result property="birthDate" column="birth_date" />
-		<result property="loginId" column="login_id" />
-		<result property="password" column="password" />
+		type="www.dream.com.security.model.CustomUserDetails">
+		<result property="partyId" column="PARTY_ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="loginId" column="ID" />
+		<result property="password" column="PASSWORD" />
+		<result property="email" column="EMAIL" />
+		<result property="authority" column="AUTHORITY" />
+		<result property="enabled" column="ENABLED" />
 	</resultMap>
-	
-	<!-- 모든 지정한 User 다 가져오기 -->
-	<select id="selectAllUser" resultMap="UserResultMap">
+
+
+	<select id="getUserById" resultMap="UserResultMap">
 	<![CDATA[
-		select *
-		  from C_User
+		 SELECT *
+            FROM T_USER
+            WHERE ID=#{loginId}
 	]]>
 	</select>
 </mapper>

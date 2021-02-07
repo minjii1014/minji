@@ -18,6 +18,7 @@ public class ReplyService {
 	}
 	
 	public ReplyVO findReplyById(long id) {
+		
 		return replyMapper.findReplyById(id);
 	}
 
@@ -32,7 +33,6 @@ public class ReplyService {
 	public boolean updateReply(ReplyVO reply) {
 		return replyMapper.updateReply(reply);
 	}
-
 	
 	
 }
