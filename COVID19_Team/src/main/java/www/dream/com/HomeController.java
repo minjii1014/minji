@@ -33,7 +33,6 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		
 		model.addAttribute("listBoard", boardService.selectAllBoard());
 		
 		return "home";

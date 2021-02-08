@@ -9,6 +9,7 @@ create table T_MoveInfo (
 	primary key(party_id, start_date),
 	constraint fk_prod_moveInfo foreign key (party_id) references T_Party (party_id)
 );
+
 drop index idx_MoveInfo;
 create index idx_MoveInfo on T_MoveInfo(latitude, longitude);
 

@@ -65,14 +65,13 @@
 	<![CDATA[
 		select *
 		  from (
-				select rownum rn, p.post_id, p.post_content, p.user_id, p.post_title, p.reg_date, p.update_date
-				  from T_Post p
+				select rownum rn, p.id, p.content, p.user_id, p.view_count, p.title, p.reg_date, p.update_date
+				  from T_Reply p
 				 where board_id = #{boardId}
 				   and rownum <= #{criteria.limit}
-				 order by p.post_id desc
+				 order by p.id desc
 				)
 		 where rn > #{criteria.offset}
-		 
 	]]>
 	</select>
 	

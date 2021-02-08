@@ -5,15 +5,21 @@
 <mapper namespace="www.dream.com.party.model.mapper.PartyMapper">
 	<resultMap id="partyResultMap" type="www.dream.com.party.model.PartyVO">
 		<result property="partyId" column="party_id" />
+		<result property="startDate" column="latitude" />
+		<result property="thruDate" column="longitude" />
+		<result property="latitude" column="start_date" />
+		<result property="longitude" column="thru_date" />
 	</resultMap>
-	<resultMap id="infectedPersonResultMap" type="www.dream.com.party.model.InfectedVO" extends="partyResultMap">
-		<result property="startDate" column="start_date" />
-		<result property="thruDate" column="thru_date" />
-	</resultMap>
+	
 	<resultMap id="userResultMap" type="www.dream.com.party.model.UserVO" extends="partyResultMap">
+		<result property="userId" column="user_id" />
 		<result property="email" column="email" />
 		<result property="loginId" column="login_id" />
 		<result property="password" column="password" />
+	</resultMap>
+	
+	<resultMap id="infectedPersonResultMap" type="www.dream.com.party.model.InfectedVO" extends="partyResultMap">
+		<result property="addressName" column="address_name" />
 	</resultMap>
 	
 	<select id="selectAllParty" resultMap="partyResultMap">
@@ -22,4 +28,16 @@
 		  from T_Party
 	]]>
 	</select>
+	
+	
+	<insert id="registerLocation">
+		<selectKey keyProperty="userId" order="BEFORE" resultType="_long">
+			select seq4User_id.nextval
+		</selectKey>
+		<![CDATA[
+		insert into T_Party(user_id, latitude, longitude)
+		       values(#{userId}, #{latitude}, #{longitude})
+		]]>
+	</insert>
+	
 </mapper>

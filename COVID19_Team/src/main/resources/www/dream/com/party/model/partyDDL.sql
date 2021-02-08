@@ -1,20 +1,22 @@
-drop table T_Party;
+drop sequence seq4User_id;
 drop sequence seq4Party_id;
+drop table T_Party;
 
 create sequence seq4Party_id;
+create sequence seq4User_id;
 
 create table T_Party (
 	party_id			numeric(22,0) primary key,
 	latitude			numeric(15, 8), -- 위도
 	longitude			numeric(15, 8), -- 경도
-	start_date			date, -- 시작 시간
-	thru_date			date, -- 끝나는 시간
+	start_date			date default sysdate, -- 시작 시간
+	thru_date			date default sysdate, -- 끝나는 시간
 	
    --InfectedPerson인 경우 추가적인 정보
     address_name        varchar2(4000),
    
    --user인 경우 추가적인 정보
-	user_id				varchar2(100),
+	user_id				numeric(22,0),
 	email				varchar2(100),
 	login_id			varchar2(100),
 	password			varchar2(100)	
