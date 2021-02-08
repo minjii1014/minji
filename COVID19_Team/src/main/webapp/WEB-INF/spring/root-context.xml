@@ -33,19 +33,24 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
 
 	<context:component-scan
 		base-package="www.dream.com.party.service"></context:component-scan>
 	<context:component-scan
 		base-package="www.dream.com.board.service"></context:component-scan>
-		
+	<context:component-scan
+		base-package="www.dream.com.user.service"></context:component-scan>
+
 	<mybatis-spring:scan
 		base-package="www.dream.com.party.model.mapper" />
 	<mybatis-spring:scan
 		base-package="www.dream.com.board.model.mapper" />
-		
-	
+	<mybatis-spring:scan
+		base-package="www.dream.com.user.model.mapper" />
+
+
 
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 </beans>
