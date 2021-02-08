@@ -1,30 +1,21 @@
 drop table T_location;
 
-create sequence seq4loaction 
+create sequence seq4loaction; 
 
 create table T_location (
-	-- À¯Àú¿Í °¨¿°ÀÚÀÇ °øÅëÀûÀÎ Á¤º¸
-	latitude			numeric(15, 8), -- À§µµ
-	longitude			numeric(15, 8), -- °æµµ
-	start_date			date, -- ½ÃÀÛ ½Ã°£
-	thru_date			date, -- ³¡³ª´Â ½Ã°£
+	-- ê³µí†µ ì •ë³´
+	latitude			numeric(15, 8), -- ìœ„ë„
+	longitude			numeric(15, 8), -- ê²½ë„
+	start_date			date, -- ì‹œì‘ ì‹œê°„
+	thru_date			date, -- ëë‚˜ëŠ” ì‹œê°„
 
-	-- »ç¿ëÀÚÀÏ °æ¿ì Ãß°¡ÀûÀÎ Á¤º¸
+	-- userì¼ ë•Œ ì •ë³´
 	id					varchar2(4000),
-	-- °¨¿°ÀÚÀÏ °æ¿ì Ãß°¡ÀûÀÎ Á¤º¸
+	-- í™•ì§„ìì¼ ë•Œ ì •ë³´
 	infected_id			numeric(15, 8),
     address_name        varchar2(4000),
     
-    primary key(id, infected_id),
+    primary key(id, infected_id)
+);
+
     constraint fk_prod_location foreign key (id) references T_User (id)
-);
-
-create table T_UserLocation (
-
-);
-
-
-
-
-insert into va ( star, thru
-1ÀÏ, star+1ÀÏ

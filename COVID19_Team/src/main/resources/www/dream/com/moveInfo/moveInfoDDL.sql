@@ -1,7 +1,8 @@
-drop table T_MoveInfo
+drop table T_MoveInfo;
 
 create table T_MoveInfo (
 	party_id			numeric(22, 0),
+	address_name        varchar2(4000),
 	start_date			timestamp default sysdate,
 	thru_date			timestamp default '9999-12-31',
 	latitude			numeric(15, 8),-- 위도
