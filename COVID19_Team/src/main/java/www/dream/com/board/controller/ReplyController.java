@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import www.dream.com.board.model.ReplyVO;
 import www.dream.com.board.service.ReplyService;
+import www.dream.com.party.model.PartyVO;
 
 @RestController
 @RequestMapping("/replies/*")
@@ -37,6 +38,7 @@ public class ReplyController {
 
 	@PostMapping(value = "new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> registerReply(@RequestBody ReplyVO reply) {
+		reply.setUserId(new PartyVO(2L));
 		long cnt = replyService.registerReply(reply);
 		return cnt == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
