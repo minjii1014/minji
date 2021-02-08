@@ -3,7 +3,7 @@ package www.dream.com.party.model;
 import lombok.Data;
 
 @Data
-public class PartyVO {
+public class PartyVO extends LocationVO {
 	private long partyId;
 	
 	public PartyVO() {
