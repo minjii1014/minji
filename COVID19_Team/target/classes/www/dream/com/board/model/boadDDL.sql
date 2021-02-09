@@ -11,10 +11,6 @@ create table T_Board(
 insert into T_Board(id, name)
   values(seq4Board_id.nextval, 'COVID-19 Map');
 insert into T_Board(id, name)
-  values(seq4Board_id.nextval, 'ê³µì§€ì‚¬í•­');
+  values(seq4Board_id.nextval, '°øÁö»çÇ×');
 insert into T_Board(id, name)
-<<<<<<< HEAD
-  values(seq4Board_id.nextval, 'ììœ  ê²Œì‹œíŒ');
-=======
-  values(seq4Board_id.nextval, 'ììœ  ê²Œì‹œíŒ');
->>>>>>> refs/remotes/origin/main
+  values(seq4Board_id.nextval, 'ÀÚÀ¯ °Ô½ÃÆÇ');

@@ -30,14 +30,14 @@
 	</select>
 	
 	
-	<insert id="registerLocation">
-		<selectKey keyProperty="userId" order="BEFORE" resultType="_long">
-			select seq4User_id.nextval
-		</selectKey>
-		<![CDATA[
-		insert into T_Party(user_id, latitude, longitude)
-		       values(#{userId}, #{latitude}, #{longitude})
-		]]>
-	</insert>
+<!-- 	<insert id="registerLocation"> -->
+<!-- 		<selectKey keyProperty="userId" order="BEFORE" resultType="_long"> -->
+<!-- 			select seq4User_id.nextval -->
+<!-- 		</selectKey> -->
+<!-- 		<![CDATA[ -->
+<!-- 		insert into T_Party(user_id, latitude, longitude) -->
+<!-- 		       values(#{userId}, #{latitude}, #{longitude}) -->
+<!-- 		]]> -->
+<!-- 	</insert> -->
 	
 </mapper>
