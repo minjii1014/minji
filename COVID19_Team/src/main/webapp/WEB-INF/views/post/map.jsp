@@ -63,10 +63,7 @@
 				navigator.geolocation.clearWatch(id);
 			}
 		}
-
-		
 	</script>
-
 	
 	<input type="hidden" value="${latitude }" id="latitude" >
 	<input type="hidden" value="${longitude }" id="longitude">
