@@ -4,14 +4,14 @@ import lombok.Data;
 
 @Data
 public class UserVO extends PartyVO {
-	private long userId;
+	private long userNum;
 	private String email;
 	private String loginId;
 	private String password;
 
-	public UserVO(long userId) {
+	public UserVO(long userNum) {
 		super();
-		this.userId = userId;
+		this.userNum = userNum;
 	}
 	
 }

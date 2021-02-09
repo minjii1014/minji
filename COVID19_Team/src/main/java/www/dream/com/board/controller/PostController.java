@@ -49,7 +49,7 @@ public class PostController {
  	 */
 	@PostMapping("registerPost")
 	public String registerPost(PostVO post, RedirectAttributes rttr) {
-		post.setUserId(new PartyVO(2L));
+//		post.setUserId(new PartyVO(2L));
 		postService.registerPost(post);
 		rttr.addFlashAttribute("result", post.getId());
 		rttr.addAttribute("boardId", post.getBoardId());

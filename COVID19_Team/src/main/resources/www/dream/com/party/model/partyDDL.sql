@@ -1,9 +1,9 @@
-drop sequence seq4User_id;
+drop sequence seq4User_num;
 drop sequence seq4Party_id;
 drop table T_Party;
 
 create sequence seq4Party_id;
-create sequence seq4User_id;
+create sequence seq4User_num;
 
 create table T_Party (
 	party_id			numeric(22,0) primary key,
@@ -16,7 +16,7 @@ create table T_Party (
     address_name        varchar2(4000),
    
    --user인 경우 추가적인 정보
-	user_id				numeric(22,0),
+	user_num			numeric(22,0),
 	email				varchar2(100),
 	login_id			varchar2(100),
 	password			varchar2(100)	

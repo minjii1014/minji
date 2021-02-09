@@ -6,19 +6,13 @@ import lombok.Data;
 
 @Data
 public class PartyVO {
-	private long partyId;			
-	private Date startDate;	
-	private Date thruDate;
-	private double latitude;	
+	private long partyId;
+	private double latitude;
 	private double longitude;
+	private Date startDate;
+	private Date thruDate;
 	
 	public PartyVO() {
-		
-	}
-	
-	public PartyVO(long partyId) {
-		super();
-		this.partyId = partyId;
 	}
 	
 }

@@ -12,7 +12,7 @@
 	</resultMap>
 	
 	<resultMap id="userResultMap" type="www.dream.com.party.model.UserVO" extends="partyResultMap">
-		<result property="userId" column="user_id" />
+		<result property="userNum" column="user_num" />
 		<result property="email" column="email" />
 		<result property="loginId" column="login_id" />
 		<result property="password" column="password" />
