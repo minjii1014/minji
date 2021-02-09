@@ -15,9 +15,9 @@
 		<property name="driverClassName"
 			value="oracle.jdbc.driver.OracleDriver" />
 		<property name="jdbcUrl"
-			value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="CORONA" />
-		<property name="password" value="CORONA" />
+			value="jdbc:oracle:thin:@localhost:1521:orcl" />
+		<property name="username" value="c##corona" />
+		<property name="password" value="corona" />
 		<property name="maximumPoolSize" value="5" />
 	</bean>
 
@@ -40,10 +40,14 @@
 		base-package="www.dream.com.party.service"></context:component-scan>
 	<context:component-scan
 		base-package="www.dream.com.board.service"></context:component-scan>
+	<context:component-scan
+		base-package="www.dream.com.userSecurity.service"></context:component-scan>
 	<mybatis-spring:scan
 		base-package="www.dream.com.party.model.mapper" />
 	<mybatis-spring:scan
 		base-package="www.dream.com.board.model.mapper" />
-
+	<mybatis-spring:scan
+		base-package="www.dream.com.userSecurity.model.mapper" />
+		
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 </beans>

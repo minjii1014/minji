@@ -5,14 +5,14 @@ create sequence seq4Reply_id;
 create table T_Reply(
 	id				numeric(22,0) primary key,
 	content			varchar2(4000),
-	user_id			numeric(22, 0),
-	original_id		numeric(22,0), --�썝湲� �븘�씠�뵒
-	obj_type		varchar2(100),	--reply, post
-	--	post�씪 寃쎌슦�쓽 異붽� �젙蹂�
+	user_id			varchar2(500),
+	original_id		numeric(22,0), -- 게시글 번호
+	obj_type		varchar2(100),	-- 타입 종류 (reply, post)
+	--	post인 경우 추가적인 정보
 	title				varchar2(500),
 	board_id			numeric(22, 0),
 	view_count			numeric(22, 0),
-	--怨듯넻 愿�由� �젙蹂�
+	--공통 관리 정보
 	reg_date		date default sysdate,
 	update_date		date default sysdate
 );

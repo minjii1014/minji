@@ -1,12 +1,12 @@
-package www.dream.com.user.model;
+package www.dream.com.userSecurity.model;
 
 import lombok.Data;
 
 @Data
 public class UserVO {
 	private long partyId;
-	private long userId;
-	private String loginId;
+	private long userNum;
+	private String userId;
 	private String password;
 	private String email;
 	private String authority;
