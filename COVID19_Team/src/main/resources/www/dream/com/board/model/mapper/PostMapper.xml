@@ -12,7 +12,7 @@
 	
 	<select id="listPost" resultMap="postResultMap">
 	<![CDATA[
-		select p.id, p.title, p.content,p.user_id, p.view_count, p.board_id, p.obj_type, p.reg_date, p.update_date
+		select p.id, p.title, p.content, p.user_id, p.view_count, p.board_id, p.obj_type, p.reg_date, p.update_date
 				, w.party_id w_party_id
   		  from T_Reply p
   		  left outer join T_Party w on p.user_id = w.party_id
@@ -74,5 +74,12 @@
 		 where rn > #{criteria.offset}
 	]]>
 	</select>
+	
+<!-- 	조회수 증가 -->
+	 <update id="countViewCount" parameterType="Long">
+    	UPDATE T_REPLY SET
+    	VIEW_COUNT = VIEW_COUNT+1
+    	WHERE id = #{id}
+    </update>
 	
 </mapper>

@@ -14,5 +14,6 @@ public class ReplyVO {
 	private String objType;
 	private Date regDate;
 	private Date updateDate;
+	private long viewCount;
 }
 

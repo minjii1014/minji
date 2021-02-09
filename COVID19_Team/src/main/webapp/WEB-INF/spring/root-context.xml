@@ -15,9 +15,9 @@
 		<property name="driverClassName"
 			value="oracle.jdbc.driver.OracleDriver" />
 		<property name="jdbcUrl"
-			value="jdbc:oracle:thin:@localhost:1521:orcl" />
-		<property name="username" value="c##corona" />
-		<property name="password" value="corona" />
+			value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="CORONA" />
+		<property name="password" value="CORONA" />
 		<property name="maximumPoolSize" value="5" />
 	</bean>
 
@@ -33,18 +33,17 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
 
 	<context:component-scan
 		base-package="www.dream.com.party.service"></context:component-scan>
 	<context:component-scan
 		base-package="www.dream.com.board.service"></context:component-scan>
-				
 	<mybatis-spring:scan
 		base-package="www.dream.com.party.model.mapper" />
 	<mybatis-spring:scan
 		base-package="www.dream.com.board.model.mapper" />
-	
 
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 </beans>

@@ -29,13 +29,8 @@
 					<i class="fa fa-comments fa-fw">Reply</i>
 				</div>
 				<div class="panel-body">
-					<ul id="listReply">
-						<li class='left clearfix' data-id='12'>
-							<div>
-								
-							</div>
-						</li>
-						<!-- 프로그램에서 처리 "", 스타일 처리 ''  li 목록 및 마지막에 anchor -->
+					<ul id="listReply">	
+					<!-- 프로그램에서 처리 "", 스타일 처리 ''  li 목록 및 마지막에 anchor -->
 					</ul>
 				</div>
 			</div>
@@ -60,44 +55,57 @@
 			frmPaging.append("<input type='hidden' name='id' value='" + $(this).data("id") + "'>");
 			frmPaging.attr("action", "/post/modifyPost");
 			frmPaging.submit();
-
 		});
-
+		
 		var originalId = "${post.id}";
-		replyService.listReply(
-			{originalId:originalId},
-			function(listReply){
-				for(var i=0, len=listReply.length || 0; i < len; i++){
-					console.log(listReply[i]);
-				}
-			},
-			function(erMsg){
-				alert(erMsg);
-			}
-		);
+		var listReplyUL = $("#listReply");
+		showReplyList();
 
-		replyService.showReply(
-				7,
-				function(reply){
-					alert(reply);
+		function showReplyList(){
+			replyService.listReply(
+				{originalId:originalId},
+				function(listReply){
+					var strReplyLi = "";
+					for(var i=0, len=listReply.length || 0; i < len; i++){ 
+						strReplyLi += "<li class='left clearfix' data-id='" + listReply[i].id + "'>";
+						strReplyLi += "<div><div class='header'><strong class='primary-font'>" + listReply[i].userId + "</strong>";
+						strReplyLi += "<small class='pull-right text-muted'>"+ listReply[i].updateDate +"</small></div>";
+						strReplyLi += "<p>"+ listReply[i].content +"</p></div></li>";
+							
+					}
+					listReplyUL.html(strReplyLi);
 				},
 				function(erMsg){
 					alert(erMsg);
 				}
 			);
-		
-		replyService.updateReply(
-				{id:7, content:"프로그램으로 자동 변경하기"},
-				function(result){
-					alert(result);
-				},
-				function(erMsg){
-					alert(erMsg);
-				}
-			);
-		
+		}
 	});
 
+</script>
+<script type="text/javascript">
+var originalId = "${post.id}";
+
+
+replyService.showReply(
+		7,
+		function(reply){
+			alert(reply);
+		},
+		function(erMsg){
+			alert(erMsg);
+		}
+	);
+
+replyService.updateReply(
+		{id:7, content:"프로그램으로 자동 변경하기"},
+		function(result){
+			alert(result);
+		},
+		function(erMsg){
+			alert(erMsg);
+		}
+	);
 </script>
     </body>
 </html>
