@@ -24,7 +24,7 @@
 	<!-- public PostVO findPostById(long postId) -->
 	<select id="findPostById" resultMap="postResultMap">
 	<![CDATA[
-		select p.id, p.title, p.content,p.user_id, p.view_count, p.board_id, p.obj_type, p.reg_date, p.update_date
+		select p.id, p.title, p.content, p.user_id, p.view_count, p.board_id, p.obj_type, p.reg_date, p.update_date
 				, w.party_id w_party_id
 		  from T_Reply p
 		  left outer join T_Party w on p.user_id = w.party_id
@@ -34,7 +34,7 @@
 	
 	
 	<insert id="registerPost">
-		<selectKey keyProperty="id" order="BEFORE" resultType="long">
+		<selectKey keyProperty="id" order="BEFORE" resultType="_long">
 			select seq4Reply_id.nextval from dual
 		</selectKey>
 		<![CDATA[

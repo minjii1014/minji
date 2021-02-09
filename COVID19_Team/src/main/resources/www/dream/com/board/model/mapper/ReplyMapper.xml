@@ -3,14 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="www.dream.com.board.model.mapper.ReplyMapper">
-	<resultMap id="replyResultMap" type="www.dream.com.board.model.ReplyVO">
+	<resultMap id="replyResultMap" type="www.dream.com.board.model.ReplyVO" extends="www.dream.com.party.model.mapper.PartyMapper.partyResultMap">
 		<result property="id" column="id" />
 		<result property="content" column="content" />
 		<result property="regDate" column="reg_date" />
 		<result property="updateDate" column="update_date" />
-		<association property="userId" column="user_id" 
-		resultMap="www.dream.com.party.model.mapper.PartyMapper.partyResultMap" columnPrefix="w_">
-		</association>
+<!-- 		<association property="userId" column="user_id"  -->
+<!-- 		resultMap="www.dream.com.party.model.mapper.PartyMapper.partyResultMap" columnPrefix="w_"> -->
+<!-- 		</association> -->
 		<discriminator javaType="String" column="obj_type">
 			<case value="reply" resultMap="replyResultMap" />
 		</discriminator>
