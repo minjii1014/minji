@@ -224,7 +224,7 @@
 			});
 		});
 
-		//댓글 삭제 이벤트
+		//댓글 삭제 이벤트 하하하
 		btnRemoveReply.on("click", function(e) {
 			e.preventDefault();
 
