@@ -18,24 +18,24 @@
 	
 	<select id="listReply" resultMap="replyResultMap">
 	<![CDATA[
-		select r.id, r.content, r.user_id, r.original_id, r.obj_type, r.reg_date, r.update_date, 
-			   w.party_id w_party_id
+		select r.id, r.content, r.user_id, r.original_id, r.obj_type, r.reg_date, r.update_date 
 		  from T_Reply r
-			   left outer join T_Party w on r.user_id = w.party_id
 		 where r.original_id = #{originalId}
 		 order by r.id desc
 	]]>
 	</select>
+<!-- 			   left outer join T_Party w on r.user_id = w.party_id -->
+<!-- 			   w.party_id w_party_id -->
 	
 	<select id="findReplyById" resultMap="replyResultMap">
 	<![CDATA[
-		select r.id, r.content, r.user_id, r.original_id, r.obj_type, r.reg_date, r.update_date, 
-			   w.party_id w_party_id
+		select r.id, r.content, r.user_id, r.original_id, r.obj_type, r.reg_date, r.update_date 
 		  from T_Reply r
-		  left outer join T_Party w on r.user_id = w.party_id
 		 where r.id = #{id}
 	]]>
 	</select>
+<!-- 		  left outer join T_Party w on r.user_id = w.party_id -->
+<!-- 			   w.party_id w_party_id -->
 	
 	<!--public void registerReply(ReplyVO reply);-->
 	<insert id="registerReply">

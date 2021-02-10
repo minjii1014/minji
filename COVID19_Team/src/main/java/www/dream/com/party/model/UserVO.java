@@ -3,10 +3,15 @@ package www.dream.com.party.model;
 import lombok.Data;
 
 @Data
-public class UserVO extends PartyVO{
+public class UserVO extends PartyVO {
+	private long userNum;
+	private String email;
 	private String loginId;
 	private String password;
-	private String email;
+
+	public UserVO(long userNum) {
+		super();
+		this.userNum = userNum;
+	}
+	
 }
-
-

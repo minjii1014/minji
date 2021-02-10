@@ -28,7 +28,9 @@
 	
 	<context:component-scan base-package="www.dream.com" />
 	<context:component-scan base-package="www.dream.com.board.controller" />
-	<context:component-scan base-package="www.dream.com.user.controller" />
+	<context:component-scan base-package="www.dream.com.party.controller" />
+	<context:component-scan base-package="www.dream.com.userSecurity.controller" />
+
 
 
 	<security:global-method-security pre-post-annotations="enabled"></security:global-method-security>

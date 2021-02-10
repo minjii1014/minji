@@ -11,5 +11,5 @@ public class MoveInfoVO{
 	private Date thruDate;
 	private long latitude;	
 	private long longitude;	
-	private long altitude;	
+	private long altitude;
 }

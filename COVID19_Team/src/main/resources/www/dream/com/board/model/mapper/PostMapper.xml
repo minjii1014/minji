@@ -13,33 +13,33 @@
 	<select id="listPost" resultMap="postResultMap">
 	<![CDATA[
 		select p.id, p.title, p.content, p.user_id, p.view_count, p.board_id, p.obj_type, p.reg_date, p.update_date
-				, w.party_id w_party_id
   		  from T_Reply p
-  		  left outer join T_Party w on p.user_id = w.party_id
   		 where p.board_id = #{boardId}
   		 order by p.id desc
 	]]>
 	</select>
+<!--   		  left outer join T_Party w on p.user_id = w.party_id -->
+<!-- 				, w.party_id w_party_id -->
 	
 	<!-- public PostVO findPostById(long postId) -->
 	<select id="findPostById" resultMap="postResultMap">
 	<![CDATA[
-		select p.id, p.title, p.content,p.user_id, p.view_count, p.board_id, p.obj_type, p.reg_date, p.update_date
-				, w.party_id w_party_id
+		select p.id, p.title, p.content, p.user_id, p.view_count, p.board_id, p.obj_type, p.reg_date, p.update_date
 		  from T_Reply p
-		  left outer join T_Party w on p.user_id = w.party_id
 		 where p.id = #{id}
 	]]>
 	</select>
+<!-- 		  left outer join T_Party w on p.user_id = w.party_id -->
+<!-- 				, w.party_id w_party_id -->
 	
 	
 	<insert id="registerPost">
-		<selectKey keyProperty="id" order="BEFORE" resultType="long">
+		<selectKey keyProperty="id" order="BEFORE" resultType="_long">
 			select seq4Reply_id.nextval from dual
 		</selectKey>
 		<![CDATA[
 		insert into T_Reply(id, content, user_id, obj_type, title, board_id, view_count)
-		       values(#{id}, #{content, jdbcType=VARCHAR}, #{userId.partyId}, 'post', #{title, jdbcType=VARCHAR}, #{boardId}, 3)
+		       values(#{id}, #{content, jdbcType=VARCHAR}, 'user', 'post', #{title, jdbcType=VARCHAR}, #{boardId}, 3)
 		]]>
 	</insert>
 	

@@ -45,7 +45,7 @@ var replyService = (function(){
             url : '/replies/new',
             data : JSON.stringify(reply),
 			contentType:"application/json;charset=utf-8", //보내는 데이타의 타입을 지정해 준다
-            dataType : 'json',	//결과에 대한 데이터 타입
+            dataType : 'text',	//결과에 대한 데이터 타입
             success : function(result, status, xhr){
 				if (cbSuccess) {
 					cbSuccess(result);
