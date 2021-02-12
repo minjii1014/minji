@@ -22,6 +22,7 @@ public class BoardController {
 	public void map() {
 	}
 	
+	// 깃 허브 커밋 테스트
 
 }
 
