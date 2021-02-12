@@ -10,7 +10,7 @@ public interface PartyMapper {
 	public List<PartyVO> selectAllParty();
 	
 //	유저의 정보 DB에 넣기
-	public void registerLocation(UserVO user);
+	public void registerLocation(PartyVO party);
 	
 	
 	

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<!-- 지도에 위치 표시해보기 다음 API쪽으로 위도 경도 표시해주면 지도에 표시해주는 (카카오로) -->
+<body>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f8e2fe7c8f6c0ab93cfcbe39af8b6d90"></script>
+
+	<button onclick="getGeolocation()">지도 보이기</button>
+	<script>
+		var myDiv = document.getElementById("target");
+		function getGeolocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(showGeolocation);
+			}
+		}
+		function showGeolocation(position) {
+			var pos = position.coords.latitude + "," + position.coords.longitude;
+			var url = "http://maps.googleapis.com/maps/api/staticmap?center="
+			+ pos + "&zoom=14&size=500x300&sensor=false";
+			window.open(url);
+		}
+		
+	</script>
+</body>
+</html>

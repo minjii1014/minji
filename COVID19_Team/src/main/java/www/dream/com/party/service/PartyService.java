@@ -18,8 +18,8 @@ public class PartyService {
 		return partyMapper.selectAllParty();
 	}
 	
-	public void registerLocation(UserVO User) {
-		partyMapper.registerLocation(User);
+	public void registerLocation(PartyVO party) {
+		partyMapper.registerLocation(party);
 	}
 	
 }

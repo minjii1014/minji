@@ -7,6 +7,7 @@
 <head>
     <meta charset="utf-8">
     <title>클릭한 위치에 마커 표시하기</title>
+    <script src="/resources/vendor/jquery/jquery.min.js"></script>
 </head>
 <body>
 	<button onclick="startGeolocation()">위치 정보 시작</button>
@@ -54,6 +55,20 @@
 			    var resultDiv = document.getElementById('clickLatlng'); 
 			    resultDiv.innerHTML = message;
 
+			    var party = {
+						latitude:latlng.getLat(),
+						longitude:latlng.getLng()
+				};
+				
+			    $.ajax({
+					url:'/party/saveAjaxLocation',
+					data: party,
+					type:'post',
+					dataType:'json',	//결과를 json으로 받습니다.
+					success:function(result) {
+						console.log(result);
+					}
+				});
 			    
 			});
 		}

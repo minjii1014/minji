@@ -17,8 +17,9 @@ public class Criteria {
 	private long totalDataCount;
 	private boolean hasPrev, hasNext;
 	
+	// totalDataCount 가져오는 식 하나 짜기
 	public Criteria() {
-		this(1, 1241);
+		this(1, 10);
 	}
 	
 	public Criteria(long pageNum, long totalDataCount) {
