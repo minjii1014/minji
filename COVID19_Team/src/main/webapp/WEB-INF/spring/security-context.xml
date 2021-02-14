@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<bean id="customAccessDenied" class="www.dream.com.userSecurity.CustomAccessDeniedHandler"></bean>
+	<bean id="customLoginSuccess" class="www.dream.com.userSecurity.CustomLoginSuccessHandler"></bean>
+	<!-- <bean id="customPasswordEncoder" class="www.dream.com.userSecurity.CustomNoOpPasswordEncoder"></bean> -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+	<bean id="customUserDetailsService" class="www.dream.com.userSecurity.CustomUserDetailsService"></bean>
+	
+	<security:http>
+		<security:intercept-url pattern="/user" access="permitAll" />
+		
+		<security:intercept-url pattern="/member" access="hasRole('ROLE_MEMBER')" />
+		
+		<security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" />
+		
+		<security:form-login login-page="/user/login" authentication-success-handler-ref="customLoginSuccess"/>
+		
+		<security:access-denied-handler ref="customAccessDenied"/>
+		
+		<security:logout logout-url="/user/customLogout" invalidate-session="true" delete-cookies="remember-me,JSESSION_ID"/>
+		
+		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
+	</security:http>
+	
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="customUserDetailsService">
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	<context:component-scan base-package="www.dream.com"></context:component-scan>
+	
+	
+</beans>
