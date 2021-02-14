@@ -6,6 +6,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -35,7 +37,7 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label class="small mb-1" for="inputFirstName">ID</label> <input class="form-control py-4" id="loginId"
-														name="loginId" type="text" placeholder="Enter your Id" />
+														name="userId" type="text" placeholder="Enter your Id" />
 												</div>
 												<button id="id_check" class="btn btn-primary" type="button" onclick="idCheck()">중복체크</button>
 											</div>
@@ -66,6 +68,7 @@
 											<div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
 										    <div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다.</div>
 										</div>
+										<input type = "hidden" name = "_csrf" value = "${_csrf.token}">
 									</form>
 									<div class="form-group mt-4 mb-0">
 											<button type="button" class="btn btn-primary btn-block" id="btnSignup" onclick="registerCheck()">회원가입</button>
@@ -141,7 +144,10 @@ $(function(){
      });
     });
 
-/* function idCheck() {
+ function idCheck() {
+
+	 var token = $("meta[name='_csrf']").attr("content");
+	 var header = $("meta[name='_csrf_header']").attr("content");
     
     var loginId = $("#loginId").val();
     
@@ -150,21 +156,22 @@ $(function(){
     } else {             
         if(loginId.trim().length != 0) {
             $.ajax({
-                async : true, 
                 type : 'POST', 
                 data: loginId,
-                url: "/user/idCheck",
+                url: "/user/idChk",
                 beforeSend : function(xhr){
-  				  xhr.setRequestHeader(header, token);},
+  				  xhr.setRequestHeader(header, token);
+  				  },
                 dataType: "json",
                 contentType: "application/json; charset=UTF-8",
                 success: function(count) {    
-                    if(count > 0) {
+                    if(count == 1) {
                         alert("해당 아이디 존재");    
                         $("#btnSignup").attr("disabled", "disabled");
                         window.location.reload();
                     } else {
                         alert("사용가능 아이디");
+                        console.log(loginId);
                         $("#btnSignup").removeAttr("disabled");
                     }            
                 },
@@ -176,7 +183,7 @@ $(function(){
             alert("아이디를 입력해주세요. ajax 실패");
         }        
     }
-} */
+} 
 
 </script>
 <script  src="https://code.jquery.com/jquery-3.5.1.js"></script>

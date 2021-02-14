@@ -2,25 +2,63 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="www.dream.com.userSecurity.model.mapper.UserMapper">
+<mapper
+	namespace="www.dream.com.userSecurity.model.mapper.UserMapper">
 	<resultMap id="UserResultMap"
 		type="www.dream.com.userSecurity.model.UserVO">
-		<result property="partyId" column="PARTY_ID" />
-		<result property="userNum" column="user_num" />
+		<id property="userId" column="user_id" />
 		<result property="userId" column="user_id" />
-		<result property="password" column="PASSWORD" />
+		<result property="partyId" column="PARTY_ID" />
+		<result property="userNum" column="USER_NUM" />
 		<result property="email" column="EMAIL" />
-		<result property="authority" column="AUTHORITY" />
+		<result property="password" column="PASSWORD" />
+		<result property="regDate" column="REGDATE" />
+		<result property="updateDate" column="UPDATEDATE" />
 		<result property="enabled" column="ENABLED" />
+		<collection property="authList" resultMap="authMap"></collection>
 	</resultMap>
+
+	<resultMap type="www.dream.com.userSecurity.model.AuthVO"
+		id="authMap">
+		<result property="userId" column="USER_ID" />
+		<result property="auth" column="AUTH" />
+	</resultMap>
+
+	<select id="read" resultMap="UserResultMap">
+		<![CDATA[
+			select
+			mem.USER_ID, PASSWORD, PARTY_ID, EMAIL, REGDATE, UPDATEDATE, ENABLED, AUTH
+			from 
+			T_USERS mem left outer join T_AUTHORITIES auth on mem.USER_ID =
+			auth.USER_ID
+			where mem.USER_ID = #{userId}
+			
+		]]>
+	</select>
 
 	<insert id="signUser">
 		<![CDATA[
-		insert into T_USER(PARTY_ID, user_num, EMAIL, user_id, PASSWORD)
-		       values(3, seq4userid.nextval, #{email, jdbcType=VARCHAR}, #{userId, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR})
+		insert into T_USERS(PARTY_ID, user_num, EMAIL, user_id, PASSWORD)
+		       values(2, seq4userid.nextval, #{email, jdbcType=VARCHAR}, #{userId, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR})
 		]]>
 	</insert>
 
+
+	<update id="userUpdate">
+	<![CDATA[
+		UPDATE T_USERS SET
+		PASSWORD = #{password},
+		EMAIL = #{email}
+		WHERE USER_ID = #{userId}
+		]]>
+	</update>
+	
+	<select id="idChk" resultType="Integer">
+	<![CDATA[
+		select count(*) FROM T_USERS
+		WHERE USER_ID = #{userId, jdbcType=VARCHAR}
+		]]>
+	</select>
 
 
 
