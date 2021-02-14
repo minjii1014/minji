@@ -11,5 +11,5 @@ public interface UserMapper {
 	public void userUpdate(UserVO userVO);
 	
 	// 아이디 중복 체크
-	public int idChk(UserVO userVO);
+	public int idChk(String userId);
 }

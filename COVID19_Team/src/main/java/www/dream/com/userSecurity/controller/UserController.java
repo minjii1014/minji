@@ -1,11 +1,11 @@
 package www.dream.com.userSecurity.controller;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +22,6 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
-	
 
 	// 로그인 페이지 진입
 	@RequestMapping(value = "login")
@@ -56,45 +54,39 @@ public class UserController {
 	// 회원가입 post
 	@RequestMapping(value = "signUp", method = RequestMethod.POST)
 	public String postSign(UserVO userVO) {
-		 
+
 		userService.signUser(userVO);
 
 		return "redirect:/home";
 	}
-	
+
 	@RequestMapping(value = "userUpdate", method = RequestMethod.GET)
 	public void getUpdate() {
 
 	}
 
-	
-	//회원 정보 수정
+	// 회원 정보 수정
 	@RequestMapping(value = "userUpdate", method = RequestMethod.POST)
 	public String postUpdate(UserVO userVO, HttpSession session) {
 		userService.userUpdate(userVO);
-		
+
 		session.invalidate();
-		
+
 		return "redirect:/home";
 	}
-	
-	
-	// 아이디 중복 체크
-	@RequestMapping(value="idChk", method = RequestMethod.POST)
-	@ResponseBody
-	public int postidChk(UserVO userVO) throws Exception {
-		
-		String userId = userVO.getUserId();
-		System.out.println(userId);
-		int idChk = userService.idChk(userVO);
-		
-		int result = 0;
-		
-		if(idChk == 1) {
-			result = 1;
-		}
-		return result;
-	}
 
+	// 아이디 중복 체크
+	@RequestMapping(value = "idChk", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<Object, Object> idcheck(@RequestBody String userId) {
+
+		int count = 0;
+		Map<Object, Object> map = new HashMap<Object, Object>();
+
+		count = userService.idChk(userId);
+		map.put("cnt", count);
+
+		return map;
+	}
 
 }

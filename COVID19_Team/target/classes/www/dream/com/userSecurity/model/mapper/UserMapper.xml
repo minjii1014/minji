@@ -53,7 +53,7 @@
 		]]>
 	</update>
 	
-	<select id="idChk" resultType="Integer">
+	<select id="idChk" resultType="Integer" parameterType="String">
 	<![CDATA[
 		select count(*) FROM T_USERS
 		WHERE USER_ID = #{userId, jdbcType=VARCHAR}

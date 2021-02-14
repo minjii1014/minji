@@ -143,14 +143,13 @@ $(function(){
 	    }
      });
     });
-
  function idCheck() {
 
 	 var token = $("meta[name='_csrf']").attr("content");
 	 var header = $("meta[name='_csrf_header']").attr("content");
     
     var loginId = $("#loginId").val();
-    
+    var idck = 0;
     if(loginId.search(/\s/) != -1) { 
         alert("아이디에는 공백이 들어갈 수 없습니다.");        
     } else {             
@@ -164,8 +163,8 @@ $(function(){
   				  },
                 dataType: "json",
                 contentType: "application/json; charset=UTF-8",
-                success: function(count) {    
-                    if(count == 1) {
+                success: function(data) {    
+                    if(data.cnt > 0) {
                         alert("해당 아이디 존재");    
                         $("#btnSignup").attr("disabled", "disabled");
                         window.location.reload();
@@ -173,6 +172,7 @@ $(function(){
                         alert("사용가능 아이디");
                         console.log(loginId);
                         $("#btnSignup").removeAttr("disabled");
+                        idck = 1;
                     }            
                 },
                 error: function(error) {

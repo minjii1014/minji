@@ -25,11 +25,13 @@ public class UserService {
 		userMapper.userUpdate(userVO);
 	}
 	
-	public int idChk(UserVO userVO) {
-		int result = userMapper.idChk(userVO);
+	public int idChk(String userId) {
+		int result = userMapper.idChk(userId);
 		System.out.println(result);
 		return result;
 	}
+
+	
 	
 
 }
