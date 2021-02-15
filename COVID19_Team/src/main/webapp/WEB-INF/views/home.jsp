@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ page session="false" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,6 +45,24 @@
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">About</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Contact</a></li>
                     </ul>
+                </div>
+                <div>
+                <sec:authorize access="isAnonymous()">
+					<a href="/user/login">로그인</a>
+					<a href="/user/signUp">회원가입</a>
+				</sec:authorize>
+                </div>
+                <div>
+                	<td><sec:authorize access="isAuthenticated()">
+                    <sec:authentication property="principal.username" var="user_id" />
+                    <div id="user_id">안녕하세요. ${user_id }</div>
+                    <a href="/user/userUpdate">회원 정보 수정하기</a>
+                    <a href="/user/userDelete">회원 탈퇴</a>
+                    <form action="/user/customLogout" method="post">
+					<input type="hidden" name="_csrf" value="${_csrf.token}">
+					<button class="btn btn-primary">로그아웃</button>
+					</form>
+                </sec:authorize></td>
                 </div>
             </div>
         </nav>

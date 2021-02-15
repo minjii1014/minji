@@ -71,7 +71,7 @@
 										<input type = "hidden" name = "_csrf" value = "${_csrf.token}">
 									</form>
 									<div class="form-group mt-4 mb-0">
-											<button type="button" class="btn btn-primary btn-block" id="btnSignup" onclick="registerCheck()">회원가입</button>
+											<button type="button" class="btn btn-primary btn-block" id="btnSignup" onclick="registerCheck()" disabled="disabled">회원가입</button>
 											<button type="button" class="btn btn-primary btn-block" id="btnCancel">취소하기</button>
 									</div>
 								</div>

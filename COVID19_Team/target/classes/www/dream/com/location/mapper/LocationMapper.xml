@@ -5,33 +5,26 @@
 <mapper namespace="www.dream.com.location.mapper.LocationMapper">
 	<resultMap id="locationResultMap"
 		type="www.dream.com.location.LocationVO">
-		<result property="id" column="id" />
-		<result property="latitude" column="latitude" />
-		<result property="longitude" column="longitude" />
+		<result property="locationX" column="location_x" />
+		<result property="locationY" column="location_y" />
+		<result property="startDate" column="start_date" />
+		<result property="thruDate" column="thru_date" />
 	</resultMap>
 	
 	<!-- 모든 지정한 User 다 가져오기 -->
 	<select id="selectAllLocation" resultMap="locationResultMap">
 	<![CDATA[
 		select *
-		  from C_Location
+		  from T_LOCATION
 	]]>
 	</select>
 	
-	<select id="findLocationById" resultMap="locationResultMap">
-	<![CDATA[
-		select id
-		  from C_Location
-	]]>
-	</select>
 	
-	<insert id="confirmLocate">
-		<selectKey keyProperty="id" order="BEFORE" resultType="long">
-			select seq4Location_id.nextval from dual <!-- 현재 값 체크 -->
-		</selectKey>
+	
+	<insert id="insertLocation" parameterType="Long">
 		<![CDATA[
-		insert into C_Location(id, latitude, longitude)
-		       values(#{id}, #{latitude}, #{longitude})
+		insert into T_LOCATION(location_x, location_y)
+		       values(#{locationX}, #{locationY})
 		]]>
 	</insert>
 </mapper>

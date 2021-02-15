@@ -13,10 +13,14 @@ public class UserVO {
 	private String userId;
 	private String password;
 	private boolean enabled;
-	
+
 	private Date regDate;
 	private Date updateDate;
 
 	private List<AuthVO> authList;
+
+	public UserVO() {
+
+	}
 
 }

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import www.dream.com.userSecurity.model.AuthVO;
 import www.dream.com.userSecurity.model.UserVO;
 import www.dream.com.userSecurity.service.UserService;
 
@@ -53,11 +55,11 @@ public class UserController {
 
 	// 회원가입 post
 	@RequestMapping(value = "signUp", method = RequestMethod.POST)
-	public String postSign(UserVO userVO) {
-
+	public String postSign(UserVO userVO ) {
 		userService.signUser(userVO);
+		userService.signAuth(userVO.getUserId());
 
-		return "redirect:/home";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "userUpdate", method = RequestMethod.GET)
@@ -72,8 +74,33 @@ public class UserController {
 
 		session.invalidate();
 
-		return "redirect:/home";
+		return "redirect:/";
 	}
+	
+	//회원 탈퇴
+	@RequestMapping(value = "userDelete", method = RequestMethod.GET)
+	public void getDelete() {
+		
+	}
+	
+	@RequestMapping(value ="userDelete", method = RequestMethod.POST )
+	public String userDelete(UserVO userVO, HttpSession session, RedirectAttributes rttr) {
+		UserVO vo = (UserVO)session.getAttribute("user");
+		
+		String sessionPw = vo.getPassword();
+		
+		String pw = userVO.getPassword();
+		if(!(sessionPw.equals(pw))) {
+			rttr.addFlashAttribute("msg", false);
+			return "redirect:/user/userDelete";
+		}
+		
+		userService.userDelete(userVO);
+		session.invalidate();
+		return "redirect:/";
+	}
+	
+	
 
 	// 아이디 중복 체크
 	@RequestMapping(value = "idChk", method = RequestMethod.POST)

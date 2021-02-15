@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import www.dream.com.userSecurity.model.AuthVO;
 import www.dream.com.userSecurity.model.UserVO;
 import www.dream.com.userSecurity.model.mapper.UserMapper;
 
@@ -22,6 +23,8 @@ public class UserService {
 	}
 	
 	public void userUpdate(UserVO userVO) {
+		String endcodedPassword = bcryptPasswordEncoder.encode(userVO.getPassword());
+		userVO.setPassword(endcodedPassword);
 		userMapper.userUpdate(userVO);
 	}
 	
@@ -31,7 +34,13 @@ public class UserService {
 		return result;
 	}
 
+	public void signAuth(String userId) {
+		userMapper.signAuth(userId);
+	}
 	
-	
+	public void userDelete(UserVO userVO) {
+		userMapper.userDelete(userVO);
+	}
+
 
 }

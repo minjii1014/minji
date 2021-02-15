@@ -37,7 +37,7 @@
 								<sec:authentication property="principal.user.userId" var="userId" />
 								<sec:authentication property="principal.user.email" var="email" />
 								<sec:authentication property="principal.user.userId" var="userId" />
-									<form name="form" id="signUp_form"  role="form" method="post" >
+									<form name="form" action="/user/userDelete" id="signUp_form"  role="form" method="post" >
 										<div class="form-row">
 											<div class="col-md-6">
 												<div class="form-group">
@@ -50,7 +50,7 @@
 											<label class="small mb-1" for="inputEmailAddress">Email</label>
 											<input class="form-control py-4" id="inputEmailAddress"
 												name="email" type="email" aria-describedby="emailHelp"
-												placeholder="Enter email address" value="${email }" />
+												placeholder="Enter email address" value="${email }" readonly="readonly" />
 										</div>
 										<div class="form-row">
 											<div class="col-md-6">
@@ -60,23 +60,17 @@
 														  name="password" type="password" placeholder="Enter password" />
 												</div>
 											</div>
-											 <div class="col-md-6">
-												<div class="form-group">
-													<label class="small mb-1" for="inputConfirmPassword">Confirm
-														Password</label> <input class="form-control py-4"
-														id="inputConfirmPassword" type="password"
-														placeholder="Confirm password" />
-												</div>
-											</div> 
-											<br>
-											<div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
-										    <div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다.</div>
 										</div>
 										<input type = "hidden" name = "_csrf" value = "${_csrf.token}">
 									</form>
 									</sec:authorize>
+									<div>
+										<c:if test="${msg == false}">
+											비밀번호가 맞지 않습니다.
+										</c:if>
+									</div>
 									<div class="form-group mt-4 mb-0">
-											<button type="button" class="btn btn-primary btn-block" id="btnSignup" onclick="registerCheck()">정보수정</button>
+											<button type="submit" class="btn btn-primary btn-block" id="btnSignup">회원탈퇴</button>
 											<button type="button" class="btn btn-primary btn-block" id="btnCancel">취소하기</button>
 									</div>
 								</div>
@@ -110,81 +104,25 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 
-function registerCheck() {
-    if($.trim($('#loginId').val()) == '') {
-        alert("아이디를 입력해주세요.");
-        return false;
-    }
-    if($.trim($('#inputPassword').val()) == '') {
-        alert("비밀번호를 입력해주세요.");
-        return false;
-    }
-    if($.trim($('#inputEmailAddress').val()) == '') {
-        alert("이메일을 입력해주세요.");
-        return false;
-    }
- 
-    if(confirm("회원정보를 변경 하시겠습니까?")){
-        $("#signUp_form").attr("action","/user/userUpdate");	
-        $("#signUp_form").submit();    
-        alert("회원정보 변경이 완료되었습니다. 감사합니다.");
-    }
-}
-	
-$(function(){
-	 $("#alert-success").hide(); 
-	 $("#alert-danger").hide();
-	 $("input").keyup(function(){ 
-		 var pwd1=$("#inputPassword").val();
-		 var pwd2=$("#inputConfirmPassword").val();
-		 if(pwd1 != "" && pwd2 != ""){ 
-			 if(pwd1 == pwd2){ 
-				 $("#alert-success").show();
-				 $("#alert-danger").hide();
-			 }else{
-				  $("#alert-success").hide();
-				  $("#alert-danger").show();
-		   }
-	    }
-     });
-    });
+$(document).ready(function(){
+	// 취소
+	$("#btnCancel").on("click", function(){
+		
+		location.href = "/";
+				    
+	})
 
-/* function idCheck() {
-    
-    var loginId = $("#loginId").val();
-    
-    if(loginId.search(/\s/) != -1) { 
-        alert("아이디에는 공백이 들어갈 수 없습니다.");        
-    } else {             
-        if(loginId.trim().length != 0) {
-            $.ajax({
-                async : true, 
-                type : 'POST', 
-                data: loginId,
-                url: "/user/idCheck",
-                beforeSend : function(xhr){
-  				  xhr.setRequestHeader(header, token);},
-                dataType: "json",
-                contentType: "application/json; charset=UTF-8",
-                success: function(count) {    
-                    if(count > 0) {
-                        alert("해당 아이디 존재");    
-                        $("#btnSignup").attr("disabled", "disabled");
-                        window.location.reload();
-                    } else {
-                        alert("사용가능 아이디");
-                        $("#btnSignup").removeAttr("disabled");
-                    }            
-                },
-                error: function(error) {
-                    alert("아이디를 입력해주세요. ajax error ");
-                }        
-            });
-        } else {
-            alert("아이디를 입력해주세요. ajax 실패");
-        }        
-    }
-} */
+	$("#submit").on("click", function(){
+		if($("#inputPassword").val()==""){
+			alert("비밀번호를 입력해주세요.");
+			$("#inputPassword").focus();
+			return false;
+		}	
+	});
+	
+		
+	
+})
 
 </script>
 <script  src="https://code.jquery.com/jquery-3.5.1.js"></script>

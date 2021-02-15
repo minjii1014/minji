@@ -12,4 +12,10 @@ public interface UserMapper {
 	
 	// 아이디 중복 체크
 	public int idChk(String userId);
+	
+	//사용자 권한주기
+	public void signAuth(String userVO);
+	
+	//회원 탈퇴
+	public void userDelete(UserVO userVO);
 }

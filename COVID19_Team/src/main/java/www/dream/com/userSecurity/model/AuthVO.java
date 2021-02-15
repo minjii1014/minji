@@ -3,7 +3,6 @@ package www.dream.com.userSecurity.model;
 import lombok.Data;
 
 @Data
-public class AuthVO {
-	private String userId;
+public class AuthVO extends UserVO {
 	private String auth;
 }
