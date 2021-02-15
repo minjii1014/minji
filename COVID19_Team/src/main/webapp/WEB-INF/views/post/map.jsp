@@ -56,8 +56,8 @@
 			    resultDiv.innerHTML = message;
 
 			    var party = {
-						latitude:latlng.getLat(),
-						longitude:latlng.getLng()
+						latitude:latlng.latlng.Ma,
+						longitude:latlng.latlng.La
 				};
 				
 			    $.ajax({

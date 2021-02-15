@@ -21,8 +21,10 @@ public class BoardController {
 	@GetMapping("/post/map")
 	public void map() {
 	}
-	
-	// 깃 허브 커밋 테스트
+
+	@GetMapping("/post/user")
+	public void user() {
+	}
 
 }
 

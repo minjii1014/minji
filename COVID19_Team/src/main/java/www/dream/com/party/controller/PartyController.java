@@ -55,5 +55,4 @@ public class PartyController {
 		return new ResponseEntity<>(listRet, HttpStatus.OK);
 	}
 	
-	
 }
