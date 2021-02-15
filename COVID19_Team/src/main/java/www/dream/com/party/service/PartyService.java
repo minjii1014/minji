@@ -18,8 +18,12 @@ public class PartyService {
 		return partyMapper.selectAllParty();
 	}
 	
-	public void registerLocation(PartyVO party) {
-		partyMapper.registerLocation(party);
+	public void infectedLocation(PartyVO party) {
+		partyMapper.infectedLocation(party);
+	}
+
+	public void userLocation(UserVO user) {
+		partyMapper.userLocation(user);
 	}
 	
 }

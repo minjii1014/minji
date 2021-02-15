@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class PartyVO {
+	private long partyNum;
 	private long partyId;
 	private double latitude;
 	private double longitude;

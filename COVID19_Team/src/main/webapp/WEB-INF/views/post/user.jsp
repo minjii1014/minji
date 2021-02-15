@@ -20,11 +20,11 @@
 // 		// 시간 반복 설정
 // 		setInterval(function(){
 // 			getGeolocation();
-// 		},2000);
+// 		}, 2000);
 		
 		function getGeolocation() {
 			if (navigator.geolocation) {
-				id = navigator.geolocation.watchPosition(showLocation);
+				id = navigator.geolocation.getCurrentPosition(showLocation);
 			}
 		}
 		
@@ -51,7 +51,7 @@
 				url:'/party/saveUserLocation',
 				data: {
 					 latitude :location.coords.latitude,
-					 longitude :location.coords.longitude
+					 longitude :location.coords.longitude,
 				},
 				type:'post',
 				dataType:'json',	//결과를 json으로 받습니다.
@@ -64,7 +64,6 @@
 			", 경도: " + location.coords.longitude + ")"
 				
 		}
-		
 		
 	</script>
 	

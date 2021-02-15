@@ -24,23 +24,8 @@ public class PartyController {
 	@Autowired
 	private PartyService partyService;
 	
-	@GetMapping("registerLocation")
-	public void registerLocation() {
-//		@RequestParam("id") long id, Model model
-//		model.addAttribute("id", id);
-	}
-
-	@PostMapping("registerLocation")
-	public String registerLocation(UserVO user, RedirectAttributes rttr) {
-		partyService.registerLocation(user);
-		rttr.addFlashAttribute("result", user.getLatitude());
-		rttr.addFlashAttribute("result", user.getLongitude());
-		
-		return "redirect:/party/registerLocation";
-	}
-	
-	// 감염자(클릭)이벤트 위도 경도 저장하기
-	@PostMapping(value="/saveAjaxLocation", produces = MediaType.APPLICATION_JSON_VALUE)
+	// 감염자(클릭)이벤트 위도 경도 저장하기 -- 감염자 관련
+	@PostMapping(value="/saveInfectedLocation", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<PartyVO>> uploadAjaxAction(double latitude, double longitude) {
 		List<PartyVO> listRet = new ArrayList<>();
@@ -50,12 +35,12 @@ public class PartyController {
 		party.setLongitude(longitude);
 				
 		listRet.add(party);
-		partyService.registerLocation(party);
+		partyService.infectedLocation(party);
 		
 		return new ResponseEntity<>(listRet, HttpStatus.OK);
 	}
 	
-	// user 정보 저장하기
+	// user 정보 저장하기 -- 유저 관련
 	@PostMapping(value="/saveUserLocation", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<UserVO>> saveUserLocation(double latitude, double longitude) {
@@ -64,9 +49,9 @@ public class PartyController {
 		UserVO user = new UserVO();
 		user.setLatitude(latitude);
 		user.setLongitude(longitude);
-				
+		
 		listRet.add(user);
-		partyService.registerLocation(user);
+		partyService.userLocation(user);
 		
 		return new ResponseEntity<>(listRet, HttpStatus.OK);
 	}
