@@ -39,7 +39,7 @@ public class PartyController {
 		return "redirect:/party/registerLocation";
 	}
 	
-	
+	// 감염자(클릭)이벤트 위도 경도 저장하기
 	@PostMapping(value="/saveAjaxLocation", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<PartyVO>> uploadAjaxAction(double latitude, double longitude) {
@@ -51,6 +51,22 @@ public class PartyController {
 				
 		listRet.add(party);
 		partyService.registerLocation(party);
+		
+		return new ResponseEntity<>(listRet, HttpStatus.OK);
+	}
+	
+	// user 정보 저장하기
+	@PostMapping(value="/saveUserLocation", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<UserVO>> saveUserLocation(double latitude, double longitude) {
+		List<UserVO> listRet = new ArrayList<>();
+		
+		UserVO user = new UserVO();
+		user.setLatitude(latitude);
+		user.setLongitude(longitude);
+				
+		listRet.add(user);
+		partyService.registerLocation(user);
 		
 		return new ResponseEntity<>(listRet, HttpStatus.OK);
 	}

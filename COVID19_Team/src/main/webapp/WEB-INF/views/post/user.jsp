@@ -17,7 +17,7 @@
 	
 	<script>
 		var myDiv = document.getElementById("target");
-		
+// 		// 시간 반복 설정
 // 		setInterval(function(){
 // 			getGeolocation();
 // 		},2000);
@@ -41,12 +41,14 @@
 			    // 지도 중심좌표에 마커를 생성합니다 
 			    position: map.getCenter() 
 			}); 
+			// 지도에 마커를 표시합니다
+			marker.setMap(map);
 									
 // 			console.log( "(위도: " + location.coords.latitude +
 // 					", 경도: " + location.coords.longitude + ")");
 
 			$.ajax({
-				url:'/party/saveAjaxLocation',
+				url:'/party/saveUserLocation',
 				data: {
 					 latitude :location.coords.latitude,
 					 longitude :location.coords.longitude

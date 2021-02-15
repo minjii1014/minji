@@ -9,9 +9,7 @@ public class UserVO extends PartyVO {
 	private String loginId;
 	private String password;
 
-	public UserVO(long userNum) {
-		super();
-		this.userNum = userNum;
+	public UserVO() {
 	}
 	
 }
