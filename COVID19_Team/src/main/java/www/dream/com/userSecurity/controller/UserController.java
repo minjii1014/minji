@@ -85,19 +85,22 @@ public class UserController {
 	
 	@RequestMapping(value ="userDelete", method = RequestMethod.POST )
 	public String userDelete(UserVO userVO, HttpSession session, RedirectAttributes rttr) {
+
 		UserVO vo = (UserVO)session.getAttribute("user");
 		
 		String sessionPw = vo.getPassword();
-		
 		String pw = userVO.getPassword();
-		if(!(sessionPw.equals(pw))) {
-			rttr.addFlashAttribute("msg", false);
+		if(sessionPw.equals(pw)) {
+			userService.userDelete(userVO);
+			rttr.addFlashAttribute("result", "removeOk");
+			session.invalidate();
+			return "redirect:/";
+		}else {
+			rttr.addFlashAttribute("result","removeFalse");
 			return "redirect:/user/userDelete";
+			
 		}
 		
-		userService.userDelete(userVO);
-		session.invalidate();
-		return "redirect:/";
 	}
 	
 	
