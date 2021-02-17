@@ -25,17 +25,22 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 			roleNames.add(authority.getAuthority());
 		});
 		
-		if(roleNames.contains("ROLE_ADMIN")) {
-			
-			response.sendRedirect("/admin");
-			return;
+		if (roleNames.contains("ROLE_ADMIN")) {
+			response.sendRedirect("/post/listPost?boardId=2");
+		} else if (roleNames.contains("ROLE_MEMBER")) {
+			response.sendRedirect("/post/listPost?boardId=3");
+		} else {
+			response.sendRedirect("/post/listPost?boardId=1");
 		}
 		
-		if(roleNames.contains("ROLE_MEMBER")) {
-			response.sendRedirect("/member");
-			return;
-		}
-		response.sendRedirect("/");
+		/*
+		 * if(roleNames.contains("ROLE_ADMIN")) {
+		 * 
+		 * response.sendRedirect("/admin"); return; }
+		 * 
+		 * if(roleNames.contains("ROLE_MEMBER")) { response.sendRedirect("/member");
+		 * return; } response.sendRedirect("/");
+		 */
 		
 	}
 

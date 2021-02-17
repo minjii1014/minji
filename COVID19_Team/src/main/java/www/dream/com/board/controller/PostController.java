@@ -1,6 +1,11 @@
 package www.dream.com.board.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +18,7 @@ import www.dream.com.board.model.Criteria;
 import www.dream.com.board.model.PostVO;
 import www.dream.com.board.service.PostService;
 import www.dream.com.party.model.PartyVO;
+import www.dream.com.userSecurity.domain.CustomUser;
 
 @Controller
 @RequestMapping("/post/*")
@@ -40,6 +46,7 @@ public class PostController {
 	 * 등록 화면 만들기
 	 */
  	@GetMapping("registerPost")
+ 	@PreAuthorize("isAuthenticated()")
 	public void registerPost(@RequestParam("boardId") long boardId, Model model) {
 		model.addAttribute("boardId", boardId);
 	}
@@ -48,8 +55,10 @@ public class PostController {
  	 *  
  	 */
 	@PostMapping("registerPost")
-	public String registerPost(PostVO post, RedirectAttributes rttr) {
+	@PreAuthorize("isAuthenticated()")
+	public String registerPost(@AuthenticationPrincipal Principal principal, PostVO post, RedirectAttributes rttr) {
 //		post.setUserId(new PartyVO(2L));
+		
 		postService.registerPost(post);
 		rttr.addFlashAttribute("result", post.getId());
 		rttr.addAttribute("boardId", post.getBoardId());
@@ -72,6 +81,7 @@ public class PostController {
 	/**
 	 * 삭제 기능
 	 */
+	@PreAuthorize("principal.username == #writer")
 	@PostMapping("removePost")
 	public String removePost(PostVO post, RedirectAttributes rttr) {
 		if(postService.removePost(post)) {

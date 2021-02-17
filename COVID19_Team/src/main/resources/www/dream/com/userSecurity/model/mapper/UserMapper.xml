@@ -46,7 +46,7 @@
 	<insert id="signAuth" parameterType="String">
 		<![CDATA[
 		insert into T_AUTHORITIES(user_id, AUTH)
-		       values(#{userId, jdbcType=VARCHAR}, 'ROLE_ADMIN')
+		       values(#{userId, jdbcType=VARCHAR}, 'ROLE_MEMBER')
 		]]>
 	</insert>
 

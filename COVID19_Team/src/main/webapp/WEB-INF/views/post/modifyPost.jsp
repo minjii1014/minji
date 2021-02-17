@@ -21,6 +21,7 @@
 			<button type="submit" data-oper="modify" class="btn btn-default">수정</button>
 			<button type="submit" data-oper="remove" class="btn btn-danger">삭제</button>
 			<%@include file="./include/pagingCommon.jsp"%>
+			<input type = "hidden" name = "_csrf" value = "${_csrf.token}">
 		</form>
 	</div>
 </div>
@@ -45,6 +46,8 @@
 			})
 		</script>
     </body>
+    <script src="${pageContext.request.contextPath}/resources/js/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>
 </html>
 			
 

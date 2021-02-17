@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import www.dream.com.board.model.ReplyVO;
 import www.dream.com.board.model.mapper.ReplyMapper;
@@ -22,14 +23,17 @@ public class ReplyService {
 		return replyMapper.findReplyById(id);
 	}
 
+	@Transactional
 	public long registerReply(ReplyVO reply) {
 		return replyMapper.registerReply(reply);
 	}
-
+	
+	@Transactional
 	public boolean removeReply(long id) {
 		return replyMapper.removeReply(id);
 	}
-
+	
+	@Transactional
 	public boolean updateReply(ReplyVO reply) {
 		return replyMapper.updateReply(reply);
 	}
