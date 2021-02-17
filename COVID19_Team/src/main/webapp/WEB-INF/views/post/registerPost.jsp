@@ -13,14 +13,8 @@
 	<div class="card shadow mb-4">
 		<div class="card-body">
 			<form id="frmPost" role="form" action="/post/registerPost" method="post">
-				<div class="form-group">
-					<label>제목</label>
-					<input id="title" name="title" value="${post.title}" class="form-control" >
-				</div>
-				<div class="form-group">
-					<label>내용</label>
-					<textarea id="txacontent" name="content" class="form-control" rows=3 >${post.content}</textarea>
-				</div>
+				<%@include file="./include/postCommon.jsp"%>
+				
 				<button id='btnRegistPost' type="submit" class="btn btn-default">등록</button>
 				<button type="reset" class="btn btn-default">취소</button>
 				

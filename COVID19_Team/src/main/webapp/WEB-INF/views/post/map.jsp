@@ -7,6 +7,7 @@
 <head>
     <meta charset="utf-8">
     <title>클릭한 위치에 마커 표시하기</title>
+    <script src="/resources/vendor/jquery/jquery.min.js"></script>
 </head>
 <body>
 	<button onclick="startGeolocation()">위치 정보 시작</button>
@@ -40,8 +41,8 @@
 	
 			// 지도에 클릭 이벤트를 등록합니다
 			// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-			kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
-			    
+			kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+				// 감염자 구분 번호를 가져옵니다.
 			    // 클릭한 위도, 경도 정보를 가져옵니다 
 			    var latlng = mouseEvent.latLng; 
 			    
@@ -54,6 +55,20 @@
 			    var resultDiv = document.getElementById('clickLatlng'); 
 			    resultDiv.innerHTML = message;
 
+			    var party = {
+						latitude:latlng.getLat(),
+						longitude:latlng.getLng(),
+				};
+				
+			    $.ajax({
+					url:'/party/saveInfectedLocation',
+					data: party,
+					type:'post',
+					dataType:'json',	//결과를 json으로 받습니다.
+					success:function(result) {
+						console.log(result);
+					}
+				});
 			    
 			});
 		}
@@ -72,6 +87,7 @@
 	
 	
 <div id="map" style="width:100%;height:350px;"></div>
+<a href="/post/user">사용자 지도</a>
 <p><em>지도를 클릭해주세요!</em></p> 
 <div id="clickLatlng"></div>
 
