@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import www.dream.com.board.model.Criteria;
 import www.dream.com.board.model.PostVO;
 import www.dream.com.board.service.PostService;
-import www.dream.com.party.model.PartyVO;
 
 @Controller
 @RequestMapping("/post/*")
@@ -20,11 +19,20 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	
+	
 	@GetMapping("listPost")
 	public void listPost(@RequestParam("boardId") long boardId, Criteria criteria, Model model) {
+//		long totalDataCount = postService.listPost(boardId);
+//		criteria.setTotalDataCount(postService.listPost(boardId));
+		criteria = new Criteria(criteria.getPageNum() , postService.listPost(boardId));
 		model.addAttribute("listPost", postService.findPostWithPaging(boardId, criteria));
+		
+		// 리스트 추가해야 되는데
+//		model.addAttribute("totalDataCount", totalDataCount);
+//		model.addAttribute("totalDataCount", postService.listPost(boardId));
 		model.addAttribute("criteria", criteria);
 		model.addAttribute("boardId", boardId);
+		
 	}
 	
 	/**
@@ -80,4 +88,6 @@ public class PostController {
 		rttr.addAttribute("boardId", post.getBoardId());
 		return "redirect:/post/listPost";
 	}
+	
+	
 }

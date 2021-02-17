@@ -17,6 +17,9 @@
 	<textarea id="txacontent" name="content" class="form-control" rows=3 >${post.content}</textarea>
 </div>
 
+<%@include file="/WEB-INF/views/common/attachUploadCommon.jsp"%>
+
+
 <script type="text/javascript">
 
 	//create read update

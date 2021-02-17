@@ -14,7 +14,7 @@ create table T_Post(
 	update_date		date default sysdate
 );
 
-insert into t_post(post_id,post_title,post_content,user_id,view_count,board_id)
+insert into t_post(post_id, post_title, post_content, user_id, view_count, board_id)
 values (seq4Post_id.nextval, '¿©±â ¹¹¶ó°í ½è³ª', 2, 2, 2);
 insert into t_post(post_id,post_title,post_content,user_id,view_count,board_id)
 values (seq4Post_id.nextval, '¿©±â´Â ¶Ç ¹¹¶ó°í ½è³ª', 2, 5, 2);

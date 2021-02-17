@@ -38,12 +38,20 @@
 	<tx:annotation-driven
 		transaction-manager="transactionManager" />
 
+
+	<context:component-scan
+		base-package="www.dream.com.framework.util"></context:component-scan>
 	<context:component-scan
 		base-package="www.dream.com.party.service"></context:component-scan>
 	<context:component-scan
 		base-package="www.dream.com.board.service"></context:component-scan>
 	<context:component-scan
+		base-package="www.dream.com.framework.attachFile.service"></context:component-scan>		
+	<context:component-scan
 		base-package="www.dream.com.userSecurity.service"></context:component-scan>
+
+	<mybatis-spring:scan
+		base-package="www.dream.com.framework.attachFile.model.mapper" />
 	<mybatis-spring:scan
 		base-package="www.dream.com.party.model.mapper" />
 	<mybatis-spring:scan
