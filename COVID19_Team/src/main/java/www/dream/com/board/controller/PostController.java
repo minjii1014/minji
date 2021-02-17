@@ -19,14 +19,23 @@ import www.dream.com.party.model.PartyVO;
 public class PostController {
 	@Autowired
 	private PostService postService;
-	
+
+
 	@GetMapping("listPost")
 	public void listPost(@RequestParam("boardId") long boardId, Criteria criteria, Model model) {
+//		long totalDataCount = postService.listPost(boardId);
+//		criteria.setTotalDataCount(postService.listPost(boardId));
+		criteria = new Criteria(criteria.getPageNum() , postService.listPost(boardId));
 		model.addAttribute("listPost", postService.findPostWithPaging(boardId, criteria));
+
+		// 리스트 추가해야 되는데
+//		model.addAttribute("totalDataCount", totalDataCount);
+//		model.addAttribute("totalDataCount", postService.listPost(boardId));
 		model.addAttribute("criteria", criteria);
 		model.addAttribute("boardId", boardId);
+
 	}
-	
+
 	/**
 	 * 상세 조회, 수정 화면 만들기
 	 */
@@ -34,7 +43,6 @@ public class PostController {
 	public void postDetail(@RequestParam("id") long id, Model model) {
 		PostVO post = postService.findPostById(id);
 		model.addAttribute("post", post);
-		
 	}
 	
 	/**
@@ -44,7 +52,6 @@ public class PostController {
 	public void registerPost(@RequestParam("boardId") long boardId, Model model) {
 		model.addAttribute("boardId", boardId);
 	}
-
  	/**
  	 *  
  	 */
@@ -81,5 +88,6 @@ public class PostController {
 		rttr.addAttribute("boardId", post.getBoardId());
 		return "redirect:/post/listPost";
 	}
-	
+
+
 }

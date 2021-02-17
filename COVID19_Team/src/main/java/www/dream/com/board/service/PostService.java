@@ -14,6 +14,10 @@ public class PostService {
 	@Autowired
 	private PostMapper postMapper;
 	
+	public long listPost(long boardId) {
+		return postMapper.listPost(boardId);
+	}
+	
 	public List<PostVO> findPostWithPaging(long boardId, Criteria criteria) {
 		return postMapper.findPostWithPaging(boardId, criteria);
 	}
