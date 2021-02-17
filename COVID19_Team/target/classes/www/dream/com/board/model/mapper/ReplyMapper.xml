@@ -6,6 +6,7 @@
 	<resultMap id="replyResultMap" type="www.dream.com.board.model.ReplyVO">
 		<result property="id" column="id" />
 		<result property="content" column="content" />
+		<result property="countOfReply" column="count_of_reply" />
 		<result property="regDate" column="reg_date" />
 		<result property="updateDate" column="update_date" />
 		<association property="userId" column="user_id" 
@@ -18,10 +19,16 @@
 	
 	<select id="listReply" resultMap="replyResultMap">
 	<![CDATA[
-		select r.id, r.content, r.user_id, r.original_id, r.obj_type, r.reg_date, r.update_date 
-		  from T_Reply r
-		 where r.original_id = #{originalId}
-		 order by r.id desc
+		select r.*, n.count_of_reply
+          from (select m.id, count(rr.id) count_of_reply
+              from(select p.id
+                     from T_Reply p
+                    where p.original_id = #{originalId}
+                    order by p.id desc
+               ) m
+               left outer join T_Reply rr on m.id = rr.original_id
+            group by m.id) n, T_Reply r
+      	 where n.id = r.id
 	]]>
 	</select>
 <!-- 			   left outer join T_Party w on r.user_id = w.party_id -->
@@ -29,9 +36,15 @@
 	
 	<select id="findReplyById" resultMap="replyResultMap">
 	<![CDATA[
-		select r.id, r.content, r.user_id, r.original_id, r.obj_type, r.reg_date, r.update_date 
-		  from T_Reply r
-		 where r.id = #{id}
+		select p.board_id, p.id, p.content, p.user_id, p.title, p.obj_type, p.reg_date, p.update_date, c.count_of_reply
+		  from (
+		  		select a.id, count(b.id) count_of_reply
+		  		  from T_Reply a
+		  		       left outer join T_Reply b on a.id = b.original_id
+		  		 where a.id = #{id}
+		  		 group by a.id
+		  	   ) c, T_Reply p
+		 where c.id = p.id
 	]]>
 	</select>
 <!-- 		  left outer join T_Party w on r.user_id = w.party_id -->
@@ -63,4 +76,13 @@
 		 where id = #{id}
 	]]>
 	</delete>
+	
+	<!-- 댓글 개수 세기 -->
+	<select id="countTotalReply" resultType="_long">
+	<![CDATA[
+		select count(*)
+		  from T_Reply p
+	     where p.original_id = #{originalId}
+	]]>
+	</select>
 </mapper>
