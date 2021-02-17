@@ -10,8 +10,9 @@ public interface PartyMapper {
 	public List<PartyVO> selectAllParty();
 	
 //	유저의 정보 DB에 넣기
-	public void registerLocation(UserVO user);
-	
+	public void infectedLocation(PartyVO party);
+
+	public void userLocation(UserVO user);
 	
 	
 }
