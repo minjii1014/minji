@@ -42,6 +42,8 @@
 		base-package="www.dream.com.board.service"></context:component-scan>
 	<context:component-scan
 		base-package="www.dream.com.userSecurity.service"></context:component-scan>
+		
+		
 	<mybatis-spring:scan
 		base-package="www.dream.com.party.model.mapper" />
 	<mybatis-spring:scan
