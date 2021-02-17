@@ -34,6 +34,7 @@ public class PostController {
 	public void postDetail(@RequestParam("id") long id, Model model) {
 		PostVO post = postService.findPostById(id);
 		model.addAttribute("post", post);
+		
 	}
 	
 	/**
@@ -80,4 +81,5 @@ public class PostController {
 		rttr.addAttribute("boardId", post.getBoardId());
 		return "redirect:/post/listPost";
 	}
+	
 }

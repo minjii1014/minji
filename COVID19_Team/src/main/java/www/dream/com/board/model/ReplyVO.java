@@ -15,5 +15,8 @@ public class ReplyVO {
 	private Date regDate;
 	private Date updateDate;
 	private long viewCount;
+	
+	/*----------연관 정보 정의 영역-----------*/
+	private int countOfReply;
 }
 

@@ -23,4 +23,9 @@ insert into T_Reply(id, content, user_id, original_id, obj_type, title, board_id
 values(seq4Reply_id.nextval, '삼런', 'cheol', null, 'post', '사런', 2, 5);
 
 insert into T_Reply(id, content, user_id, original_id, obj_type)
-values(seq4Reply_id.nextval, '오런', 2, 1, 'reply');
+values(seq4Reply_id.nextval, '오런', 'hong', 1, 'reply');
+
+insert into T_Reply(id, content, user_id, original_id, obj_type)
+select seq4Reply_id.nextval, original_id, content, user_id, obj_type
+  from T_Reply
+ where original_id = 1;

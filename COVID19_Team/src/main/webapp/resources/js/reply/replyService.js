@@ -7,7 +7,7 @@ var replyService = (function(){
 	function listReplyInternal(param, cbSuccess, cbError) {
 		var page = param.page || 1;
 		$.getJSON(
-			"/replies/pages/" + param.originalId + ".json",
+			"/replies/pages/" + param.originalId + "/" + page + ".json",
 			function(result) {
 				if (cbSuccess) {
 					cbSuccess(result);

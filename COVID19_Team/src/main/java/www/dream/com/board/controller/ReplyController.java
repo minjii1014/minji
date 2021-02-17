@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import www.dream.com.board.model.Criteria;
 import www.dream.com.board.model.ReplyVO;
 import www.dream.com.board.service.ReplyService;
+import www.dream.com.framework.dataType.Pair;
 
 @RestController
 @RequestMapping("/replies/*")
@@ -24,10 +26,20 @@ public class ReplyController {
 	@Autowired
 	private ReplyService replyService;
 	
-	@GetMapping(value = "/pages/{originalId}", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<ReplyVO>> listReply(@PathVariable("originalId") long originalId) {
-		List<ReplyVO> listReply = replyService.listReply(originalId);
-		return new ResponseEntity<>(listReply, HttpStatus.OK);
+	@GetMapping(value = "countTotalReply/{originalId}")
+	public ResponseEntity<Long> countTotalReply(
+			@PathVariable("originalId") long originalId) {
+		return new ResponseEntity<>(replyService.countTotalReply(originalId), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "pages/{originalId}/{pageNum}", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<Pair<Criteria, List<ReplyVO>>> listReply(
+			@PathVariable("originalId") long originalId, 
+			@PathVariable("pageNum") long pageNum) {
+		Criteria criteria = new Criteria(pageNum, replyService.countTotalReply(originalId));
+		List<ReplyVO> listReply = replyService.listReply(originalId, criteria);
+		Pair<Criteria, List<ReplyVO>> dreamPair = new Pair<>(criteria, listReply);
+		return new ResponseEntity<>(dreamPair, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "{id}", produces = { MediaType.APPLICATION_JSON_VALUE })

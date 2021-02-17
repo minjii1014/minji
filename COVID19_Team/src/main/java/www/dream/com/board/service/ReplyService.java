@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import www.dream.com.board.model.Criteria;
 import www.dream.com.board.model.ReplyVO;
 import www.dream.com.board.model.mapper.ReplyMapper;
 
@@ -13,8 +14,8 @@ public class ReplyService {
 	@Autowired
 	private ReplyMapper replyMapper;
 
-	public List<ReplyVO> listReply(long originalId) {
-		return replyMapper.listReply(originalId);
+	public List<ReplyVO> listReply(long originalId, Criteria criteria) {
+		return replyMapper.listReply(originalId, criteria);
 	}
 	
 	public ReplyVO findReplyById(long id) {
@@ -32,6 +33,10 @@ public class ReplyService {
 
 	public boolean updateReply(ReplyVO reply) {
 		return replyMapper.updateReply(reply);
+	}
+
+	public long countTotalReply(long originalId) {
+		return replyMapper.countTotalReply(originalId);
 	}
 	
 	
