@@ -255,18 +255,18 @@
 				var anchorForListReplyOfReply =  ulOfModalControl.children('a')[0];
 				//지금 막 달은 댓글은 첫 페이지 최상단에 나타나야 함.
 				//이에 기존 UL에 담긴 Li 들은 모두 청소 하고 
-				//var listReply = ulOfModalControl.find('li');
-				//listReply.remove();
-				ulOfModalControl.remove(ulOfModalControl.find('li'));
+				var listReply = ulOfModalControl.find('li');
+				listReply.remove();
+				//ulOfModalControl.remove(ulOfModalControl.find('li'));
 				//1페이지를 조회하여 보여주도록 제어한다.
 				//만약에 댓글의 개수가 페이지당 출력 개수를 초과할 경우
 				var countOfReply = result.second;
-				ulOfModalControl.data("countofreply", countOfReply)
+				ulOfModalControl.data("countofreply", countOfReply);
 				var pageSize = result.third;
 				
 				if(countOfReply > pageSize){
 					//다음 펼치기는 2쪽(page_num = 2)으로 설정
-					ulOfModalControl.data("page-num", 2)			
+					ulOfModalControl.data("page_num", 2)			
 				}
 				
 				showReplyList(1, originalid, anchorForListReplyOfReply, ulOfModalControl);
