@@ -23,7 +23,6 @@ public class PostService {
 	}
 
 	public PostVO findPostById(long id) {
-		postMapper.countViewCount(id);
 		return postMapper.findPostById(id);
 	}
 
