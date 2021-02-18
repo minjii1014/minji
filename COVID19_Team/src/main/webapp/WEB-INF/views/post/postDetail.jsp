@@ -33,7 +33,6 @@
 						<!-- 프로그램에서 처리 "", 스타일 처리 ''  li 목록 및 마지막에 anchor -->
 						댓글 개수는 ${post.countOfReply}
 						<button class="btnAddReply" class="btn btn-primary btn-xs fa-pull-right">댓글달기</button>
-						${criteria}
 						<br>
 					</ul>
 				</div>
