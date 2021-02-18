@@ -31,8 +31,10 @@
 				<div class="panel-body">
 					<ul id="listReply" data-originalid="${post.id}" data-page_num="1" data-countofreply="${post.countOfReply}">	
 						<!-- 프로그램에서 처리 "", 스타일 처리 ''  li 목록 및 마지막에 anchor -->
-						댓글 개수는 "${post.countOfReply}"
+						댓글 개수는 ${post.countOfReply}
 						<button class="btnAddReply" class="btn btn-primary btn-xs fa-pull-right">댓글달기</button>
+						${criteria}
+						<br>
 					</ul>
 				</div>
 			</div>
@@ -153,7 +155,7 @@
 					
 					var pageCriteria = pairOfCriteriaListReply.first;
 					if(pageCriteria.pageNum < pageCriteria.endPage || pageCriteria.hasNext){
-						choosenUl.append(anchorOfShowMoreReply);
+						//choosenUl.append(anchorOfShowMoreReply);
 						choosenUl.data('page_num', pageNum + 1);
 					}
 				},
@@ -295,26 +297,6 @@
 				liOfModalControl.remove();
 			});
 		});
-
-		/* 댓글 더 펼치기 출력 하기 및 이벤트 처리*/
-		var replyMoreListUp = $("#replyMoreListUp");
-		function displayMoreListUp(pageCriteria){
-			var anchorHtml = "<a href='" + (pageCriteria.pageNum + 1)
-				+"'>답글 더보기. 총 개수는" + pageCriteria.totalDataCount + "</a>";
-			if(pageCriteria.pageNum < pageCriteria.endPage || pageCriteria.hasNext){
-				replyMoreListUp.html(anchorHtml);
-			}else{
-				replyMoreListUp.hide();
-			}
-		}
-
-		//댓글 더보기 클릭시 펼치기
-		replyMoreListUp.on("click", "a", function(e){
-			e.preventDefault();
-			var targetPageNum = $(this).attr("href");
-			showReplyList(targetPageNum, originalId);
-		});
-		
 	});
 </script>
 

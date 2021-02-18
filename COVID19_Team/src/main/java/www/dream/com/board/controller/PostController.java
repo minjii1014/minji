@@ -82,4 +82,12 @@ public class PostController {
 		return "redirect:/post/listPost";
 	}
 	
+ 	@GetMapping("map")
+	public void map() {
+	}
+ 	
+ 	@GetMapping("user")
+	public void user() {
+	}
+	
 }

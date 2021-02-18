@@ -19,7 +19,7 @@
 	
 	<select id="listReply" resultMap="replyResultMap">
 	<![CDATA[
-		select r.*, n.count_of_reply
+		select rownum, r.*, n.count_of_reply
           from (select m.id, count(rr.id) count_of_reply
               from(select p.id
                      from T_Reply p
