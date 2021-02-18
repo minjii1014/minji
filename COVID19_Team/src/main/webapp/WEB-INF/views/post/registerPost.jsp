@@ -2,6 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ page session="false" %>
 <%@include file="../common/header.jsp"%>
 
@@ -13,25 +14,20 @@
 	<div class="card shadow mb-4">
 		<div class="card-body">
 			<form id="frmPost" role="form" action="/post/registerPost" method="post">
-				<div class="form-group">
-					<label>제목</label>
-					<input id="title" name="title" value="${post.title}" class="form-control" >
-				</div>
-				<div class="form-group">
-					<label>내용</label>
-					<textarea id="txacontent" name="content" class="form-control" rows=3 >${post.content}</textarea>
-				</div>
+				<%@include file="./include/postCommon.jsp"%>
+				
 				<button id='btnRegistPost' type="submit" class="btn btn-default">등록</button>
 				<button type="reset" class="btn btn-default">취소</button>
 				
 				<input type="hidden" name="boardId" value="${boardId}">
+				<input type = "hidden" name = "_csrf" value = "${_csrf.token}">
 			</form>
 			<%@include file="./include/pagingCommon.jsp"%>
 		</div>
 	</div>
 
 <%@include file="../common/footer.jsp"%>
-	
+<script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>	
 		<script type="text/javascript">
 			$(document).ready(function() {
 				//create read update
@@ -47,6 +43,7 @@
 			})
 		</script>
     </body>
+<script src="${pageContext.request.contextPath}/resources/js/ckeditor.js"></script>
 </html>
 			
 

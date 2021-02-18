@@ -10,9 +10,9 @@
 		<result property="boardId" column="board_id" />
 	</resultMap>
 	
-	<select id="listPost" resultMap="postResultMap">
+	<select id="listPost" resultType ="_long">
 	<![CDATA[
-		select p.id, p.title, p.content, p.user_id, p.view_count, p.board_id, p.obj_type, p.reg_date, p.update_date
+		select count(*)
   		  from T_Reply p
   		 where p.board_id = #{boardId}
   		 order by p.id desc
@@ -66,7 +66,7 @@
 	]]>
 	</delete>
 	
-<!-- 	findPostWithPaging -->
+	<!-- 	findPostWithPaging -->
 	<select id="findPostWithPaging" resultMap="postResultMap">
 	<![CDATA[
 		select *

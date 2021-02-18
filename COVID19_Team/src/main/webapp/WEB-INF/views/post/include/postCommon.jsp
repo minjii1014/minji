@@ -14,8 +14,13 @@
 </div>
 <div class="form-group">
 	<label>내용</label>
-	<textarea id="txacontent" name="content" class="form-control" rows=3 >${post.content}</textarea>
+	<textarea id="txacontent" name="content" class="form-control" rows="5" cols="40" >${post.content}</textarea>
 </div>
+<div class="form-group" >
+	<label>Writer</label>
+	<input class="form-control" name="writer" value='<sec:authentication property="principal.username"/>' readonly="readonly">
+</div>
+
 
 <script type="text/javascript">
 

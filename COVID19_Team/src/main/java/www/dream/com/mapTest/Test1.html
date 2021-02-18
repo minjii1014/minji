@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<!-- 위도, 경도 불러오기 -->
+<body>
+	<button onclick="getGeolocation()">위치 정보 얻기</button>
+	<div id="target"></div>
+	<script>
+		var myDiv = document.getElementById("target");
+		function getGeolocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(showLocation);
+			}
+		}
+		function showLocation(location) {
+			myDiv.innerHTML = "(위도: " + location.coords.latitude +
+			", 경도: " + location.coords.longitude + ")"
+		}
+	</script>
+</body>
+</html>

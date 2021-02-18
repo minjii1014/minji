@@ -13,7 +13,6 @@
 <div class="card shadow mb-4">
 	<div class="card-body">
 		<%@include file="./include/postCommon.jsp"%>
-		
 		<!-- data : 요소에 추가적으로 변수와 정보를 마음대로 추가 가능한 장치 -->
 		<button data-oper="modify" class="btn btn-default" onclick="location.href='/post/modifyPost?id=${post.id}'">수정</button>
 		<button id="btnGotoList" class="btn btn-info">목록</button>

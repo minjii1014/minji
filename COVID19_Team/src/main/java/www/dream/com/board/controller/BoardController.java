@@ -16,10 +16,6 @@ public class BoardController {
 	public void list(Model model) {
 		model.addAttribute("listBoard", boardService.selectAllBoard());
 	}
-	
-	
-	
-//	내꺼는 될텐데 왜 충돌이 나지?
 
 }
 

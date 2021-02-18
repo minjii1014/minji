@@ -4,15 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="www.dream.com.party.model.mapper.PartyMapper">
 	<resultMap id="partyResultMap" type="www.dream.com.party.model.PartyVO">
+		<result property="partyNum" column="party_num" />
 		<result property="partyId" column="party_id" />
-		<result property="startDate" column="latitude" />
-		<result property="thruDate" column="longitude" />
-		<result property="latitude" column="start_date" />
-		<result property="longitude" column="thru_date" />
+		<result property="latitude" column="latitude" />
+		<result property="longitude" column="longitude" />
+		<result property="startDate" column="start_date" />
+		<result property="thruDate" column="thru_date" />
 	</resultMap>
 	
 	<resultMap id="userResultMap" type="www.dream.com.party.model.UserVO" extends="partyResultMap">
-		<result property="userNum" column="user_num" />
+<!-- 		<result property="userNum" column="user_num" /> -->
 		<result property="email" column="email" />
 		<result property="loginId" column="login_id" />
 		<result property="password" column="password" />
@@ -30,14 +31,26 @@
 	</select>
 	
 	
-<!-- 	<insert id="registerLocation"> -->
-<!-- 		<selectKey keyProperty="userId" order="BEFORE" resultType="_long"> -->
-<!-- 			select seq4User_id.nextval -->
-<!-- 		</selectKey> -->
-<!-- 		<![CDATA[ -->
-<!-- 		insert into T_Party(user_id, latitude, longitude) -->
-<!-- 		       values(#{userId}, #{latitude}, #{longitude}) -->
-<!-- 		]]> -->
-<!-- 	</insert> -->
+	<!-- 감염자 관련 -->	
+	<insert id="infectedLocation">
+		<selectKey keyProperty="partyNum" order="BEFORE" resultType="_long">
+			select seq4Party_num.nextval from dual
+		</selectKey>	
+		<![CDATA[
+ 		insert into T_Party(party_num, party_id, latitude, longitude)
+ 		       values(#{partyNum}, 1, #{latitude}, #{longitude})
+ 		]]>
+	</insert>
+	
+	<!-- 유저 관련 -->	
+	<insert id="userLocation">
+		<selectKey keyProperty="partyNum" order="BEFORE" resultType="_long">
+			select seq4Party_num.nextval from dual
+		</selectKey>
+		<![CDATA[
+ 		insert into T_Party(party_num, party_id, latitude, longitude)
+ 		       values(#{partyNum}, 2, #{latitude}, #{longitude})
+ 		]]>
+	</insert>
 	
 </mapper>

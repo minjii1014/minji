@@ -1,14 +1,22 @@
-drop sequence seq4User_num;
+drop sequence seq4Party_num;
 drop sequence seq4Party_id;
 drop table T_Party;
 
-create sequence seq4Party_id;
-create sequence seq4User_num;
 
+
+create sequence seq4Party_id
+ start with 1
+ increment by 1;
+
+create sequence seq4Party_num
+ start with 1
+ increment by 1;
+ 
 create table T_Party (
-	party_id			numeric(22,0) primary key,
-	latitude			numeric(15, 8), -- 위도
-	longitude			numeric(15, 8), -- 경도
+	party_num			numeric(22,0) primary key,
+	party_id			numeric(22,0),
+	latitude			numeric(22, 15), -- 위도
+	longitude			numeric(22, 15), -- 경도
 	start_date			date default sysdate, -- 시작 시간
 	thru_date			date default sysdate, -- 끝나는 시간
 	
@@ -16,7 +24,6 @@ create table T_Party (
     address_name        varchar2(4000),
    
    --user인 경우 추가적인 정보
-	user_num			numeric(22,0),
 	email				varchar2(100),
 	login_id			varchar2(100),
 	password			varchar2(100)	
