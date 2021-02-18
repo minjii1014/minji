@@ -60,7 +60,7 @@
 	]]>
 	</delete>
 	
-<!-- 	findPostWithPaging -->
+	<!-- 	findPostWithPaging -->
 	<select id="findPostWithPaging" resultMap="postResultMap">
 	<![CDATA[
 		select *

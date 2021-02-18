@@ -23,6 +23,7 @@
 				<input type = "hidden" name = "_csrf" value = "${_csrf.token}">
 			</form>
 			<%@include file="./include/pagingCommon.jsp"%>
+<%-- 			<%@include file="./include/attachUploadCommon.jsp"%> --%>
 		</div>
 	</div>
 
