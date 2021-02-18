@@ -26,12 +26,12 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<i class="fa fa-comments fa-fw">Reply</i>
-					<button id="btnAddReply" data-originalid="${post.id}" class="btn btn-primary btn-xs fa-pull-right">댓글달기</button>
 				</div>
 				<div class="panel-body">
 					<ul id="listReply" data-originalid="${post.id}" data-page_num="1" data-countofreply="${post.countOfReply}">	
 						<!-- 프로그램에서 처리 "", 스타일 처리 ''  li 목록 및 마지막에 anchor -->
-						댓글 개수는 "${post.countOfReply}"<br>
+						댓글 개수는 "${post.countOfReply}"
+						<button class="btnAddReply" class="btn btn-primary btn-xs fa-pull-right">댓글달기</button>
 					</ul>
 				</div>
 			</div>
@@ -99,31 +99,29 @@
 		/** 댓글 목록 조회 및 출력 */
 		var originalId = "${post.id}";
 		var listReplyUL = $("#listReply");
-		appendShowReplyListAnchor(listReplyUL);
+		showReplyListAnchor(listReplyUL);
 		
-		function appendShowReplyListAnchor(parentUl) {
-			var originalid = parentUl.data("originalid");
+		function showReplyListAnchor(parentUl) {
 			var replyCnt = parentUl.data("countofreply");
 			if(replyCnt > 0){
-				var strReplyLi = "<a>댓글 펼치기</a>";
-				parentUl.append(strReplyLi);
+				var strShowReply = "<a>댓글 펼치기</a>";
+				parentUl.append(strShowReply);
 			}
 		}
 
 		//댓글 또는 대댓글 펼치기
 		$("#listReply").on("click", "a", function(e){
+			var choosenAnchor = $(this);
 			var choosenUl = $(this).closest("ul");
+			choosenAnchor.remove();
 			var originalId = choosenUl.data("originalid");
 			var pageNum = choosenUl.data("page_num");
-			choosenUl.remove($(this));
-			showReplyList(pageNum, originalId, choosenUl, $(this));
+			showReplyList(pageNum, originalId, choosenAnchor, choosenUl);
 			//page_num을 1올려주고 맨 마지막에 anchor를 다시 달아준다
 			
 		});
-		
-		var replyCurPageNum = 1;
 
-		function showReplyList(pageNum, originalId, choosenUl, anchorOfShowMoreReply){
+		function showReplyList(pageNum, originalId, anchorOfShowMoreReply, choosenUl){
 			//ajax 호출
 			replyService.listReply(
 				{originalId:originalId, page:(pageNum || 1)}, //타겟 정보
@@ -138,23 +136,25 @@
 						strReplyLi += "<small class='fa-pull-right text-muted'>"
 							+ dateGapDisplayService.displayTime(listReply[i].updateDate) 
 							+ "</small>";
-						strReplyLi += "<button type='button' class='fa-pull-right'>대댓달기</button>"
 						strReplyLi += "</div>";
 						strReplyLi += "<p>"+ listReply[i].content +"</p>";
+						strReplyLi += "<ul data-originalid='" + listReply[i].id + 
+			              "' data-page_num='1' data-countofreply='" +  listReply[i].countOfReply +
+			              "'>댓글 " + listReply[i].countOfReply + "개 더보기 ";
+						strReplyLi += "<button class='btnAddReply' class='btn btn-primary btn-xs fa-pull-right'>대댓글달기</button> ";
 						if(listReply[i].countOfReply > 0){
-							/*
-							<ul id="listReply" data-originalid="${post.id}" data-page_num="1">	
-								<!-- 프로그램에서 처리 "", 스타일 처리 ''  li 목록 및 마지막에 anchor -->
-								댓글 개수는 "${post.countOfReply}"
-							</ul>
-							*/
-							strReplyLi += "<ul data-originalid='" + listReply[i].id + "'data-page_num='1'>댓글 " + listReply[i].countOfReply + "개 보기</ul>";
+							strReplyLi += "<a>댓글 펼치기</a>";
 						}
+						strReplyLi += "</ul>";
 						strReplyLi += "</div></li>";
 					}
-					listReplyUL.append(strReplyLi);
+					choosenUl.append(strReplyLi);
+					
 					var pageCriteria = pairOfCriteriaListReply.first;
-					displayAnchorShowReplyList(pageCriteria, anchorOfShowMoreReply, choosenUl);
+					if(pageCriteria.pageNum < pageCriteria.endPage || pageCriteria.hasNext){
+						choosenUl.append(anchorOfShowMoreReply);
+						choosenUl.data('page_num', pageNum + 1);
+					}
 				},
 				function(erMsg){
 					alert(erMsg);
@@ -175,10 +175,13 @@
 		//e.stopImmediatePropagation();
 		
 		//댓글 상세 조회
+		var ulOfModalControl;
+		var liOfModalControl;
 		$("#listReply").on("click", "li p", function(e){
-			var choosenLi = $(this).closest("li");
+			ulOfModalControl = $(this).closest("ul");
+			liOfModalControl = $(this).closest("li");
 			//showReplyList 함수 내 strReplyLi에서 추가된 li의 id
-			var replyId = choosenLi.data("id");
+			var replyId = liOfModalControl.data("id");
 			replyService.showReply(
 				replyId,
 				function(reply){
@@ -202,33 +205,16 @@
 				}
 			);
 		});
-		 
-		//등록 화면 열기
-		$("#btnAddReply").on("click", function(e) {
-			e.preventDefault();
-			var originalid = $(this).data("originalid");
-			openModal(originalid);
-		});
-		
-		//댓글 등록 이벤트
-		btnRegisterReply.on("click", function(e) {
-			e.preventDefault();
- 			var originalid = btnRegisterReply.data("originalid");
-			
-			//객체 생성(javascript 방식 객체 만들기, 속성 명칭:값)
-			var reply = {originalId: originalid,
-				content:modalReply.find("input[name='replyContent']").val()};
-			replyService.registerReply(reply, function(result){
-				alert("댓글이 등록되었습니다.");
-				modalReply.modal("hide");
-				showReplyList(1, originalId);
-			});
-		});
 
-		//대댓글 버튼 이벤트
-		listReplyUL.on("click", "li button", function(e) {
-			e.preventDefault();
-			var originalid = $(this).closest("li").data("id");
+		
+		 
+		//댓글 등록 화면 열기
+		$("ul").on("click", ".btnAddReply", function(e) {
+			//Nested li에서 일어난 이벤트가 이를 감싸고 있는 요소(부모 요소)에 할당된 위임 이벤트가 연속해서 처리되는 것을 막을 것이야.
+			e.stopImmediatePropagation();
+
+			ulOfModalControl = $(this).closest("ul");
+			var originalid = ulOfModalControl.data("originalid");
 			openModal(originalid);
 		});
 
@@ -252,6 +238,39 @@
 		btnCloseModal.on("click", function(e) {
 			modalReply.modal("hide");
 		});
+
+		//댓글 등록 이벤트
+		btnRegisterReply.on("click", function(e) {
+			e.preventDefault();
+ 			var originalid = btnRegisterReply.data("originalid");
+			
+			//객체 생성(javascript 방식 객체 만들기, 속성 명칭:값)
+			var reply = {originalId: originalid,
+				content:modalReply.find("input[name='replyContent']").val()};
+			modalReply.modal("hide");
+			replyService.registerReply(reply, function(result){
+				alert("댓글이 등록되었습니다.");
+				
+				var anchorForListReplyOfReply =  ulOfModalControl.children('a')[0];
+				//지금 막 달은 댓글은 첫 페이지 최상단에 나타나야 함.
+				//이에 기존 UL에 담긴 Li 들은 모두 청소 하고 
+				var listReply = ulOfModalControl.find('li');
+				listReply.remove();
+				//ulOfModalControl.remove(ulOfModalControl.find('li'));
+				//1페이지를 조회하여 보여주도록 제어한다.
+				//만약에 댓글의 개수가 페이지당 출력 개수를 초과할 경우
+				var countOfReply = result.second;
+				ulOfModalControl.data("countofreply", countOfReply);
+				var pageSize = result.third;
+				
+				if(countOfReply > pageSize){
+					//다음 펼치기는 2쪽(page_num = 2)으로 설정
+					ulOfModalControl.data("page_num", 2)			
+				}
+				
+				showReplyList(1, originalid, anchorForListReplyOfReply, ulOfModalControl);
+			});
+		});
 		
 		//댓글 수정 이벤트
 		btnModifyReply.on("click", function(e) {
@@ -261,7 +280,8 @@
 			replyService.updateReply(reply, function(result){
 				alert("댓글이 수정되었습니다.");
 				modalReply.modal("hide");
-				showReplyList(1, originalId);
+				var replyContent = liOfModalControl.find('p')[0];
+	            replyContent.textContent = reply.content;
 			});
 		});
 		
@@ -271,15 +291,19 @@
 			replyService.deleteReply(modalReply.data("id"), function(result){
 				alert("댓글이 삭제되었습니다.");
 				modalReply.modal("hide");
-				showReplyList(1, originalId);
+				liOfModalControl.remove();
 			});
 		});
 
 		/* 댓글 더 펼치기 출력 하기 및 이벤트 처리*/
 		var replyMoreListUp = $("#replyMoreListUp");
-		function displayAnchorShowReplyList(pageCriteria, anchorOfShowMoreReply, choosenUl){
+		function displayMoreListUp(pageCriteria){
+			var anchorHtml = "<a href='" + (pageCriteria.pageNum + 1)
+				+"'>답글 더보기. 총 개수는" + pageCriteria.totalDataCount + "</a>";
 			if(pageCriteria.pageNum < pageCriteria.endPage || pageCriteria.hasNext){
-				choosenUl.append(anchorOfShowMoreReply);
+				replyMoreListUp.html(anchorHtml);
+			}else{
+				replyMoreListUp.hide();
 			}
 		}
 
@@ -290,48 +314,6 @@
 			showReplyList(targetPageNum, originalId);
 		});
 		
-		/* 대댓글 관련 처리 */
-		//대댓글 목록 가져와서 댓글에 UL li로 추가
-		$("#listReply").on("click", "li a", function(e){
-			e.preventDefault();
-			var choosenAnchor = $(this);
-			//선택된 a태그에 달려있는 href
-			var originalId = choosenAnchor.closest("li").data("id");
-			showReplyOfReplyList(1, originalId, choosenAnchor.closest("li"));
-		});
-		
-		function showReplyOfReplyList(pageNum, originalId, replyLi){
-			replyService.listReply(
-				{originalId:originalId, page:(pageNum || 1)}, //타겟 정보
-				function(pairOfCriteriaListReply){
-					//pair에서 List<ReplyVO> 선택
-					var listReply = pairOfCriteriaListReply.second;
-					var strReplyLi = "<ul>";
-					for(var i=0, len=listReply.length || 0; i < len; i++){ 
-						strReplyLi += "<li class='left clearfix' data-id='" + listReply[i].id + "'>";
-						strReplyLi += "<div><div class='header'><strong class='primary-font'>" + listReply[i].userId + "</strong>";
-						//**시간전으로 표시
-						strReplyLi += "<small class='fa-pull-right text-muted'>"
-							+ dateGapDisplayService.displayTime(listReply[i].updateDate) 
-							+ "</small>";
-						strReplyLi += "<button type='button' class='fa-pull-right' data-originalid='" +listReply[i].id + "'>대댓달기</button>"
-						strReplyLi += "</div>";
-						strReplyLi += "<p>"+ listReply[i].content +"</p>";
-						if(listReply[i].countOfReply > 0){
-							strReplyLi += "<a href='" + listReply[i].id + "'>댓글 개수는" + listReply[i].countOfReply + "</a>";
-						}
-						strReplyLi += "</div></li>";
-					}
-					strReplyLi += "</ul>";
-					replyLi.append(strReplyLi);
-					var moreListUp = pairOfCriteriaListReply.first;
-					//displayMoreListUp(moreListUp);
-				},
-				function(erMsg){
-					alert(erMsg);
-				}
-			);
-		}
 	});
 </script>
 
