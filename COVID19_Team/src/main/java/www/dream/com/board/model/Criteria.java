@@ -52,7 +52,7 @@ public class Criteria {
 			endPage = endPage < PAGING_AMOUNT ? PAGING_AMOUNT : endPage;
 		}
 
-		startPage = 1;
+		startPage = endPage - PAGING_AMOUNT + 1;
 		int realEnd = (int) Math.ceil((float) totalDataCount / DEFAULT_AMOUNT);
 		if (realEnd < endPage)
 			endPage = realEnd;
