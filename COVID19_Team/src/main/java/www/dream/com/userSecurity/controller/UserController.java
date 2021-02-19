@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import www.dream.com.userSecurity.model.AuthVO;
 import www.dream.com.userSecurity.model.UserVO;
 import www.dream.com.userSecurity.service.UserService;
 
@@ -102,8 +101,6 @@ public class UserController {
 		}
 		
 	}
-	
-	
 
 	// 아이디 중복 체크
 	@RequestMapping(value = "idChk", method = RequestMethod.POST)

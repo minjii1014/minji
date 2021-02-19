@@ -39,7 +39,7 @@
 		</selectKey>
 		<![CDATA[
 		insert into T_Reply(id, content, user_id, obj_type, title, board_id, view_count)
-		       values(#{id}, #{content, jdbcType=VARCHAR}, 'user', 'post', #{title, jdbcType=VARCHAR}, #{boardId}, 3)
+		       values(#{id}, #{content, jdbcType=VARCHAR}, 'a', 'post', #{title, jdbcType=VARCHAR}, #{boardId}, 1)
 		]]>
 	</insert>
 	
