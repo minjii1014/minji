@@ -33,3 +33,18 @@ insert into T_Party(party_id, start_date,thru_date)
 values(1, 2020-11-11, 2020-12-12);
 insert into T_Party(party_id, email,login_id,password)
 values(2, 'aaa', 'bbb', 'ccc');
+
+
+
+
+
+
+
+select DISTINCT d.LOGIN_ID 
+  from T_PARTY m, T_PARTY d --m 은 확진사 d는 사용자 
+ where m.party_id = 1 
+   and d.LOGIN_ID = 'a'
+   and m.latitude - 0.001 < d.latitude 
+   and m.latitude + 0.001 > d.latitude 
+   and m.longitude + 0.001 > d.longitude 
+   and m.longitude - 0.001 < d.longitude;

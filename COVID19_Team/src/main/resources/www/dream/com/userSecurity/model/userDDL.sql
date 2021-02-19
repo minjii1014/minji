@@ -26,7 +26,7 @@ create table persistent_logins (
     series VARCHAR2(200) PRIMARY KEY,
     token VARCHAR2(200) not NULL,
     last_used TIMESTAMP not null
-    );
+);
 
 create UNIQUE INDEX ix_auth_username on T_Authorities (user_id);
 

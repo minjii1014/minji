@@ -13,11 +13,19 @@
 	<div class="card-body">
 		<div class="table-responsive">
 			<form id='frmPaging' action='/post/listPost' method="get">
+				<input id='txtSearch' type="text" name="search" value="${criteria.search}">
+					<select name="sortMethod">
+						<option id="optSortByDate" value="sortByDate" ${criteria.sortMethod == 'sortByDate' ? 'selected' : ''}>최신순</option>
+						<option id="optSortByAccuracy" value="sortByAccuracy" ${criteria.sortMethod == 'sortByAccuracy' ? 'selected' : ''}>정확도순</option>
+					</select>
+					
 				<input type="hidden" name="boardId" value="${boardId}">
 				<input type="hidden" name="pageNum" value="${criteria.pageNum}">
 				<button id="btnSearch" type="submit" class="btn btn-primary">검색</button>
 			</form>
+			
 			<button id='btnRegisterPost' type="button" class="btn btn-primary">Register New Post</button>
+			${criteria }
 			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 				<thead>
 					<tr>

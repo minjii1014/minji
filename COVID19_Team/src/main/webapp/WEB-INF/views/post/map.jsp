@@ -55,20 +55,10 @@
 			    var resultDiv = document.getElementById('clickLatlng'); 
 			    resultDiv.innerHTML = message;
 
-			    var party = {
-						latitude:latlng.getLat(),
-						longitude:latlng.getLng(),
-				};
-				
-			    $.ajax({
-					url:'/party/saveInfectedLocation',
-					data: party,
-					type:'post',
-					dataType:'json',	//결과를 json으로 받습니다.
-					success:function(result) {
-						console.log(result);
-					}
-				});
+			
+			    $("input[name=latitude]").val(latlng.getLat());
+			    $("input[name=longitude]").val(latlng.getLng());
+
 			    
 			});
 		}
@@ -78,18 +68,66 @@
 				navigator.geolocation.clearWatch(id);
 			}
 		}
+
+		$(document).ready(function(){
+			$("#btnSave").on("click", function(e){
+			e.preventDefault();
+
+			
+			if($("input[name=latitude]").val() == '' || $("input[name=latitude]").val() == null){
+				alert('지도 클릭해주세요');
+				return;
+			}
+			
+			var party = {
+					latitude : $("input[name=latitude]").val(),
+					longitude : $("input[name=longitude]").val(),
+					startDate : $("input[name=startDate]").val().replace('T', ' '),
+					thruDate : $("input[name=thruDate]").val().replace('T', ' '),
+			};
+			
+    		$.ajax({
+				url:'/party/saveInfectedLocation',
+				data: party,
+				type:'post',
+				dataType:'json',	//결과를 json으로 받습니다.
+				success:function(result) {
+					console.log(result);
+				}
+			});
+			    
+ 		    $("input[name=startDate]").val();
+ 		    $("input[name=thruDate]").val();
+				
+// 			saveLocation.submit();
+				
+		});
+			
+	});
+
+
+	
 	</script>
 	
-	<input type="hidden" value="${latitude }" id="latitude" >
-	<input type="hidden" value="${longitude }" id="longitude">
-	<input type="hidden" value="${start_date }" id="start_date">
-	<input type="hidden" value="${thru_date }" id="thru_date">
-	
+<!-- 	확진자 경로랑 시간을 넣을라고 -->
+<!-- 	위도 경도 찍어서 -->
+<!-- 	시간을 우리가 수기로 입력하려고 함. -->
 	
 <div id="map" style="width:100%;height:350px;"></div>
 <a href="/post/user">사용자 지도</a>
 <p><em>지도를 클릭해주세요!</em></p> 
-<div id="clickLatlng"></div>
+<div id="clickLatlng"></div> 
+	
+	<input name="startDate" type="datetime-local">
+	<input name="thruDate" type="datetime-local"  >
+	<input name="latitude" type="hidden" value="${latitude }" id="latitude" >
+	<input name="longitude" type="hidden" value="${longitude }" id="longitude">
+	
+	<button id="btnSave" value="버튼">시간을 적어주세요</button>
+<%-- <form action="/post/map" value="${party.thruDate}"> --%>
+<!-- 	<input type="datetime-local"> -->
+<!-- 	<button type="submit" value="submit">시간을 적어주세요</button> -->
+<!-- </form> -->
 
 </body>
 </html>

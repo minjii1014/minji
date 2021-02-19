@@ -12,10 +12,12 @@ public class Criteria {
 	private long pageNum;
 	private int amount;
 	
-	
 	private long startPage, endPage;
 	private long totalDataCount;
 	private boolean hasPrev, hasNext;
+	
+	// 서치 관련
+	private String search;
 	
 	public Criteria() {
 		this(1, 1241);
@@ -59,13 +61,18 @@ public class Criteria {
 		hasPrev = startPage > 1;
 		hasNext = endPage < realEnd;
 	}
-	
+
 	public void setTotalDataCount(long totalDataCount) {
 		this.totalDataCount = totalDataCount;
 		int realEnd = (int) Math.ceil((float) totalDataCount / DEFAULT_AMOUNT);
 		if (realEnd < endPage)
 			endPage = realEnd;
 		hasNext = endPage < realEnd;
+	}
+	
+	// 서치 관련
+	public String[] getSearchArr() {
+		return (search != null && !search.isEmpty()) ? search.split(" ") : null;
 	}
 	
 }

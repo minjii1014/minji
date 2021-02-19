@@ -8,8 +8,8 @@
 		<result property="partyId" column="party_id" />
 		<result property="latitude" column="latitude" />
 		<result property="longitude" column="longitude" />
-		<result property="startDate" column="start_date" />
-		<result property="thruDate" column="thru_date" />
+		<result property="startDate" column="start_date"/>
+		<result property="thruDate" column="thru_date"/>
 	</resultMap>
 	
 	<resultMap id="userResultMap" type="www.dream.com.party.model.UserVO" extends="partyResultMap">
@@ -32,14 +32,16 @@
 	
 	
 	<!-- 감염자 관련 -->	
+	
 	<insert id="infectedLocation">
 		<selectKey keyProperty="partyNum" order="BEFORE" resultType="_long">
 			select seq4Party_num.nextval from dual
 		</selectKey>	
 		<![CDATA[
- 		insert into T_Party(party_num, party_id, latitude, longitude)
- 		       values(#{partyNum}, 1, #{latitude}, #{longitude})
+ 		insert into T_Party(party_num, party_id, latitude, longitude, start_date, thru_date)
+ 		       values(#{partyNum}, 1, #{latitude}, #{longitude}, #{startDate, jdbcType=DATE}, ${thruDate, jdbcType=DATE})
  		]]>
+
 	</insert>
 	
 	<!-- 유저 관련 -->	

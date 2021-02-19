@@ -13,6 +13,9 @@ public class PartyVO {
 	private Date startDate;
 	private Date thruDate;
 	
+//	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+//	private LocalDateTime SDate;
+	
 	public PartyVO() {
 	}
 	

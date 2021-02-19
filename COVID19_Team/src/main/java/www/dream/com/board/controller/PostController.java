@@ -1,7 +1,6 @@
 package www.dream.com.board.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,13 +12,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import www.dream.com.board.model.Criteria;
 import www.dream.com.board.model.PostVO;
 import www.dream.com.board.service.PostService;
+import www.dream.com.party.model.PartyVO;
+import www.dream.com.party.service.PartyService;
 
 @Controller
 @RequestMapping("/post/*")
 public class PostController {
 	@Autowired
 	private PostService postService;
-
+	@Autowired
+	private PartyService partyService;
 
 	@GetMapping("listPost")
 	public void listPost(@RequestParam("boardId") long boardId, Criteria criteria, Model model) {
@@ -46,7 +48,7 @@ public class PostController {
 	 * 등록 화면 만들기
 	 */
  	@GetMapping("registerPost")
- 	@PreAuthorize("isAuthenticated()")
+// 	@PreAuthorize("isAuthenticated()")
 	public void registerPost(@RequestParam("boardId") long boardId, Model model) {
 		model.addAttribute("boardId", boardId);
 	}
@@ -54,7 +56,7 @@ public class PostController {
  	 *  
  	 */
 	@PostMapping("registerPost")
-	@PreAuthorize("isAuthenticated()")
+//	@PreAuthorize("isAuthenticated()")
 	public String registerPost(PostVO post, RedirectAttributes rttr) {
 //		post.setUserId(new PartyVO(2L));
 		postService.registerPost(post);
@@ -80,7 +82,7 @@ public class PostController {
 	 * 삭제 기능
 	 */
 	@PostMapping("removePost")
-	@PreAuthorize("principal.username == #writer")
+//	@PreAuthorize("principal.username == #writer")
 	public String removePost(PostVO post, RedirectAttributes rttr) {
 		if(postService.removePost(post)) {
 			rttr.addFlashAttribute("result", "success");
@@ -91,9 +93,13 @@ public class PostController {
 	
 	
 	@GetMapping("map")
-	public void map() {
+	public void map(PartyVO party, RedirectAttributes rttr) {
+		partyService.infectedLocation(party);
+//		PartyVO party = partyService.infectedLocation(party);
+//		model.addAttribute("party", party);
+				
 	}
-	
+		
 	@GetMapping("user")
 	public void user() {
 		
