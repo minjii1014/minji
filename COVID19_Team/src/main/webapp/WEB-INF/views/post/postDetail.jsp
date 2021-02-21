@@ -102,10 +102,12 @@
 		var originalId = "${post.id}";
 		var listReplyUL = $("#listReply");
 		showReplyListAnchor(listReplyUL);
+
 		
 		function showReplyListAnchor(parentUl) {
 			var replyCnt = parentUl.data("countofreply");
 			if(replyCnt > 0){
+				//첫 화면 댓글 펼치기
 				var strShowReply = "<a>댓글 펼치기</a>";
 				parentUl.append(strShowReply);
 			}
@@ -119,7 +121,6 @@
 			var originalId = choosenUl.data("originalid");
 			var pageNum = choosenUl.data("page_num");
 			showReplyList(pageNum, originalId, choosenAnchor, choosenUl);
-			//page_num을 1올려주고 맨 마지막에 anchor를 다시 달아준다
 			
 		});
 
@@ -145,6 +146,7 @@
 			              "'>댓글 " + listReply[i].countOfReply + "개 더보기 ";
 						strReplyLi += "<button class='btnAddReply' class='btn btn-primary btn-xs fa-pull-right'>대댓글달기</button> ";
 						if(listReply[i].countOfReply > 0){
+							//대댓글 시 댓글 펼치기
 							strReplyLi += "<a>댓글 펼치기</a>";
 						}
 						strReplyLi += "</ul>";
@@ -154,7 +156,9 @@
 					
 					var pageCriteria = pairOfCriteriaListReply.first;
 					if(pageCriteria.pageNum < pageCriteria.endPage || pageCriteria.hasNext){
-						//choosenUl.append(anchorOfShowMoreReply);
+						//page_num을 1올려주고 맨 마지막에 anchor를 다시 달아준다
+						//ex) 11개 일때 처음 10개 리스트, 댓글 펼치기 생김 -> 댓글 펼치기 클릭 시 나머지 댓글 1개 추가 리스트
+						choosenUl.append(anchorOfShowMoreReply);
 						choosenUl.data('page_num', pageNum + 1);
 					}
 				},
@@ -176,7 +180,7 @@
 		//Nested li에서 일어난 이벤트가 이를 감싸고 있는 요소(부모 요소)에 할당된 위임 이벤트가 연속해서 처리되는 것을 막는다.
 		//e.stopImmediatePropagation();
 		
-		//댓글 상세 조회
+		/*   댓글 상세 조회   */
 		var ulOfModalControl;
 		var liOfModalControl;
 		$("#listReply").on("click", "li p", function(e){
@@ -211,6 +215,7 @@
 		
 		 
 		//댓글 등록 화면 열기
+		//댓글 달기 버튼
 		$("ul").on("click", ".btnAddReply", function(e) {
 			//Nested li에서 일어난 이벤트가 이를 감싸고 있는 요소(부모 요소)에 할당된 위임 이벤트가 연속해서 처리되는 것을 막을 것이야.
 			e.stopImmediatePropagation();
@@ -242,6 +247,7 @@
 		});
 
 		//댓글 등록 이벤트
+		//모달 창 내 등록 버튼
 		btnRegisterReply.on("click", function(e) {
 			e.preventDefault();
  			var originalid = btnRegisterReply.data("originalid");
@@ -258,17 +264,7 @@
 				//이에 기존 UL에 담긴 Li 들은 모두 청소 하고 
 				var listReply = ulOfModalControl.find('li');
 				listReply.remove();
-				//ulOfModalControl.remove(ulOfModalControl.find('li'));
 				//1페이지를 조회하여 보여주도록 제어한다.
-				//만약에 댓글의 개수가 페이지당 출력 개수를 초과할 경우
-				var countOfReply = result.second;
-				ulOfModalControl.data("countofreply", countOfReply);
-				var pageSize = result.third;
-				
-				if(countOfReply > pageSize){
-					//다음 펼치기는 2쪽(page_num = 2)으로 설정
-					ulOfModalControl.data("page_num", 2)			
-				}
 				
 				showReplyList(1, originalid, anchorForListReplyOfReply, ulOfModalControl);
 			});
