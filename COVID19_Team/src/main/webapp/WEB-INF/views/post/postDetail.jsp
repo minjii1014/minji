@@ -134,7 +134,7 @@
 					var strReplyLi = "";
 					for(var i=0, len=listReply.length || 0; i < len; i++){ 
 						strReplyLi += "<li class='left clearfix' data-id='" + listReply[i].id + "'>";
-						strReplyLi += "<div><div class='header'><strong class='primary-font'>" + listReply[i].userId + "</strong>";
+						strReplyLi += "<div><div class='header'><strong class='primary-font'>" + "user" + "</strong>";
 						//**시간전으로 표시
 						strReplyLi += "<small class='fa-pull-right text-muted'>"
 							+ dateGapDisplayService.displayTime(listReply[i].updateDate) 
