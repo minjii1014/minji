@@ -13,10 +13,12 @@
 	<div class="card-body">
 		<div class="table-responsive">
 			<form id='frmPaging' action='/post/listPost' method="get">
+					
 				<input type="hidden" name="boardId" value="${boardId}">
 				<input type="hidden" name="pageNum" value="${criteria.pageNum}">
 				<button id="btnSearch" type="submit" class="btn btn-primary">검색</button>
 			</form>
+			
 			<button id='btnRegisterPost' type="button" class="btn btn-primary">Register New Post</button>
 			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 				<thead>

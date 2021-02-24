@@ -13,6 +13,7 @@ public interface PartyMapper {
 	public void infectedLocation(PartyVO party);
 
 	public void userLocation(UserVO user);
-	
+
+	public PartyVO showOverlap(PartyVO party);
 	
 }

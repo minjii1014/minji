@@ -14,6 +14,10 @@ public class PartyService {
 	@Autowired
 	private PartyMapper partyMapper;
 	
+	public PartyVO showOverlap(PartyVO party) {
+		return partyMapper.showOverlap(party);
+	}
+	
 	public List<PartyVO> selectAllParty() {
 		return partyMapper.selectAllParty();
 	}

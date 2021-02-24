@@ -17,8 +17,8 @@ create table T_Party (
 	party_id			numeric(22,0),
 	latitude			numeric(22, 15), -- 위도
 	longitude			numeric(22, 15), -- 경도
-	start_date			date default sysdate, -- 시작 시간
-	thru_date			date default sysdate, -- 끝나는 시간
+	start_date			varchar2(100), -- 시작 시간
+	thru_date			varchar2(100), -- 끝나는 시간
 	
    --InfectedPerson인 경우 추가적인 정보
     address_name        varchar2(4000),
@@ -33,3 +33,24 @@ insert into T_Party(party_id, start_date,thru_date)
 values(1, 2020-11-11, 2020-12-12);
 insert into T_Party(party_id, email,login_id,password)
 values(2, 'aaa', 'bbb', 'ccc');
+
+
+
+
+
+
+
+select DISTINCT m.party_id  --m 은 확진사 d는 사용자 
+  from T_PARTY m, T_PARTY d 
+ where m.party_id = 1
+   and d.party_id != 1
+   and m.thru_date >= d.start_date;
+   and m.start_date <= d.thru_date;
+   and m.latitude - 0.001 < d.latitude 
+   and m.latitude + 0.001 > d.latitude 
+   and m.longitude + 0.001 > d.longitude 
+   and m.longitude - 0.001 < d.longitude;
+   
+   
+   
+   
