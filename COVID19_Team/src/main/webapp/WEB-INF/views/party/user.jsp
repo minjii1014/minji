@@ -50,8 +50,8 @@
 			$.ajax({
 				url:'/party/saveUserLocation',
 				data: {
-					 latitude :location.coords.latitude,
-					 longitude :location.coords.longitude,
+					latitude :location.coords.latitude,
+					longitude :location.coords.longitude
 				},
 				type:'post',
 				dataType:'json',	//결과를 json으로 받습니다.

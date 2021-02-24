@@ -20,8 +20,6 @@ import www.dream.com.party.service.PartyService;
 public class PostController {
 	@Autowired
 	private PostService postService;
-	@Autowired
-	private PartyService partyService;
 
 	@GetMapping("listPost")
 	public void listPost(@RequestParam("boardId") long boardId, Criteria criteria, Model model) {
@@ -30,7 +28,6 @@ public class PostController {
 
 		model.addAttribute("criteria", criteria);
 		model.addAttribute("boardId", boardId);
-
 	}
 
 	/**
@@ -90,20 +87,5 @@ public class PostController {
 		rttr.addAttribute("boardId", post.getBoardId());
 		return "redirect:/post/listPost";
 	}
-	
-	
-	@GetMapping("map")
-	public void map(PartyVO party, RedirectAttributes rttr) {
-		partyService.infectedLocation(party);
-//		PartyVO party = partyService.infectedLocation(party);
-//		model.addAttribute("party", party);
-				
-	}
-		
-	@GetMapping("user")
-	public void user() {
-		
-	}
-
 
 }

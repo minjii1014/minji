@@ -117,7 +117,7 @@
                     	<c:forEach var="board" items="${listBoard}" varStatus="status">
 							<c:if test="${status.index eq 0}">
 								<li>
-									<a href="/post/map">${board.name}</a>
+									<a href="/party/map">${board.name}</a>
 								</li>
 							</c:if>
 						</c:forEach>

@@ -39,7 +39,7 @@
 		</selectKey>	
 		<![CDATA[
  		insert into T_Party(party_num, party_id, latitude, longitude, start_date, thru_date)
- 		       values(#{partyNum}, 1, #{latitude}, #{longitude}, #{startDate, jdbcType=DATE}, ${thruDate, jdbcType=DATE})
+ 		       values(#{partyNum}, 1, #{latitude}, #{longitude}, to_date(#{startDate, jdbcType=VARCHAR}, 'yyyy-mm-dd hh24:mi') , to_date(#{thruDate, jdbcType=VARCHAR}, 'yyyy-mm-dd hh24:mi'))
  		]]>
 
 	</insert>
@@ -50,9 +50,26 @@
 			select seq4Party_num.nextval from dual
 		</selectKey>
 		<![CDATA[
- 		insert into T_Party(party_num, party_id, latitude, longitude)
- 		       values(#{partyNum}, 2, #{latitude}, #{longitude})
+ 		insert into T_Party(party_num, party_id, latitude, longitude, start_date, thru_date)
+ 		       values(#{partyNum}, 2, #{latitude}, #{longitude}, to_date(#{startDate, jdbcType=VARCHAR}, 'yyyy-mm-dd hh24:mi:ss') , to_date(#{thruDate, jdbcType=VARCHAR}, 'yyyy-mm-dd hh24:mi:ss'))
  		]]>
 	</insert>
+	
+	<!-- m 은 확진사 d는 사용자 -->
+	<select id="showOverlap" resultMap="partyResultMap">
+	<![CDATA[
+		select DISTINCT m.party_id
+		  from T_PARTY m, T_PARTY d
+		 where m.party_id = 1
+		   and d.party_id != 1
+		   and m.thru_date >= d.start_date
+		   and m.start_date <= d.thru_date
+		   and m.latitude - 0.001 < d.latitude
+		   and m.latitude + 0.001 > d.latitude
+		   and m.longitude + 0.001 > d.longitude
+		   and m.longitude - 0.001 < d.longitude
+	]]>
+	</select>
+	
 	
 </mapper>
