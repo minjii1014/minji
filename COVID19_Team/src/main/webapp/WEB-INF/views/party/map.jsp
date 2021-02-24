@@ -27,12 +27,11 @@
 
 			<c:if test="${not empty party}">
 				<c:if test="${party.partyId eq '1' }">
-					alert('1')
+					alert('동선이 겹쳤습니다.')
 				</c:if>
 			</c:if>
 
 			<c:if test="${empty party }">
-					alert('2');
 			</c:if>
 			
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
