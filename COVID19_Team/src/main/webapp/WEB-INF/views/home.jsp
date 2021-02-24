@@ -59,11 +59,11 @@
                     <div id="user_id">안녕하세요. ${user_id }</div>
                     <a href="/user/userUpdate">회원 정보 수정하기</a>
                     <a href="/user/userDelete">회원 탈퇴</a>
-                    <form action="/user/customLogout" method="post">
-						<input type="hidden" name="_csrf" value="${_csrf.token}">
-						<button class="btn btn-primary">로그아웃</button>
-					</form>
-                </sec:authorize></td>
+	                    <form action="/user/customLogout" method="post">
+							<input type="hidden" name="_csrf" value="${_csrf.token}">
+							<button class="btn btn-primary">로그아웃</button>
+						</form>
+                	</sec:authorize></td>
                 </div>
             </div>
         </nav>

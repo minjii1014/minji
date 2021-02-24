@@ -47,6 +47,11 @@
 // 			console.log( "(위도: " + location.coords.latitude +
 // 					", 경도: " + location.coords.longitude + ")");
 
+			// 시간 반복 설정
+			setInterval(function(){
+				getGeolocation();
+			}, 10000);
+
 			$.ajax({
 				url:'/party/saveUserLocation',
 				data: {
