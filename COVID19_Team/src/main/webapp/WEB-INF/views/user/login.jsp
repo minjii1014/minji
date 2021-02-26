@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,14 +29,13 @@
 							<div class="card shadow-lg border-0 rounded-lg mt-5">
 								<div class="card-header">
 									<h3 class="text-center font-weight-light my-4">Login</h3>
-									<h4><c:out value="${error}"/></h4>
-									<h4><c:out value="${logout}"/></h4>
 								</div>
 								<div class="card-body">
-									<form action="/login" method="post">
+								<c:if test="${user == null}">
+									<form action='<c:url value='/user/login'/>' method="post">
 										<div class="form-group">
 											<label class="small mb-1" for="inputId">Id</label>
-											<input class="form-control py-4" id="inputId" name="username" 
+											<input class="form-control py-4" id="inputId" name="loginId"
 												type="text" placeholder="아이디를 입력하세요" />
 										</div>
 										<div class="form-group">
@@ -45,9 +43,13 @@
 											<input class="form-control py-4" id="inputPassword" name="password"
 												type="password" placeholder="비밀번호를 입력하세요" />
 										</div>
-										<div>
-										<div>
-											<input type="checkbox" name="remember-me"> Remember Me
+										<div class="form-group">
+											<div class="custom-control custom-checkbox">
+												<input class="custom-control-input"
+													id="rememberPasswordCheck" type="checkbox" /> <label
+													class="custom-control-label" for="rememberPasswordCheck">Remember
+													password</label>
+											</div>
 										</div>
 										<div
 											class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
@@ -56,6 +58,13 @@
 										</div>
 										<input type = "hidden" name = "_csrf" value = "${_csrf.token}">
 									</form>
+									</c:if>
+									
+									<c:if test="${user != null}">
+										<c:redirect url="/home"/>
+									</c:if>
+
+
 								</div>
 								<div class="card-footer text-center">
 									<div class="small">
@@ -83,8 +92,11 @@
 			</footer>
 		</div>
 	</div>
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"crossorigin="anonymous"></script>
-	<script	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
 	<script src="/resources/table_js/scripts.js"></script>
 </body>
 </html>

@@ -41,7 +41,7 @@
 	<context:component-scan
 		base-package="www.dream.com.board.service"></context:component-scan>
 	<context:component-scan
-		base-package="www.dream.com.userSecurity.service"></context:component-scan>
+		base-package="www.dream.com.user.service"></context:component-scan>
 	<context:component-scan
 		base-package="www.dream.com.location"></context:component-scan>
 		
@@ -51,7 +51,7 @@
 	<mybatis-spring:scan
 		base-package="www.dream.com.board.model.mapper" />
 	<mybatis-spring:scan
-		base-package="www.dream.com.userSecurity.model.mapper" />
+		base-package="www.dream.com.user.model.mapper" />
 	<mybatis-spring:scan
 		base-package="www.dream.com.location.model.mapper" />
 		

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-<%@ page session="false" %>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html lang="en">
 	<style>
@@ -46,24 +46,33 @@
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Contact</a></li>
                     </ul>
                 </div>
-                <div>
-                <sec:authorize access="isAnonymous()">
-					<a href="/user/login">로그인</a>
-					<a href="/user/signUp">회원가입</a>
-				</sec:authorize>
-                </div>
-                <div>
-                	<td><sec:authorize access="isAuthenticated()">
-                    <sec:authentication property="principal.username" var="user_id" />
-                    <div id="user_id">안녕하세요. ${user_id }</div>
-                    <a href="/user/userUpdate">회원 정보 수정하기</a>
-                    <a href="/user/userDelete">회원 탈퇴</a>
-                    <form action="/user/customLogout" method="post">
-					<input type="hidden" name="_csrf" value="${_csrf.token}">
-					<button class="btn btn-primary">로그아웃</button>
-					</form>
-                </sec:authorize></td>
-                </div>
+                <form name='homeForm' method="post" action="/user/login">
+				<c:if test="${member == null}">
+					<div>
+						<label for="userId"></label> <input type="text" id="userId" placeholder="아이디"
+							class="form-control" name="userId">
+					</div>
+					<div>
+						<label for="userPass"></label> <input type="password"
+							class="form-control"id="password" name="password" placeholder="비밀번호">
+					</div>
+					<div>
+						<button type="submit" class="btn btn-primary">로그인</button>
+						<button type="button" class="btn btn-info" onclick="location.href='user/signUp'">회원가입</button>
+					</div>
+				</c:if>
+				<c:if test="${member != null}">
+					<div>
+						<p style="color: white;">${member.userId}님환영 합니다.</p>
+						<button id="registerBtn" type="button" class="btn btn-info ">정보변경</button>
+						<button id="deleteBtn" type="button" class="btn btn-info ">회원탈퇴</button>
+						<button id="logoutBtn" type="button" class="btn btn-danger ">로그아웃</button>
+					</div>
+				</c:if>
+				<c:if test="${msg == false}">
+					<p style="color: red;">아이디와 비밀번호 확인해주세요.</p>
+				</c:if>
+			</form>
             </div>
         </nav>
         <!-- Masthead-->
@@ -432,5 +441,20 @@
         <script src="/resources/assets/mail/contact_me.js"></script>
         <!-- Core theme JS-->
         <script src="/resources/js/scripts.js"></script>
+        <script type="text/javascript">        
+        $(document).ready(function(){
+		$("#logoutBtn").on("click", function(){
+			location.href="user/logout";
+		})
+		
+		$("#registerBtn").on("click", function(){
+			location.href="user/memberUpdate";
+		})
+		$("#deleteBtn").on("click", function(){
+			location.href="user/memberDelete";
+		})
+		
+	})
+	</script>
     </body>
 </html>

@@ -2,10 +2,15 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
+<meta id="_csrf" name="_csrf" content="${_csrf.token}" />
+<meta id="_csrf_header" name="_csrf_header"
+	content="${_csrf.headerName}" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -26,49 +31,54 @@
 						<div class="col-lg-7">
 							<div class="card shadow-lg border-0 rounded-lg mt-5">
 								<div class="card-header">
-									<h3 class="text-center font-weight-light my-4">회원 가입</h3>
+									<h3 class="text-center font-weight-light my-4">회원 정보 수정</h3>
 								</div>
 								<div class="card-body">
-									<form name="form" id="signUp_form"  role="form" method="post" >
+									<form name="form" id="update_form" role="form" method="post">
 										<div class="form-row">
 											<div class="col-md-6">
 												<div class="form-group">
-													<label class="small mb-1" for="inputFirstName">ID</label> <input class="form-control py-4" id="userId"
-														name=userId type="text" placeholder="Enter your Id" />
+													<label class="small mb-1" for="inputFirstName">ID</label> <input
+														class="form-control py-4" id="loginId" name="userId"
+														type="text" value="${member.userId }" readonly="readonly" />
 												</div>
-												<button id="id_check" class="btn btn-primary" type="button" onclick="idCheck()">중복체크</button>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="small mb-1" for="inputEmailAddress">Email</label>
 											<input class="form-control py-4" id="inputEmailAddress"
 												name="email" type="email" aria-describedby="emailHelp"
-												placeholder="Enter email address" />
+												placeholder="Enter email address" value="${member.email }" />
 										</div>
 										<div class="form-row">
 											<div class="col-md-6">
 												<div class="form-group">
 													<label class="small mb-1" for="inputPassword">Password</label>
-													<input class="form-control py-4" id="inputPassword" 
-														  name="password" type="password" placeholder="Enter password" />
+													<input class="form-control py-4" id="inputPassword"
+														name="password" type="password"
+														placeholder="Enter password" />
 												</div>
 											</div>
-											 <div class="col-md-6">
+											<div class="col-md-6">
 												<div class="form-group">
 													<label class="small mb-1" for="inputConfirmPassword">Confirm
 														Password</label> <input class="form-control py-4"
 														id="inputConfirmPassword" type="password"
 														placeholder="Confirm password" />
 												</div>
-											</div> 
+											</div>
 											<br>
-											<div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
-										    <div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다.</div>
+											<div class="alert alert-success" id="alert-success">비밀번호가
+												일치합니다.</div>
+											<div class="alert alert-danger" id="alert-danger">비밀번호가
+												일치하지 않습니다.</div>
 										</div>
 									</form>
 									<div class="form-group mt-4 mb-0">
-											<button type="button" class="btn btn-primary btn-block" id="btnSignup" onclick="registerCheck()" disabled="disabled" >회원가입</button>
-											<button type="button" class="btn btn-primary btn-block" id="btnCancel">취소하기</button>
+										<button type="button" class="btn btn-primary btn-block"
+											id="btnSignup" onclick="registerCheck()">정보수정</button>
+										<button type="button" class="btn btn-primary btn-block"
+											id="btnCancel">취소하기</button>
 									</div>
 								</div>
 								<div class="card-footer text-center">
@@ -97,16 +107,12 @@
 			</footer>
 		</div>
 	</div>
-	
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript">
 
 function registerCheck() {
-        
-    if($.trim($('#userId').val()) == '') {
-        alert("아이디를 입력해주세요.");
-        return false;
-    }
     if($.trim($('#inputPassword').val()) == '') {
         alert("비밀번호를 입력해주세요.");
         return false;
@@ -116,11 +122,25 @@ function registerCheck() {
         return false;
     }
  
-    if(confirm("회원가입을 하시겠습니까?")){
-        $("#signUp_form").attr("action","/user/signUp");	
-        $("#signUp_form").submit();    
-        alert("회원가입이 완료되었습니다. 감사합니다.");
-    }
+    $.ajax({
+		url : "/user/passChk",
+		type : "POST",
+		dateType : "json",
+		data : $("#update_form").serializeArray(),
+		success: function(data){
+			
+			if(data==true){
+				if(confirm("회원수정하시겠습니까?")){
+					$("#update_form").submit();
+				}
+				
+			}else{
+				alert("패스워드가 틀렸습니다.");
+				return;
+				
+				}
+			}
+		})
 }
 	
 $(function(){
@@ -140,49 +160,12 @@ $(function(){
 	    }
      });
     });
-    
-
- function idCheck() {
-    
-    var userId = $("#userId").val();
-    
-    if(userId.search(/\s/) != -1) { 
-        alert("아이디에는 공백이 들어갈 수 없습니다.");        
-    } else {             
-        if(userId.trim().length != 0) {
-            $.ajax({
-                async : true, 
-                type : 'POST', 
-                data: userId,
-                url: "/user/idCheck",
-                dataType: "json",
-                contentType: "application/json; charset=UTF-8",
-                success: function(data) {     //map에서 value꺼낼때 map의 이름.key값 
-                    if(data.cnt > 0) {
-                        alert("해당 아이디 존재");    
-                        $("#btnSignup").attr("disabled", "disabled");
-                        window.location.reload();
-                    } else {
-                        alert("사용가능 아이디");
-                        $("#btnSignup").removeAttr("disabled");
-                    }            
-                },
-                error: function(error) {
-                    alert("아이디를 입력해주세요.");
-                }        
-            });
-        } else {
-            alert("아이디를 입력해주세요. ajax 실패");
-        }        
-    }
-} 
-
 </script>
-<script  src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-	crossorigin="anonymous"></script>
-<script src="/resources/table_js/scripts.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+	<script src="/resources/table_js/scripts.js"></script>
 
 </body>
 

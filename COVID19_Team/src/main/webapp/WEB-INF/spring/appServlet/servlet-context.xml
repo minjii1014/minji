@@ -29,8 +29,8 @@
 	<context:component-scan base-package="www.dream.com" />
 	<context:component-scan base-package="www.dream.com.board.controller" />
 	<context:component-scan base-package="www.dream.com.party.controller" />
-	<context:component-scan base-package="www.dream.com.userSecurity.controller" />
-	<context:component-scan base-package="www.dream.com.userSecurity.*" />
+	<context:component-scan base-package="www.dream.com.user.controller" />
+	<context:component-scan base-package="www.dream.com.user.*" />
 	<context:component-scan base-package="www.dream.com.location.*" />
 
 

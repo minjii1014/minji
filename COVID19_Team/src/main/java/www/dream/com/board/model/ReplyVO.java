@@ -4,7 +4,6 @@ import java.util.Date;
 
 import lombok.Data;
 import www.dream.com.party.model.PartyVO;
-import www.dream.com.userSecurity.model.UserVO;
 
 @Data
 public class ReplyVO {
