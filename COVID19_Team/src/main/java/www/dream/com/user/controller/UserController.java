@@ -25,8 +25,8 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-
-	@Autowired
+	
+//	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;	
 	
 	/* 회원가입 */

@@ -3,10 +3,9 @@ package www.dream.com.user.model;
 import java.util.Date;
 
 import lombok.Data;
-import www.dream.com.party.model.PartyVO;
 
 @Data
-public class UserVO {
+public class UserVO  {
 	
 	private long partyId;
 	private long userNum;

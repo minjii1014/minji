@@ -44,8 +44,9 @@
 	<update id="memberUpdate">
 		<![CDATA[
 		UPDATE T_USER SET
+		
 		    email = #{email, jdbcType=VARCHAR},
-		    password = #{password, jdbcType=VARCHAR}
+		    password = #{password, jdbcType=VARCHAR} 
 		    where user_id = #{userId} 		
 		]]>
 	</update>
@@ -62,5 +63,12 @@
 		where user_id = #{userId}
 			and password = #{password}
 	</select>
+	
+
+
+
+
+
+
 
 </mapper>

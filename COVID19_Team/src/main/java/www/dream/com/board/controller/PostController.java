@@ -80,8 +80,8 @@ public class PostController {
 	/**
 	 * 삭제 기능
 	 */
-	@PostMapping("removePost")
 	@PreAuthorize("principal.username == #writer")
+	@PostMapping("removePost")
 	public String removePost(PostVO post, RedirectAttributes rttr) {
 		if(postService.removePost(post)) {
 			rttr.addFlashAttribute("result", "success");

@@ -2,10 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -26,24 +29,28 @@
 						<div class="col-lg-7">
 							<div class="card shadow-lg border-0 rounded-lg mt-5">
 								<div class="card-header">
-									<h3 class="text-center font-weight-light my-4">회원 가입</h3>
+									<h3 class="text-center font-weight-light my-4">Create
+										Account</h3>
 								</div>
 								<div class="card-body">
+								<sec:authorize access="isAuthenticated()">
+								<sec:authentication property="principal.user.userId" var="userId" />
+								<sec:authentication property="principal.user.email" var="email" />
+								<sec:authentication property="principal.user.userId" var="userId" />
 									<form name="form" id="signUp_form"  role="form" method="post" >
 										<div class="form-row">
 											<div class="col-md-6">
 												<div class="form-group">
-													<label class="small mb-1" for="inputFirstName">ID</label> <input class="form-control py-4" id="userId"
-														name=userId type="text" placeholder="Enter your Id" />
+													<label class="small mb-1" for="inputFirstName">ID</label> <input class="form-control py-4" id="loginId"
+														name="userId" type="text" value="${userId }" readonly="readonly" />
 												</div>
-												<button id="id_check" class="btn btn-primary" type="button" onclick="idCheck()">중복체크</button>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="small mb-1" for="inputEmailAddress">Email</label>
 											<input class="form-control py-4" id="inputEmailAddress"
 												name="email" type="email" aria-describedby="emailHelp"
-												placeholder="Enter email address" />
+												placeholder="Enter email address" value="${email }" />
 										</div>
 										<div class="form-row">
 											<div class="col-md-6">
@@ -65,9 +72,11 @@
 											<div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
 										    <div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다.</div>
 										</div>
+										<input type = "hidden" name = "_csrf" value = "${_csrf.token}">
 									</form>
+									</sec:authorize>
 									<div class="form-group mt-4 mb-0">
-											<button type="button" class="btn btn-primary btn-block" id="btnSignup" onclick="registerCheck()" disabled="disabled" >회원가입</button>
+											<button type="button" class="btn btn-primary btn-block" id="btnSignup" onclick="registerCheck()">정보수정</button>
 											<button type="button" class="btn btn-primary btn-block" id="btnCancel">취소하기</button>
 									</div>
 								</div>
@@ -102,8 +111,7 @@
 <script type="text/javascript">
 
 function registerCheck() {
-        
-    if($.trim($('#userId').val()) == '') {
+    if($.trim($('#loginId').val()) == '') {
         alert("아이디를 입력해주세요.");
         return false;
     }
@@ -116,10 +124,10 @@ function registerCheck() {
         return false;
     }
  
-    if(confirm("회원가입을 하시겠습니까?")){
-        $("#signUp_form").attr("action","/user/signUp");	
+    if(confirm("회원정보를 변경 하시겠습니까?")){
+        $("#signUp_form").attr("action","/user/userUpdate");	
         $("#signUp_form").submit();    
-        alert("회원가입이 완료되었습니다. 감사합니다.");
+        alert("회원정보 변경이 완료되었습니다. 감사합니다.");
     }
 }
 	
@@ -140,25 +148,26 @@ $(function(){
 	    }
      });
     });
-    
 
- function idCheck() {
+/* function idCheck() {
     
-    var userId = $("#userId").val();
+    var loginId = $("#loginId").val();
     
-    if(userId.search(/\s/) != -1) { 
+    if(loginId.search(/\s/) != -1) { 
         alert("아이디에는 공백이 들어갈 수 없습니다.");        
     } else {             
-        if(userId.trim().length != 0) {
+        if(loginId.trim().length != 0) {
             $.ajax({
                 async : true, 
                 type : 'POST', 
-                data: userId,
+                data: loginId,
                 url: "/user/idCheck",
+                beforeSend : function(xhr){
+  				  xhr.setRequestHeader(header, token);},
                 dataType: "json",
                 contentType: "application/json; charset=UTF-8",
-                success: function(data) {     //map에서 value꺼낼때 map의 이름.key값 
-                    if(data.cnt > 0) {
+                success: function(count) {    
+                    if(count > 0) {
                         alert("해당 아이디 존재");    
                         $("#btnSignup").attr("disabled", "disabled");
                         window.location.reload();
@@ -168,14 +177,14 @@ $(function(){
                     }            
                 },
                 error: function(error) {
-                    alert("아이디를 입력해주세요.");
+                    alert("아이디를 입력해주세요. ajax error ");
                 }        
             });
         } else {
             alert("아이디를 입력해주세요. ajax 실패");
         }        
     }
-} 
+} */
 
 </script>
 <script  src="https://code.jquery.com/jquery-3.5.1.js"></script>

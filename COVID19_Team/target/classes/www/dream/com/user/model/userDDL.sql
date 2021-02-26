@@ -1,4 +1,5 @@
 drop sequence seq4Party_id;
+drop sequence seq4Party_id;
 
 drop table T_Party;
 drop table T_Party_Type;
@@ -29,19 +30,6 @@ create table T_User (
     updatedate          DATE DEFAULT SYSDATE,
     ENABLED             char(1) DEFAULT  '1' 	
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 --권한 계층관계를 포함하는 정보로 정의
 create table T_Authority_Type(
