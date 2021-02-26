@@ -19,37 +19,37 @@ public class UserService {
 	public void signUp(UserVO userVO) {
 		String encoderpw = bCryptPasswordEncoder.encode(userVO.getPassword());
 		userVO.setPassword(encoderpw);
-		
+
 		userMapper.signUp(userVO);
 	}
 
-	
 	public int idChk(String userId) {
 		int result = userMapper.idChk(userId);
 		System.out.println(result);
 		return result;
 	}
-	
+
 	public UserVO login(UserVO userVO) {
-		
+
 		String pw = userVO.getPassword();
 		System.out.println(userVO + "Service");
 		System.out.println(userMapper.login(userVO));
 		return userMapper.login(userVO);
 	}
-	
+
 	public void memberUpdate(UserVO userVO) {
-		
-		 userMapper.memberUpdate(userVO);
+		String encoderpw = bCryptPasswordEncoder.encode(userVO.getPassword());
+		userVO.setPassword(encoderpw);
+		userMapper.memberUpdate(userVO);
 	}
-	
+
 	public void memberDelete(UserVO userVO) {
 		userMapper.memberDelete(userVO);
 	}
-	
+
 	public int passChk(UserVO userVO) {
-		int result   = userMapper.passChk(userVO);
+		int result = userMapper.passChk(userVO);
 		return result;
 	}
-	
+
 }

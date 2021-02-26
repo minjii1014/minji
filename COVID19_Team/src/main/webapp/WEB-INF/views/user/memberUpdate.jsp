@@ -76,7 +76,7 @@
 									</form>
 									<div class="form-group mt-4 mb-0">
 										<button type="button" class="btn btn-primary btn-block"
-											id="btnSignup" onclick="registerCheck()">정보수정</button>
+											id="btnSignup" onclick="registerCheck()" disabled="disabled">정보수정</button>
 										<button type="button" class="btn btn-primary btn-block"
 											id="btnCancel">취소하기</button>
 									</div>
@@ -111,56 +111,42 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
-
-function registerCheck() {
-    if($.trim($('#inputPassword').val()) == '') {
-        alert("비밀번호를 입력해주세요.");
-        return false;
-    }
-    if($.trim($('#inputEmailAddress').val()) == '') {
-        alert("이메일을 입력해주세요.");
-        return false;
-    }
- 
-    $.ajax({
-		url : "/user/passChk",
-		type : "POST",
-		dateType : "json",
-		data : $("#update_form").serializeArray(),
-		success: function(data){
-			
-			if(data==true){
-				if(confirm("회원수정하시겠습니까?")){
-					$("#update_form").submit();
-				}
-				
-			}else{
-				alert("패스워드가 틀렸습니다.");
-				return;
-				
-				}
+		function registerCheck() {
+			if ($.trim($('#inputPassword').val()) == '') {
+				alert("비밀번호를 입력해주세요.");
+				return false;
 			}
-		})
-}
-	
-$(function(){
-	 $("#alert-success").hide(); 
-	 $("#alert-danger").hide();
-	 $("input").keyup(function(){ 
-		 var pwd1=$("#inputPassword").val();
-		 var pwd2=$("#inputConfirmPassword").val();
-		 if(pwd1 != "" && pwd2 != ""){ 
-			 if(pwd1 == pwd2){ 
-				 $("#alert-success").show();
-				 $("#alert-danger").hide();
-			 }else{
-				  $("#alert-success").hide();
-				  $("#alert-danger").show();
-		   }
-	    }
-     });
-    });
-</script>
+			if ($.trim($('#inputEmailAddress').val()) == '') {
+				alert("이메일을 입력해주세요.");
+				return false;
+			}
+
+			if (confirm("회원정보를 변경 하시겠습니까?")) {
+				$("#update_form").attr("action", "/user/memberUpdate");
+				$("#update_form").submit();
+				alert("회원가입이 완료되었습니다. 다시 로그인해주세요.");
+			}
+		}
+
+		$(function() {
+			$("#alert-success").hide();
+			$("#alert-danger").hide();
+			$("input").keyup(function() {
+				var pwd1 = $("#inputPassword").val();
+				var pwd2 = $("#inputConfirmPassword").val();
+				if (pwd1 != "" && pwd2 != "") {
+					if (pwd1 == pwd2) {
+						$("#alert-success").show();
+						$("#alert-danger").hide();
+						$("#btnSignup").removeAttr("disabled");
+					} else {
+						$("#alert-success").hide();
+						$("#alert-danger").show();
+					}
+				}
+			});
+		});
+	</script>
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
