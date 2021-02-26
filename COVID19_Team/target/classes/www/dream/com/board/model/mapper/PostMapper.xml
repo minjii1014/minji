@@ -24,9 +24,15 @@
 	<!-- public PostVO findPostById(long postId) -->
 	<select id="findPostById" resultMap="postResultMap">
 	<![CDATA[
-		select p.id, p.title, p.content, p.user_id, p.view_count, p.board_id, p.obj_type, p.reg_date, p.update_date
-		  from T_Reply p
-		 where p.id = #{id}
+		select p.board_id, p.id, p.content, p.user_id, p.title, p.obj_type, p.reg_date, p.update_date, c.count_of_reply
+		  from (
+		  		select a.id, count(b.id) count_of_reply
+		  		  from T_Reply a
+		  		       left outer join T_Reply b on a.id = b.original_id
+		  		 where a.id = #{id}
+		  		 group by a.id
+		  	   ) c, T_Reply p
+		 where c.id = p.id
 	]]>
 	</select>
 <!-- 		  left outer join T_Party w on p.user_id = w.party_id -->
@@ -75,11 +81,13 @@
 	]]>
 	</select>
 	
-<!-- 	조회수 증가 -->
+	
+	<!-- 조회수 증가 -->
 	 <update id="countViewCount" parameterType="Long">
     	UPDATE T_REPLY SET
     	VIEW_COUNT = VIEW_COUNT+1
     	WHERE id = #{id}
     </update>
+    
 	
 </mapper>

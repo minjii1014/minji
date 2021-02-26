@@ -38,7 +38,7 @@
 
 	<insert id="signUser">
 		<![CDATA[
-		insert into T_USERS(PARTY_ID, user_num, EMAIL, user_id, PASSWORD)
+		insert into T_USERS(PARTY_ID, user_num, email, user_id, password)
 		       values(2, seq4userid.nextval, #{email, jdbcType=VARCHAR}, #{userId, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR})
 		]]>
 	</insert>
