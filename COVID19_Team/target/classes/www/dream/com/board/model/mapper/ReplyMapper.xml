@@ -19,16 +19,19 @@
 	
 	<select id="listReply" resultMap="replyResultMap">
 	<![CDATA[
-		select r.*, n.count_of_reply
-          from (select m.id, count(rr.id) count_of_reply
-              from(select p.id
-                     from T_Reply p
-                    where p.original_id = #{originalId}
-                    order by p.id desc
-               ) m
-               left outer join T_Reply rr on m.id = rr.original_id
-            group by m.id) n, T_Reply r
-      	 where n.id = r.id
+		select rownum, r.*, n.count_of_reply
+		  from (select m.id, count(rr.id) count_of_reply
+		          from(select *
+		                 from (select k.*,rownum rn   
+		                         from (select p.*
+		                                 from T_Reply p
+		                                where p.original_id = #{originalId}
+		                                order by p.id desc) k
+		                        where rownum <= #{criteria.limit}) l
+		                where rn > #{criteria.offset}) m
+		          left outer join T_Reply rr on m.id = rr.original_id
+		            group by m.id) n, T_Reply r
+		  where n.id = r.id
 	]]>
 	</select>
 <!-- 			   left outer join T_Party w on r.user_id = w.party_id -->
