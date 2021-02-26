@@ -12,12 +12,12 @@
 		<result property="thruDate" column="thru_date"/>
 	</resultMap>
 	
-	<resultMap id="userResultMap" type="www.dream.com.party.model.UserVO" extends="partyResultMap">
-<!-- 		<result property="userNum" column="user_num" /> -->
-		<result property="email" column="email" />
-		<result property="loginId" column="login_id" />
-		<result property="password" column="password" />
-	</resultMap>
+<!-- 	<resultMap id="userResultMap" type="www.dream.com.party.model.UserVO" extends="partyResultMap"> -->
+<!--		<result property="userNum" column="user_num" /> -->
+<!-- 		<result property="email" column="email" /> -->
+<!-- 		<result property="loginId" column="login_id" /> -->
+<!-- 		<result property="password" column="password" /> -->
+<!-- 	</resultMap> -->
 	
 	<resultMap id="infectedPersonResultMap" type="www.dream.com.party.model.InfectedVO" extends="partyResultMap">
 		<result property="addressName" column="address_name" />

@@ -1,7 +1,16 @@
 drop sequence seq4Party_id;
 
+
 drop table T_Party;
 drop table T_Party_Type;
+
+
+
+drop table T_user;
+drop table T_Authority_Type;
+drop table T_Authority;
+drop table persistent_logins;
+
 
 create sequence seq4Party_id;
 create sequence seq4user_num;
@@ -11,6 +20,7 @@ create table T_Party (
 	party_id			numeric(22, 0) not null,
 	descript			varchar2(2000),
 );
+
 insert into T_Party(party_id, descript)
 	values(seq4Party_id.nextval, '확진자');
 insert into T_Party(party_id, descript)
@@ -29,19 +39,6 @@ create table T_User (
     updatedate          DATE DEFAULT SYSDATE,
     ENABLED             char(1) DEFAULT  '1' 	
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 --권한 계층관계를 포함하는 정보로 정의
 create table T_Authority_Type(

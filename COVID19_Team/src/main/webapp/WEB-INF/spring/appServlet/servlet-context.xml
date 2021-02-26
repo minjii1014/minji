@@ -22,6 +22,9 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+	
+<!-- 	<beans:bean id="passwordEncoder"  -->
+<!--         class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"  /> -->
 
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
 	</beans:bean>
@@ -29,8 +32,8 @@
 	<context:component-scan base-package="www.dream.com" />
 	<context:component-scan base-package="www.dream.com.board.controller" />
 	<context:component-scan base-package="www.dream.com.party.controller" />
-	<context:component-scan base-package="www.dream.com.userSecurity.controller" />
-	<context:component-scan base-package="www.dream.com.userSecurity.*" />
+	<context:component-scan base-package="www.dream.com.user.controller" />
+	<context:component-scan base-package="www.dream.com.user.*" />
 
 
 	<security:global-method-security pre-post-annotations="enabled"></security:global-method-security>
