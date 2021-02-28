@@ -14,11 +14,11 @@
 </div>
 <div class="form-group">
 	<label>내용</label>
-	<textarea id="txacontent" name="content" class="form-control" rows=3 >${post.content}</textarea>
+	<textarea id="txacontent" name="content" class="form-control" rows="5" cols="40" >${post.content}</textarea>
 </div>
 
-<script type="text/javascript">
 
+<script type="text/javascript">
 	//create read update
 	function setOprationMode(oprationMode) {
 		if ("read" === oprationMode) {

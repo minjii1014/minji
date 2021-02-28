@@ -14,12 +14,20 @@ public class PartyService {
 	@Autowired
 	private PartyMapper partyMapper;
 	
+	public PartyVO showOverlap(PartyVO party) {
+		return partyMapper.showOverlap(party);
+	}
+	
 	public List<PartyVO> selectAllParty() {
 		return partyMapper.selectAllParty();
 	}
 	
-	public void registerLocation(UserVO User) {
-		partyMapper.registerLocation(User);
+	public void infectedLocation(PartyVO party) {
+		partyMapper.infectedLocation(party);
+	}
+
+	public void userLocation(UserVO user) {
+		partyMapper.userLocation(user);
 	}
 	
 }

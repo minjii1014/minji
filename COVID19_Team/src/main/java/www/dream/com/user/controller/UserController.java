@@ -72,6 +72,7 @@ public class UserController {
 			
 			if(login != null && pwCheck) {
 				session.setAttribute("member", login);
+				session.setAttribute("userId", login.getUserId());
 			} else {
 				session.setAttribute("member", null);
 				rttr.addFlashAttribute("msg", false);

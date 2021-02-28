@@ -33,10 +33,6 @@
 										Account</h3>
 								</div>
 								<div class="card-body">
-								<sec:authorize access="isAuthenticated()">
-								<sec:authentication property="principal.user.userId" var="userId" />
-								<sec:authentication property="principal.user.email" var="email" />
-								<sec:authentication property="principal.user.password" var="password" />
 									<form name="form" action="/user/userDelete" id="signUp_form"  role="form" method="post" >
 										<div class="form-row">
 											<div class="col-md-6">
@@ -63,7 +59,6 @@
 										</div>
 										<input type = "hidden" name = "_csrf" value = "${_csrf.token}">
 									</form>
-									</sec:authorize>
 									<div>
 										<c:if test="${result == removeFalse}">
 											비밀번호가 맞지 않습니다.

@@ -2,3 +2,4 @@ eclipse.preferences.version=1
 encoding//src/main/resources/www/dream/com/board/model/replyDDL.sql=UTF-8
 encoding//src/main/resources/www/dream/com/moveInfo/moveInfoDDL.sql=UTF-8
 encoding//src/main/resources/www/dream/com/party/model/partyDDL.sql=UTF-8
+encoding//src/main/resources/www/dream/com/user/userDDL.sql=UTF-8

@@ -20,4 +20,6 @@ public interface PostMapper {
 	
 	public void countViewCount(long id);
 
+	// 게시물 개수 조회 위함
+	public long listPost(long boardId);
 }

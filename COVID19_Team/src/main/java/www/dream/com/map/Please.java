@@ -1,4 +1,4 @@
-package www.dream.com.mapTest;
+package www.dream.com.map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

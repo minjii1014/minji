@@ -2,6 +2,8 @@ package www.dream.com.board.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import www.dream.com.board.model.Criteria;
 import www.dream.com.board.model.ReplyVO;
 import www.dream.com.board.service.ReplyService;
+import www.dream.com.framework.dataType.Pair;
 
 @RestController
 @RequestMapping("/replies/*")
@@ -24,11 +28,21 @@ public class ReplyController {
 	@Autowired
 	private ReplyService replyService;
 	
-	@GetMapping(value = "/pages/{originalId}", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<ReplyVO>> listReply(@PathVariable("originalId") long originalId) {
-		List<ReplyVO> listReply = replyService.listReply(originalId);
-		return new ResponseEntity<>(listReply, HttpStatus.OK);
+	@GetMapping(value = "countTotalReply/{originalId}")
+	public ResponseEntity<Long> countTotalReply(
+			@PathVariable("originalId") long originalId) {
+		return new ResponseEntity<>(replyService.countTotalReply(originalId), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "pages/{originalId}/{pageNum}", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<Pair<Criteria, List<ReplyVO>>> listReply(
+		@PathVariable("originalId") long originalId, 
+		@PathVariable("pageNum") long pageNum) {
+			Criteria criteria = new Criteria(pageNum, replyService.countTotalReply(originalId));
+			List<ReplyVO> listReply = replyService.listReply(originalId, criteria);
+			Pair<Criteria, List<ReplyVO>> dreamPair = new Pair<>(criteria, listReply);
+			return new ResponseEntity<>(dreamPair, HttpStatus.OK);
+		}
 	
 	@GetMapping(value = "{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ReplyVO> findReplyById(@PathVariable("id") long id) {
@@ -36,7 +50,9 @@ public class ReplyController {
 	}
 
 	@PostMapping(value = "new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<String> registerReply(@RequestBody ReplyVO reply) {
+	public ResponseEntity<String> registerReply(@RequestBody ReplyVO reply, HttpSession session) {
+		String userId = (String) session.getAttribute("userId");
+		reply.setUserId(userId);
 		long cnt = replyService.registerReply(reply);
 		return cnt == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -55,4 +71,3 @@ public class ReplyController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
-

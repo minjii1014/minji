@@ -15,6 +15,10 @@ public class PostService {
 	@Autowired
 	private PostMapper postMapper;
 	
+	public long listPost(long boardId) {
+		return postMapper.listPost(boardId);
+	}
+	
 	public List<PostVO> findPostWithPaging(long boardId, Criteria criteria) {
 		return postMapper.findPostWithPaging(boardId, criteria);
 	}
@@ -25,10 +29,9 @@ public class PostService {
 	}
 
 	public PostVO findPostById(long id) {
-		postMapper.countViewCount(id);
 		return postMapper.findPostById(id);
 	}
-	
+
 	@Transactional
 	public boolean updatePost(PostVO post) {
 		return postMapper.updatePost(post);

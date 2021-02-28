@@ -12,12 +12,5 @@
 <body>
 <h1>모든 사용자 진입 가능 페이지</h1>
 
-<sec:authorize access="isAnonymous()">
-	<a href="/user/login">로그인</a>
-</sec:authorize>
-
-<sec:authorize access="isAuthenticated()">
-	<a href="/user/customLogout">로그아웃</a>
-</sec:authorize>
 </body>
 </html>

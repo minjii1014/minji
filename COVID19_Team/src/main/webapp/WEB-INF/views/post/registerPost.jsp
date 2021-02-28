@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-<%@ page session="false" %>
 <%@include file="../common/header.jsp"%>
 
 <div class="container-fluid">
@@ -14,18 +13,13 @@
 	<div class="card shadow mb-4">
 		<div class="card-body">
 			<form id="frmPost" role="form" action="/post/registerPost" method="post">
-				<div class="form-group">
-					<label>제목</label>
-					<input id="title" name="title" value="${post.title}" class="form-control" >
-				</div>
-				<div class="form-group">
-					<label>내용</label>
-					<textarea id="txacontent" name="content" class="form-control" rows="5" cols="40" >${post.content}</textarea>
-				</div>
+				<%@include file="./include/postCommon.jsp"%>
+				
 				<div class="form-group" >
 					<label>Writer</label>
-					<input class="form-control" name="writer" value='<sec:authentication property="principal.username"/>' readonly="readonly">
+					<input class="form-control" name="writer" value="${member.userId}" readonly="readonly"/>
 				</div>
+				
 				<button id='btnRegistPost' type="submit" class="btn btn-default">등록</button>
 				<button type="reset" class="btn btn-default">취소</button>
 				
@@ -33,6 +27,7 @@
 				<input type = "hidden" name = "_csrf" value = "${_csrf.token}">
 			</form>
 			<%@include file="./include/pagingCommon.jsp"%>
+<%-- 			<%@include file="./include/attachUploadCommon.jsp"%> --%>
 		</div>
 	</div>
 
@@ -53,7 +48,5 @@
 			})
 		</script>
     </body>
-    <script src="${pageContext.request.contextPath}/resources/js/ckeditor.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/ckeditor.js"></script>
 </html>
-			
-

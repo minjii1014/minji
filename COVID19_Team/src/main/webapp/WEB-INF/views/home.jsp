@@ -158,11 +158,13 @@ ul {
 					<!-- 							</ul> -->
 					<!--                         </form> -->
 
-					<c:forEach var="board" items="${listBoard}" varStatus="status">
-						<c:if test="${status.index eq 0}">
-							<li><a href="/post/map">${board.name}</a></li>
-						</c:if>
-					</c:forEach>
+                    	<c:forEach var="board" items="${listBoard}" varStatus="status">
+							<c:if test="${status.index eq 0}">
+								<li>
+									<a href="/party/map">${board.name}</a>
+								</li>
+							</c:if>
+						</c:forEach>
 				</div>
 				<!-- Portfolio Item 2-->
 				<div class="col-md-6 col-lg-4 mb-5">
@@ -563,18 +565,14 @@ ul {
 			$("#logoutBtn").on("click", function() {
 				location.href = "user/logout";
 			})
-
 			$("#registerBtn").on("click", function() {
 				location.href = "user/memberUpdate";
 			})
 			$("#deleteBtn").on("click", function() {
 				location.href = "user/memberDelete";
 			})
-
 		})
-
 		function registerCheck() {
-
 			if ($.trim($('#userId').val()) == '') {
 				alert("아이디를 입력해주세요.");
 				return false;

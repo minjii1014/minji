@@ -13,11 +13,11 @@ create table T_Party (
 	descript			varchar2(2000),
 );
 insert into T_Party(party_id, descript)
-	values(seq4Party_id.nextval, '확진자');
+	values(seq4Party_id.nextval, '�솗吏꾩옄');
 insert into T_Party(party_id, descript)
-	values(seq4Party_id.nextval, '일반회원');
+	values(seq4Party_id.nextval, '�씪諛섑쉶�썝');
 insert into T_Party(party_id, descript)
-	values(seq4Party_id.nextval, '관리자');
+	values(seq4Party_id.nextval, '愿�由ъ옄');
 
 
 create table T_User (
@@ -33,18 +33,7 @@ create table T_User (
 
 
 
-
-
-
-
-
-
-
-
-
-
-
---권한 계층관계를 포함하는 정보로 정의
+--沅뚰븳 怨꾩링愿�怨꾨�� �룷�븿�븯�뒗 �젙蹂대줈 �젙�쓽
 create table T_Authority_Type(
 	name				varchar2(100),
 	super_auth_name		varchar2(100),
@@ -61,8 +50,11 @@ create table T_Authority(
 	primary key(party_id, auth_name)		
 );
 
+drop table T_Authority_Type;
+drop table T_Authority;
+drop table persistent_logins;
 
---Spring Security가 알아서 사용하는 테이블
+--Spring Security媛� �븣�븘�꽌 �궗�슜�븯�뒗 �뀒�씠釉�
 create table persistent_logins(
 	username 			varchar2(100),
 	series				varchar2(64) primary key,

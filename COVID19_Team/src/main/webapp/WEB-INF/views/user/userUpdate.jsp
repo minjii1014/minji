@@ -33,10 +33,6 @@
 										Account</h3>
 								</div>
 								<div class="card-body">
-								<sec:authorize access="isAuthenticated()">
-								<sec:authentication property="principal.user.userId" var="userId" />
-								<sec:authentication property="principal.user.email" var="email" />
-								<sec:authentication property="principal.user.userId" var="userId" />
 									<form name="form" id="signUp_form"  role="form" method="post" >
 										<div class="form-row">
 											<div class="col-md-6">
@@ -74,7 +70,6 @@
 										</div>
 										<input type = "hidden" name = "_csrf" value = "${_csrf.token}">
 									</form>
-									</sec:authorize>
 									<div class="form-group mt-4 mb-0">
 											<button type="button" class="btn btn-primary btn-block" id="btnSignup" onclick="registerCheck()">정보수정</button>
 											<button type="button" class="btn btn-primary btn-block" id="btnCancel">취소하기</button>

@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ page session="false" %>
 
 <%@include file="../common/header.jsp"%>
 			
@@ -46,8 +45,6 @@
 			})
 		</script>
     </body>
-    <script src="${pageContext.request.contextPath}/resources/js/ckeditor.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/ckeditor.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>
 </html>
-			
-

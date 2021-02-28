@@ -15,9 +15,9 @@
 		<property name="driverClassName"
 			value="oracle.jdbc.driver.OracleDriver" />
 		<property name="jdbcUrl"
-			value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="CORONA" />
-		<property name="password" value="CORONA" />
+			value="jdbc:oracle:thin:@localhost:1521:orcl" />
+		<property name="username" value="c##corona" />
+		<property name="password" value="corona" />
 		<property name="maximumPoolSize" value="5" />
 	</bean>
 

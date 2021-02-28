@@ -3,8 +3,9 @@
 
 <form id='frmPaging' action='/post/listPost' method="get">
 	<input type=hidden name="boardId" value="${post.boardId}">
+	<input type=hidden name="pageNum" value="${criteria.pageNum}">
+<%-- 	<input type=hidden name="search" value="${criteria.search}"> --%>
 </form>
-
 <script type="text/javascript">
 	$(document).ready(function() {
 		// 목록으로 돌아가기 버튼
