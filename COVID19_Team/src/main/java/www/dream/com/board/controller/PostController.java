@@ -40,6 +40,12 @@ public class PostController {
 		model.addAttribute("criteria", criteria);
 		model.addAttribute("post", post);
 	}
+	
+	@PostMapping("postDetail")
+	public void postDetail(PostVO post, HttpSession session) {
+		String userId = (String) session.getAttribute("userId");
+		post.setUserId(userId);
+	}
 
 	
 	/**

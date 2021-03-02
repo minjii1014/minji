@@ -18,7 +18,8 @@
 		</div>
 		
 		<!-- data : 요소에 추가적으로 변수와 정보를 마음대로 추가 가능한 장치 -->
-		<button data-oper="modify" class="btn btn-default" onclick="location.href='/post/modifyPost?id=${post.id}'">수정</button>
+		<button id="btnModify" data-oper="modify" class="btn btn-default" onclick="location.href='/post/modifyPost?id=${post.id}'">수정</button>
+		
 		<button id="btnGotoList" class="btn btn-info">목록</button>
 		<%@include file="./include/pagingCommon.jsp"%>
 	</div>
@@ -29,7 +30,7 @@
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<i class="fa fa-comments fa-fw">Reply</i>
+					<p>Reply</p>
 				</div>
 				<div class="panel-body">
 					<ul id="listReply" data-originalid="${post.id}" data-page_num="1" data-countofreply="${post.countOfReply}">	
@@ -88,16 +89,26 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		
 		//create read update
 		setOprationMode("read");
 		var frmPaging = $("#frmPaging");
 		//게시글(PostVo) 수정
+		
+// 		var btnModify = document.getElementById('button');
+
+		if ('${member.userId}' != '${post.userId}') {
+			$("#btnModify").attr("disabled", "disabled");
+			return;
+		}
+		
 		$("#modify").on("click", function(e) {
 			e.preventDefault();
 			frmPaging.append("<input type='hidden' name='id' value='" + $(this).data("id") + "'>");
 			frmPaging.attr("action", "/post/modifyPost");
 			frmPaging.submit();
 		});
+		
 		/** 댓글 목록 조회 및 출력 */
 		var originalId = "${post.id}";
 		var listReplyUL = $("#listReply");
@@ -131,7 +142,7 @@
 					var strReplyLi = "";
 					for(var i=0, len=listReply.length || 0; i < len; i++){ 
 						strReplyLi += "<li class='left clearfix' data-id='" + listReply[i].id + "'>";
-						strReplyLi += "<div><div class='header'><strong class='primary-font'>" + "${member.userId}" + "</strong>";
+						strReplyLi += "<div><div class='header'><strong class='primary-font'>" + listReply[i].userId + "</strong>";
 						//**시간전으로 표시
 						strReplyLi += "<small class='fa-pull-right text-muted'>"
 							+ dateGapDisplayService.displayTime(listReply[i].updateDate) 

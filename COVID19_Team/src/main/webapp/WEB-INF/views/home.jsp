@@ -83,6 +83,7 @@ ul {
 						<button type="button" class="btn btn-info"
 							onclick="location.href='user/signUp'">회원가입</button>
 					</div>
+					${member }
 				</c:if>
 				<c:if test="${member != null}">
 					<div>

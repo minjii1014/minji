@@ -48,5 +48,5 @@
 			})
 		</script>
     </body>
-<script src="${pageContext.request.contextPath}/resources/js/ckeditor.js"></script>
+<%-- <script src="${pageContext.request.contextPath}/resources/js/ckeditor.js"></script> --%>
 </html>

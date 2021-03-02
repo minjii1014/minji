@@ -10,14 +10,13 @@
 		<result property="longitude" column="longitude" />
 		<result property="startDate" column="start_date"/>
 		<result property="thruDate" column="thru_date"/>
-	</resultMap>
+	</resultMap>	
 	
-<!-- 	<resultMap id="userResultMap" type="www.dream.com.party.model.UserVO" extends="partyResultMap"> -->
-<!--		<result property="userNum" column="user_num" /> -->
-<!-- 		<result property="email" column="email" /> -->
-<!-- 		<result property="loginId" column="login_id" /> -->
-<!-- 		<result property="password" column="password" /> -->
-<!-- 	</resultMap> -->
+	<resultMap id="userResultMap" type="www.dream.com.party.model.UserVO" extends="partyResultMap">
+		<result property="email" column="email" />
+		<result property="loginId" column="login_id" />
+		<result property="password" column="password" />
+	</resultMap>
 	
 	<resultMap id="infectedPersonResultMap" type="www.dream.com.party.model.InfectedVO" extends="partyResultMap">
 		<result property="addressName" column="address_name" />
@@ -32,7 +31,6 @@
 	
 	
 	<!-- 감염자 관련 -->	
-	
 	<insert id="infectedLocation">
 		<selectKey keyProperty="partyNum" order="BEFORE" resultType="_long">
 			select seq4Party_num.nextval from dual
@@ -50,14 +48,15 @@
 			select seq4Party_num.nextval from dual
 		</selectKey>
 		<![CDATA[
- 		insert into T_Party(party_num, party_id, latitude, longitude, start_date, thru_date)
- 		       values(#{partyNum}, 2, #{latitude}, #{longitude}, to_date(#{startDate, jdbcType=VARCHAR}, 'yyyy-mm-dd hh24:mi:ss') , to_date(#{thruDate, jdbcType=VARCHAR}, 'yyyy-mm-dd hh24:mi:ss'))
+ 		insert into T_Party(party_num, party_id, latitude, longitude, login_id, start_date, thru_date)
+ 		       values(#{partyNum}, 2, #{latitude}, #{longitude}, #{loginId, jdbcType=VARCHAR}, to_date(#{startDate, jdbcType=VARCHAR}, 'yyyy-mm-dd hh24:mi:ss') , to_date(#{thruDate, jdbcType=VARCHAR}, 'yyyy-mm-dd hh24:mi:ss'))
  		]]>
 	</insert>
 	
 	<!-- m 은 확진사 d는 사용자 -->
-	<select id="showOverlap" resultMap="partyResultMap">
+	<select id="showOverlap" resultMap="userResultMap">
 	<![CDATA[
+	-- and 추가
 		select DISTINCT m.party_id
 		  from T_PARTY m, T_PARTY d
 		 where m.party_id = 1

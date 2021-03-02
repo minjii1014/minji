@@ -6,20 +6,20 @@ create sequence seq4Party_id;
 create sequence seq4User_num;
 
 create table T_Party (
-	party_id			numeric(22,0) primary key,
-	latitude			numeric(15, 8), -- 위도
-	longitude			numeric(15, 8), -- 경도
-	start_date			date default sysdate, -- 시작 시간
-	thru_date			date default sysdate, -- 끝나는 시간
+	party_num			numeric(22,0) primary key,
+	party_id			numeric(22,0),
+	latitude			numeric(22, 15), -- 위도
+	longitude			numeric(22, 15), -- 경도
+	start_date			varchar2(1000), -- 시작 시간
+	thru_date			varchar2(1000), -- 끝나는 시간
 	
    --InfectedPerson인 경우 추가적인 정보
     address_name        varchar2(4000),
    
    --user인 경우 추가적인 정보
-	user_num			numeric(22,0),
 	email				varchar2(100),
 	login_id			varchar2(100),
-	password			varchar2(100)	
+	password			varchar2(100)
 );
 
 insert into T_Party(party_id, start_date,thru_date)

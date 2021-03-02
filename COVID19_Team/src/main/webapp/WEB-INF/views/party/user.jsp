@@ -17,10 +17,16 @@
 	
 	<script>
 		var myDiv = document.getElementById("target");
-// 		// 시간 반복 설정
-// 		setInterval(function(){
-// 			getGeolocation();
-// 		}, 2000);
+		<c:if test="${not empty party}">
+			<c:if test="${party.partyId eq '1' }">
+				alert('동선이 겹쳤습니다.')
+			</c:if>
+		</c:if>
+		<c:if test="${empty party }">
+		</c:if>
+
+		${member}
+
 		
 		function getGeolocation() {
 			if (navigator.geolocation) {
@@ -46,9 +52,11 @@
 // 			console.log( "(위도: " + location.coords.latitude +
 // 					", 경도: " + location.coords.longitude + ")");
 			// 시간 반복 설정
-			setInterval(function(){
-				getGeolocation();
-			}, 10000);
+			
+// 			setInterval(function(){
+// 				getGeolocation();
+// 			}, 10000);
+			
 			$.ajax({
 				url:'/party/saveUserLocation',
 				data: {
@@ -68,7 +76,6 @@
 		}
 		
 	</script>
-	
 사용자 위치정보 저장
 	
 </body>
