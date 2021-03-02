@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="www.dream.com.board.model.mapper.PostMapper">
+	<resultMap id="postResultMap" type="www.dream.com.board.model.PostVO"
+	extends="www.dream.com.board.model.mapper.ReplyMapper.replyResultMap">
+		<result property="title" column="title" />
+		<result property="viewCount" column="view_count" />
+		<result property="boardId" column="board_id" />
+	</resultMap>
+	
+	<select id="listPost" resultType ="_long">
+	<![CDATA[
+		select count(*)
+  		  from T_Reply p
+  		 where p.board_id = #{boardId}
+  		 order by p.id desc
+	]]>
+	</select>
+<!--   		  left outer join T_Party w on p.user_id = w.party_id -->
+<!-- 				, w.party_id w_party_id -->
+	
+	<!-- public PostVO findPostById(long postId) -->
+	<select id="findPostById" resultMap="postResultMap">
+	<![CDATA[
+		select p.board_id, p.id, p.content, p.user_id, p.title, p.obj_type, p.reg_date, p.update_date, c.count_of_reply
+		  from (
+		  		select a.id, count(b.id) count_of_reply
+		  		  from T_Reply a
+		  		       left outer join T_Reply b on a.id = b.original_id
+		  		 where a.id = #{id}
+		  		 group by a.id
+		  	   ) c, T_Reply p
+		 where c.id = p.id
+	]]>
+	</select>
+<!-- 		  left outer join T_Party w on p.user_id = w.party_id -->
+<!-- 				, w.party_id w_party_id -->
+	
+	
+	<insert id="registerPost">
+		<selectKey keyProperty="id" order="BEFORE" resultType="_long">
+			select seq4Reply_id.nextval from dual
+		</selectKey>
+		<![CDATA[
+		insert into T_Reply(id, content, user_id, obj_type, title, board_id, view_count)
+		       values(#{id}, #{content, jdbcType=VARCHAR}, #{userId, jdbcType=VARCHAR}, 'post', #{title, jdbcType=VARCHAR}, #{boardId}, 3)
+		]]>
+	</insert>
+	
+	<update id="updatePost">
+	<![CDATA[
+		update T_Reply
+		   set title = #{title},
+		   	   content = #{content},
+		       update_date = sysdate
+		 where id = #{id}
+	]]>
+	</update>
+
+	<delete id="removePost">
+	<![CDATA[
+		delete from T_Reply
+		 where id = #{id}
+	]]>
+	</delete>
+	
+	<!-- 	findPostWithPaging -->
+	<select id="findPostWithPaging" resultMap="postResultMap">
+	<![CDATA[
+		select *
+		  from (
+				select rownum rn, p.id, p.content, p.user_id, p.view_count, p.title, p.reg_date, p.update_date
+				  from T_Reply p
+				 where board_id = #{boardId}
+				   and rownum <= #{criteria.limit}
+				 order by p.id desc
+				)
+		 where rn > #{criteria.offset}
+	]]>
+	</select>
+	
+	
+	<!-- 조회수 증가 -->
+	 <update id="countViewCount" parameterType="Long">
+    	UPDATE T_REPLY SET
+    	VIEW_COUNT = VIEW_COUNT+1
+    	WHERE id = #{id}
+    </update>
+    
+	
+</mapper>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="www.dream.com.board.model.mapper.ReplyMapper">
+	<resultMap id="replyResultMap" type="www.dream.com.board.model.ReplyVO">
+		<result property="id" column="id" />
+		<result property="content" column="content" />
+		<result property="countOfReply" column="count_of_reply" />
+		<result property="regDate" column="reg_date" />
+		<result property="updateDate" column="update_date" />
+		<result property="userId" column="user_id" />
+		<discriminator javaType="String" column="obj_type">
+			<case value="reply" resultMap="replyResultMap" />
+		</discriminator>
+	</resultMap>
+	
+	<select id="listReply" resultMap="replyResultMap">
+	<![CDATA[
+		select rownum, r.*, n.count_of_reply
+		  from (select m.id, count(rr.id) count_of_reply
+		          from(select *
+		                 from (select k.*,rownum rn   
+		                         from (select p.*
+		                                 from T_Reply p
+		                                where p.original_id = #{originalId}
+		                                order by p.id desc) k
+		                        where rownum <= #{criteria.limit}) l
+		                where rn > #{criteria.offset}) m
+		          left outer join T_Reply rr on m.id = rr.original_id
+		            group by m.id) n, T_Reply r
+		  where n.id = r.id
+	]]>
+	</select>
+<!-- 			   left outer join T_Party w on r.user_id = w.party_id -->
+<!-- 			   w.party_id w_party_id -->
+	
+	<select id="findReplyById" resultMap="replyResultMap">
+	<![CDATA[
+		select p.board_id, p.id, p.content, p.user_id, p.title, p.obj_type, p.reg_date, p.update_date, c.count_of_reply
+		  from (
+		  		select a.id, count(b.id) count_of_reply
+		  		  from T_Reply a
+		  		       left outer join T_Reply b on a.id = b.original_id
+		  		 where a.id = #{id}
+		  		 group by a.id
+		  	   ) c, T_Reply p
+		 where c.id = p.id
+	]]>
+	</select>
+<!-- 		  left outer join T_Party w on r.user_id = w.party_id -->
+<!-- 			   w.party_id w_party_id -->
+	
+	<!--public void registerReply(ReplyVO reply);-->
+	<insert id="registerReply">
+		<selectKey keyProperty="id" order="BEFORE" resultType="long">
+			select seq4Reply_id.nextval from dual
+		</selectKey>
+		<![CDATA[
+		insert into T_Reply(id, content, original_id, user_id, obj_type)
+		       values(#{id}, #{content, jdbcType=VARCHAR}, #{originalId}, #{userId, jdbcType=VARCHAR}, 'reply')
+		]]>
+	</insert>
+	
+	<update id="updateReply">
+	<![CDATA[
+		update T_Reply
+		   set content = #{content},
+		       update_date = sysdate
+		 where id = #{id}
+	]]>
+	</update>
+
+	<delete id="removeReply">
+	<![CDATA[
+		delete from T_Reply
+		 where id = #{id}
+	]]>
+	</delete>
+	
+	<!-- 댓글 개수 세기 -->
+	<select id="countTotalReply" resultType="_long">
+	<![CDATA[
+		select count(*)
+		  from T_Reply p
+	     where p.original_id = #{originalId}
+	]]>
+	</select>
+</mapper>

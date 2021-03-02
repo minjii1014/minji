@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="www.dream.com.party.model.mapper.PartyMapper">
+	<resultMap id="partyResultMap" type="www.dream.com.party.model.PartyVO">
+		<result property="partyNum" column="party_num" />
+		<result property="partyId" column="party_id" />
+		<result property="latitude" column="latitude" />
+		<result property="longitude" column="longitude" />
+		<result property="startDate" column="start_date"/>
+		<result property="thruDate" column="thru_date"/>
+	</resultMap>	
+	
+	<resultMap id="userResultMap" type="www.dream.com.party.model.UserVO" extends="partyResultMap">
+		<result property="email" column="email" />
+		<result property="loginId" column="login_id" />
+		<result property="password" column="password" />
+	</resultMap>
+	
+	<resultMap id="infectedPersonResultMap" type="www.dream.com.party.model.InfectedVO" extends="partyResultMap">
+		<result property="addressName" column="address_name" />
+	</resultMap>
+	
+	<select id="selectAllParty" resultMap="partyResultMap">
+	<![CDATA[
+		select *
+		  from T_Party
+	]]>
+	</select>
+	
+	
+	<!-- 감염자 관련 -->	
+	<insert id="infectedLocation">
+		<selectKey keyProperty="partyNum" order="BEFORE" resultType="_long">
+			select seq4Party_num.nextval from dual
+		</selectKey>	
+		<![CDATA[
+ 		insert into T_Party(party_num, party_id, latitude, longitude, start_date, thru_date)
+ 		       values(#{partyNum}, 1, #{latitude}, #{longitude}, to_date(#{startDate, jdbcType=VARCHAR}, 'yyyy-mm-dd hh24:mi') , to_date(#{thruDate, jdbcType=VARCHAR}, 'yyyy-mm-dd hh24:mi'))
+ 		]]>
+
+	</insert>
+	
+	<!-- 유저 관련 -->	
+	<insert id="userLocation">
+		<selectKey keyProperty="partyNum" order="BEFORE" resultType="_long">
+			select seq4Party_num.nextval from dual
+		</selectKey>
+		<![CDATA[
+ 		insert into T_Party(party_num, party_id, latitude, longitude, login_id, start_date, thru_date)
+ 		       values(#{partyNum}, 2, #{latitude}, #{longitude}, #{loginId, jdbcType=VARCHAR}, to_date(#{startDate, jdbcType=VARCHAR}, 'yyyy-mm-dd hh24:mi:ss') , to_date(#{thruDate, jdbcType=VARCHAR}, 'yyyy-mm-dd hh24:mi:ss'))
+ 		]]>
+	</insert>
+	
+	<!-- m 은 확진사 d는 사용자 -->
+	<select id="showOverlap" resultMap="userResultMap">
+	<![CDATA[
+	-- and 추가
+		select DISTINCT m.party_id
+		  from T_PARTY m, T_PARTY d
+		 where m.party_id = 1
+		   and d.party_id != 1
+		   and m.thru_date >= d.start_date
+		   and m.start_date <= d.thru_date
+		   and m.latitude - 0.001 < d.latitude
+		   and m.latitude + 0.001 > d.latitude
+		   and m.longitude + 0.001 > d.longitude
+		   and m.longitude - 0.001 < d.longitude
+	]]>
+	</select>
+	
+	
+</mapper>
